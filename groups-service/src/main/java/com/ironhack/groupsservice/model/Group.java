@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Groups {
+@Table(name = "groups")
+public class Group {
 
     /**
      * Properties
@@ -12,21 +13,23 @@ public class Groups {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private Long groupAdmin;
 
     @OneToMany(mappedBy = "groups")
-    private List<GroupsMembers> groupsMembersList;
+    private List<GroupMember> groupMemberList;
 
     /**
      * Default constructor
      */
-    public Groups() {
+    public Group() {
     }
 
     /**
-     * Constructor: groupAdmin
+     * Constructor: name, groupAdmin
      */
-    public Groups(Long groupAdmin) {
+    public Group(String name, Long groupAdmin) {
+        this.name = name;
         this.groupAdmin = groupAdmin;
     }
 
@@ -41,6 +44,14 @@ public class Groups {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Long getGroupAdmin() {
         return groupAdmin;
     }
@@ -49,11 +60,11 @@ public class Groups {
         this.groupAdmin = groupAdmin;
     }
 
-    public List<GroupsMembers> getGroupsMembersList() {
-        return groupsMembersList;
+    public List<GroupMember> getGroupsMembersList() {
+        return groupMemberList;
     }
 
-    public void setGroupsMembersList(List<GroupsMembers> groupsMembersList) {
-        this.groupsMembersList = groupsMembersList;
+    public void setGroupsMembersList(List<GroupMember> groupMemberList) {
+        this.groupMemberList = groupMemberList;
     }
 }

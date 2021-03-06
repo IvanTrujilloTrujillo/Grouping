@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Groups } from '../models/groups';
 import { Site } from '../models/site';
 
 @Injectable({
@@ -13,6 +14,11 @@ export class EdgeService {
   constructor(
     private http: HttpClient
   ) { }
+
+  getAllGroups(): Observable<Groups[]> {
+    const url: string = "groups/";
+    return this.http.get<Groups[]>(this.baseUrl + url);
+  }
 
   getSitesByGroupId(id: number): Observable<Site[]> {
     const url: string = "sites/group";

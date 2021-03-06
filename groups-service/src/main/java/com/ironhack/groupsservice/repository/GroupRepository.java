@@ -1,9 +1,9 @@
 package com.ironhack.groupsservice.repository;
 
-import com.ironhack.groupsservice.model.GroupsMembers;
+import com.ironhack.groupsservice.model.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GroupsMembersRepository extends JpaRepository<GroupsMembers, Long> {
+public interface GroupRepository extends JpaRepository<Group, Long> {
 }

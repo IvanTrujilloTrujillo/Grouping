@@ -1,1 +1,18 @@
-<p>new-review works!</p>
+<h1>New Review</h1>
+
+<form [formGroup]="reviewForm">
+
+  <label for="name-site">Name of the site:</label>
+  <input type="text" id="name-site" name="name-site" formControlName="name" placeholder="Name">
+
+  <select name="group-select" id="group-select" formControlName="group">
+    <option *ngFor="let group of groupList" [value]="group.id">{{ group.name }}</option>
+  </select>
+
+  <label for="map-url">Url of Google Maps:</label>
+  <input type="text" id="map-url" name="map-url" formControlName="mapUrl" placeholder="Url">
+
+  rating
+
+  comment
+</form>

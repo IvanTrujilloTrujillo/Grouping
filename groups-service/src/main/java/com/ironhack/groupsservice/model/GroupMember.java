@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "groups_members")
-public class GroupsMembers {
+public class GroupMember {
 
     /**
     * Properties
@@ -15,20 +15,20 @@ public class GroupsMembers {
     private Long UserId;
     @ManyToOne
     @JoinColumn(name = "group_id")
-    private Groups groups;
+    private Group group;
 
     /**
      * Default constructor
      */
-    public GroupsMembers() {
+    public GroupMember() {
     }
 
     /**
-     * Constructor: userId, groups
+     * Constructor: userId, group
      */
-    public GroupsMembers(Long userId, Groups groups) {
+    public GroupMember(Long userId, Group group) {
         UserId = userId;
-        this.groups = groups;
+        this.group = group;
     }
 
     /**
@@ -50,11 +50,11 @@ public class GroupsMembers {
         UserId = userId;
     }
 
-    public Groups getGroups() {
-        return groups;
+    public Group getGroups() {
+        return group;
     }
 
-    public void setGroups(Groups groups) {
-        this.groups = groups;
+    public void setGroups(Group group) {
+        this.group = group;
     }
 }

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ironhack</groupId>
-	<artifactId>groups-service</artifactId>
+	<artifactId>group-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>groups-service</name>
+	<name>group-service</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>15</java.version>

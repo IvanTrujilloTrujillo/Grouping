@@ -1,7 +1,8 @@
 export class Groups {
-
+  
   constructor(
     private _id: number,
+    private _name: string,
     private _groupAdmin: number
   ) {}
 
@@ -10,6 +11,12 @@ export class Groups {
   }
   public set id(value: number) {
     this._id = value;
+  }
+  public get name(): string {
+    return this._name;
+  }
+  public set name(value: string) {
+    this._name = value;
   }
   public get groupAdmin(): number {
     return this._groupAdmin;
