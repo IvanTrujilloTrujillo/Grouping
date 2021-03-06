@@ -16,7 +16,7 @@ public class Group {
     private String name;
     private Long groupAdmin;
 
-    @OneToMany(mappedBy = "groups")
+    @OneToMany(mappedBy = "group")
     private List<GroupMember> groupMemberList;
 
     /**

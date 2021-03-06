@@ -31,4 +31,13 @@ public class SiteService implements ISiteService {
 
         return siteDTOList;
     }
+
+    //Save a new Site
+    public void saveNewSite(SiteDTO siteDTO) {
+        //Check if the Site already exists
+        if()
+
+        //Convert Site dto to a Site and save it
+        siteRepository.save(new Site(siteDTO.getName(), siteDTO.getGroupId(), siteDTO.getMapUrl()));
+    }
 }

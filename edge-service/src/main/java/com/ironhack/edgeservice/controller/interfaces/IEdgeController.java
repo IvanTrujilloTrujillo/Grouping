@@ -10,4 +10,6 @@ public interface IEdgeController {
     List<GroupDTO> getAllGroups();
 
     List<SiteDTO> getSiteByGroupId(Long id);
+
+    void saveNewSite(SiteDTO siteDTO);
 }

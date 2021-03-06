@@ -28,4 +28,16 @@ public class EdgeController implements IEdgeController {
     public List<SiteDTO> getSiteByGroupId(@PathVariable("id") Long id) {
         return edgeService.getSiteByGroupId(id);
     }
+
+    @PostMapping("/sites")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveNewSite(@RequestBody SiteDTO siteDTO) {
+        edgeService.saveNewSite(siteDTO);
+    }
+
+    @PostMapping("/reviews")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveNewReview(@RequestBody ) {
+        edgeService.saveNewReview();
+    }
 }

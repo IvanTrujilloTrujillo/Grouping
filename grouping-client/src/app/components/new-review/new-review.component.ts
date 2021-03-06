@@ -42,4 +42,8 @@ export class NewReviewComponent implements OnInit {
     });
   }
 
+  onSubmit(): void {
+    
+  }
+
 }

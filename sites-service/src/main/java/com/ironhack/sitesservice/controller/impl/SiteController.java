@@ -5,10 +5,7 @@ import com.ironhack.sitesservice.controller.interfaces.ISiteController;
 import com.ironhack.sitesservice.service.interfaces.ISiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +19,11 @@ public class SiteController implements ISiteController {
     @ResponseStatus(HttpStatus.OK)
     public List<SiteDTO> getSiteByGroupId(@PathVariable("id") Long id) {
         return siteService.getSiteByGroupId(id);
+    }
+
+    @PostMapping("/sites")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveNewSite(@RequestBody SiteDTO siteDTO) {
+        siteService.saveNewSite(siteDTO);
     }
 }

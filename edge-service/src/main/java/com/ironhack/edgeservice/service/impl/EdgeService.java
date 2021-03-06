@@ -37,4 +37,9 @@ public class EdgeService implements IEdgeService {
 
         return siteClient.getSiteByGroupId(id);
     }
+
+    //Save a new Site
+    public void saveNewSite(SiteDTO siteDTO) {
+        siteClient.saveNewSite(siteDTO);
+    }
 }
