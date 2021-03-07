@@ -1,0 +1,13 @@
+<h1>New Site</h1>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="siteForm">
+
+  <label for="name-site">Name of the site:</label>
+  <input type="text" id="name-site" name="name-site" formControlName="name" placeholder="Name">
+
+  <label for="map-url">Url of Google Maps:</label>
+  <input type="text" id="map-url" name="map-url" formControlName="mapUrl" placeholder="Url">
+
+  <button type="submit">Create Site</button>
+
+</form>
