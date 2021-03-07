@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Groups } from 'src/app/models/groups';
+import { Review } from 'src/app/models/review';
+import { Site } from 'src/app/models/site';
 import { EdgeService } from 'src/app/services/edge.service';
 
 @Component({
@@ -10,40 +12,45 @@ import { EdgeService } from 'src/app/services/edge.service';
 })
 export class NewReviewComponent implements OnInit {
 
-  groupList: Groups[] = [];
+  @Input() site!: Site;
+  @Input() groupId!: number;
+
+  @Output() reviewAddedEvent = new EventEmitter();
 
   reviewForm: FormGroup;
 
-  nameField: FormControl;
-  groupField: FormControl;
-  mapUrlField: FormControl;
+  ratingField: FormControl;
+  commentField: FormControl;
 
   constructor(
     private edgeService: EdgeService
   ) {
-    this.nameField = new FormControl('', [Validators.required]);
-    this.groupField = new FormControl('', [Validators.required]);
-    this.mapUrlField = new FormControl('', []);
+    this.ratingField = new FormControl('', [Validators.required]);
+    this.commentField = new FormControl('', []);
 
     this.reviewForm = new FormGroup({
-      name: this.nameField,
-      group: this.groupField,
-      mapUrl: this.mapUrlField
+      rating: this.ratingField,
+      comment: this.commentField
     });
   }
 
   ngOnInit(): void {
-    this.getAllGroups();
   }
 
-  getAllGroups(): void {
-    this.edgeService.getAllGroups().subscribe(result => {
-      this.groupList = result;
+
+  onSubmit(): void {
+    const review: Review = new Review(1,
+      this.groupId,
+      this.site,
+      1,
+      Number(this.ratingField.value),
+      this.commentField.value
+    );
+
+    this.edgeService.saveNewReview(review).subscribe(result => {
+      this.reviewAddedEvent.emit('');
     });
   }
 
-  onSubmit(): void {
-    
-  }
-
 }
+

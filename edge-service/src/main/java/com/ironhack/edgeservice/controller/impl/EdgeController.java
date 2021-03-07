@@ -1,6 +1,7 @@
 package com.ironhack.edgeservice.controller.impl;
 
 import com.ironhack.edgeservice.controller.dtos.GroupDTO;
+import com.ironhack.edgeservice.controller.dtos.ReviewDTO;
 import com.ironhack.edgeservice.controller.dtos.SiteDTO;
 import com.ironhack.edgeservice.controller.interfaces.IEdgeController;
 import com.ironhack.edgeservice.service.interfaces.IEdgeService;
@@ -31,13 +32,13 @@ public class EdgeController implements IEdgeController {
 
     @PostMapping("/sites")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveNewSite(@RequestBody SiteDTO siteDTO) {
-        edgeService.saveNewSite(siteDTO);
+    public SiteDTO saveNewSite(@RequestBody String siteJSON) {
+        return edgeService.saveNewSite(siteJSON);
     }
 
     @PostMapping("/reviews")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveNewReview(@RequestBody ) {
-        edgeService.saveNewReview();
+    public void saveNewReview(@RequestBody String reviewJSON) {
+        edgeService.saveNewReview(reviewJSON);
     }
 }

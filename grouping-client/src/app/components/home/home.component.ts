@@ -11,6 +11,9 @@ export class HomeComponent implements OnInit {
 
   siteList: Site[] = [];
 
+  newSiteAdded: boolean = false;
+  newSite: Site = new Site(1, '', '');
+
   constructor(
     private edgeService: EdgeService
   ) { }
@@ -23,6 +26,18 @@ export class HomeComponent implements OnInit {
     this.edgeService.getSitesByGroupId(id).subscribe(result => {
       this.siteList = result;
     });
+  }
+
+  addNewSiteToList(site: Site): void {
+    this.siteList.push(site);
+    this.newSite = site;
+    this.newSiteAdded = true;
+
+  }
+
+  closeNewReviewApp() {
+    this.newSiteAdded = false;
+    this.newSite = new Site(1, '', '');
   }
 
 }

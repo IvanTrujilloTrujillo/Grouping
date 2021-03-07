@@ -7,5 +7,5 @@ import java.util.List;
 public interface ISiteService {
     List<SiteDTO> getSiteByGroupId(Long id);
 
-    void saveNewSite(SiteDTO siteDTO);
+    SiteDTO saveNewSite(SiteDTO siteDTO);
 }

@@ -1,2 +1,23 @@
-<h2>{{ site.name }}</h2>
-<p>{{ site.mapUrl }}</p>
+<mat-card class="site-card">
+  <mat-card-header>
+    <mat-card-title>{{ site.name }}</mat-card-title>
+  </mat-card-header>
+  <div class="map-container">
+    <p>Error on display the map</p>
+  </div><!-- Aquí estaría genial meter el mapa -->
+  <mat-card-content>
+    <p>
+      Review: x estrellas
+    </p>
+    <!-- Esto tiene que ser un link que lleve a ver todos los comentarios de este sitio y del mismo grupo,
+  por lo que probablemente haya que user app-comments -->
+    <a class="nav-link" routerLink="/comments" routerLinkActive="active">See comments</a>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="showNewReviewApp()">Add a Review</button>
+  </mat-card-actions>
+</mat-card>
+
+<div *ngIf="newReview">
+  <app-new-review [site]="site" [groupId]="groupId" (reviewAddedEvent)="closeNewReviewApp()"></app-new-review>
+</div>

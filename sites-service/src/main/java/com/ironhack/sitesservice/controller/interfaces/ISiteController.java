@@ -7,4 +7,6 @@ import java.util.List;
 public interface ISiteController {
 
     List<SiteDTO> getSiteByGroupId(Long id);
+
+    SiteDTO saveNewSite(SiteDTO siteDTO);
 }

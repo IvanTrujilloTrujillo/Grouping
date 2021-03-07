@@ -22,11 +22,11 @@ export class EdgeService {
   }
 
   getSitesByGroupId(id: number): Observable<Site[]> {
-    const url: string = "sites/group";
+    const url: string = "sites/group/";
     return this.http.get<Site[]>(this.baseUrl + url + id);
   }
 
-  saveReview(review: Review): Observable<{}> {
+  saveNewReview(review: Review): Observable<{}> {
     const url: string = "reviews";
     let body = JSON.stringify(review);
     //Need to remove '_' from the names of the properties
@@ -35,12 +35,12 @@ export class EdgeService {
     return this.http.post<{}>(this.baseUrl + url, body);
   }
 
-  saveNewSite(site: Site): Observable<{}> {
+  saveNewSite(site: Site): Observable<Site> {
     const url: string = "sites";
     let body = JSON.stringify(site);
     //Need to remove '_' from the names of the properties
     body = body.replace(/"_/g, '"');
 
-    return this.http.post<{}>(this.baseUrl + url, body);
+    return this.http.post<Site>(this.baseUrl + url, body);
   }
 }

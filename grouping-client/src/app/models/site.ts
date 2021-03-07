@@ -3,7 +3,6 @@ export class Site {
   constructor(
     private _id: number,
     private _name: string,
-    private _groupId: number,
     private _mapUrl: string
   ) {}
 
@@ -12,12 +11,6 @@ export class Site {
   }
   public set mapUrl(value: string) {
     this._mapUrl = value;
-  }
-  public get groupId(): number {
-    return this._groupId;
-  }
-  public set groupId(value: number) {
-    this._groupId = value;
   }
   public get name(): string {
     return this._name;

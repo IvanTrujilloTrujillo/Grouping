@@ -1,33 +1,50 @@
-package com.ironhack.sitesservice.model;
+package com.ironhack.edgeservice.controller.dtos;
 
-import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
-@Entity
-public class Review {
+public class ReviewDTO {
 
     /**
      * Properties
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private Long groupId;
-    @ManyToOne
-    private Site site;
+    @NotNull
+    private SiteDTO site;
+    @NotNull
     private Long userId;
+    @NotNull
+    @Min(1)
+    @Max(5)
     private Integer rating;
+    @NotNull
     private String comment;
 
     /**
      * Default constructor
      */
-    public Review() {
+    public ReviewDTO() {
+    }
+
+    /**
+     * Constructor: id, groupId, site, userId, rating, comment
+     */
+    public ReviewDTO(Long id, Long groupId, SiteDTO site, Long userId, Integer rating, String comment) {
+        this.id = id;
+        this.groupId = groupId;
+        this.site = site;
+        this.userId = userId;
+        this.rating = rating;
+        this.comment = comment;
     }
 
     /**
      * Constructor: groupId, site, userId, rating, comment
      */
-    public Review(Long groupId, Site site, Long userId, Integer rating, String comment) {
+    public ReviewDTO(Long groupId, SiteDTO site, Long userId, Integer rating, String comment) {
         this.groupId = groupId;
         this.site = site;
         this.userId = userId;
@@ -54,11 +71,11 @@ public class Review {
         this.groupId = groupId;
     }
 
-    public Site getSite() {
+    public SiteDTO getSite() {
         return site;
     }
 
-    public void setSite(Site site) {
+    public void setSite(SiteDTO site) {
         this.site = site;
     }
 
@@ -84,17 +101,5 @@ public class Review {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    @Override
-    public String toString() {
-        return "Review{" +
-                "id=" + id +
-                ", groupId=" + groupId +
-                ", site=" + site +
-                ", userId=" + userId +
-                ", rating=" + rating +
-                ", comment='" + comment + '\'' +
-                '}';
     }
 }

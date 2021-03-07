@@ -1,8 +1,11 @@
 package com.ironhack.edgeservice.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ironhack.edgeservice.client.GroupClient;
 import com.ironhack.edgeservice.client.SiteClient;
 import com.ironhack.edgeservice.controller.dtos.GroupDTO;
+import com.ironhack.edgeservice.controller.dtos.ReviewDTO;
 import com.ironhack.edgeservice.controller.dtos.SiteDTO;
 import com.ironhack.edgeservice.service.interfaces.IEdgeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +42,32 @@ public class EdgeService implements IEdgeService {
     }
 
     //Save a new Site
-    public void saveNewSite(SiteDTO siteDTO) {
-        siteClient.saveNewSite(siteDTO);
+    public SiteDTO saveNewSite(String siteJSON) {
+        //Convert JSON object to SiteDTO
+        ObjectMapper objectMapper = new ObjectMapper();
+        SiteDTO siteDTO = null;
+        try {
+            siteDTO = objectMapper.readValue(siteJSON, SiteDTO.class);
+        } catch (JsonProcessingException e) {
+            System.out.println(siteJSON);
+            e.printStackTrace();
+        }
+
+        return siteClient.saveNewSite(siteDTO);
+    }
+
+    //Save a new Review
+    public void saveNewReview(String reviewJSON) {
+        //Convert JSON object to ReviewDTO
+        ObjectMapper objectMapper = new ObjectMapper();
+        ReviewDTO reviewDTO = null;
+        try {
+            reviewDTO = objectMapper.readValue(reviewJSON, ReviewDTO.class);
+        } catch (JsonProcessingException e) {
+            System.out.println(reviewJSON);
+            e.printStackTrace();
+        }
+
+        siteClient.saveNewReview(reviewDTO);
     }
 }

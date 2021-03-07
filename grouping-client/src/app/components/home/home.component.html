@@ -1,5 +1,9 @@
-<h1>Global Sites</h1>
-
 <div class="site-card" *ngFor="let site of siteList">
-  <app-site-card [site]="site"></app-site-card>
+  <app-site-card [site]="site" [groupId]="1"></app-site-card>
+</div>
+<div class="new-site">
+  <app-new-site [groupId]="1" (siteAddedEvent)="addNewSiteToList($event)"></app-new-site>
+</div>
+<div *ngIf="newSiteAdded">
+  <app-new-review [site]="newSite" [groupId]="1" (reviewAddedEvent)="closeNewReviewApp()"></app-new-review>
 </div>

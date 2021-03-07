@@ -12,8 +12,6 @@ public class SiteDTO {
     @NotEmpty
     private String name;
     @NotNull
-    private Long groupId;
-    @NotNull
     private String mapUrl;
 
     /**
@@ -23,21 +21,19 @@ public class SiteDTO {
     }
 
     /**
-     * Constructor: id, name, groupId, mapUrl
+     * Constructor: id, name mapUrl
      */
-    public SiteDTO(Long id, @NotEmpty String name, @NotNull Long groupId, @NotNull String mapUrl) {
+    public SiteDTO(Long id, String name, String mapUrl) {
         this.id = id;
         this.name = name;
-        this.groupId = groupId;
         this.mapUrl = mapUrl;
     }
 
     /**
-     * Constructor: name, groupId, mapUrl
+     * Constructor: name, mapUrl
      */
-    public SiteDTO(String name, Long groupId, String mapUrl) {
+    public SiteDTO(String name, String mapUrl) {
         this.name = name;
-        this.groupId = groupId;
         this.mapUrl = mapUrl;
     }
 
@@ -58,14 +54,6 @@ public class SiteDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
     }
 
     public String getMapUrl() {

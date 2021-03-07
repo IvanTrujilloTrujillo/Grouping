@@ -10,6 +10,11 @@ import { HomeComponent } from './components/home/home.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { NewReviewComponent } from './components/new-review/new-review.component';
 import { SiteCardComponent } from './components/home/site-card/site-card.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { NewSiteComponent } from './components/new-site/new-site.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -19,13 +24,18 @@ import { SiteCardComponent } from './components/home/site-card/site-card.compone
     HomeComponent,
     GroupsComponent,
     NewReviewComponent,
-    SiteCardComponent
+    SiteCardComponent,
+    CommentsComponent,
+    NewSiteComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

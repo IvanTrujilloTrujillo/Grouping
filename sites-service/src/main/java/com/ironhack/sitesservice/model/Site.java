@@ -13,7 +13,6 @@ public class Site {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Long groupId;
     private String mapUrl;
 
     @OneToMany(mappedBy = "site")
@@ -26,11 +25,19 @@ public class Site {
     }
 
     /**
-     * Constructor: name, groupId, mapUrl
+     * Constructor: id, name, mapUrl
      */
-    public Site(String name, Long groupId, String mapUrl) {
+    public Site(Long id, String name, String mapUrl) {
+        this.id = id;
         this.name = name;
-        this.groupId = groupId;
+        this.mapUrl = mapUrl;
+    }
+
+    /**
+     * Constructor: name, mapUrl
+     */
+    public Site(String name, String mapUrl) {
+        this.name = name;
         this.mapUrl = mapUrl;
     }
 
@@ -51,14 +58,6 @@ public class Site {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
     }
 
     public String getMapUrl() {

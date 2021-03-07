@@ -23,7 +23,7 @@ public class SiteController implements ISiteController {
 
     @PostMapping("/sites")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveNewSite(@RequestBody SiteDTO siteDTO) {
-        siteService.saveNewSite(siteDTO);
+    public SiteDTO saveNewSite(@RequestBody SiteDTO siteDTO) {
+        return siteService.saveNewSite(siteDTO);
     }
 }

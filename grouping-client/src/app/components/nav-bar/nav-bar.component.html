@@ -1,12 +1,13 @@
-<ul class="nav nav-tabs">
-  <a class="logo" routerLink="/home" routerLinkActive="active">
-    <img src="../../assets/img/Logo-letras.png" height="30" alt="Logo Grouping">
-  </a>
-
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/groups" routerLinkActive="active">Groups</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link"  routerLink="/new-review" routerLinkActive="active">New Review</a>
-  </li>
-</ul>
+<nav>
+  <div class="nav-wrapper grey">
+    <a class="brand-logo center" routerLink="/home" routerLinkActive="active">
+      <img src="../../assets/img/Logo-letras.png" height="40"  alt="Logo Grouping">
+    </a>
+    <ul id="nav-mobile" class="left hide-on-med-and-down">
+      <li><a class="nav-link" routerLink="/groups" routerLinkActive="active">MyGroups</a></li>
+    </ul>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a class="nav-link" routerLink="/new-group" routerLinkActive="active">Create New Group</a></li>
+    </ul>
+  </div>
+</nav>

@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface SiteRepository extends JpaRepository<Site, Long> {
-    List<Site> findByGroupId(Long id);
-    Optional<Site> findBy
+    Optional<Site> findByName(String name);
+    Optional<Site> findByMapUrl(String mapUrl);
 }

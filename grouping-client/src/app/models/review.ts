@@ -1,8 +1,11 @@
+import { Site } from "./site";
+
 export class Review {
 
   constructor(
     private _id: number,
-    private _siteId: number,
+    private _groupId: number,
+    private _site: Site,
     private _userId: number,
     private _rating: number,
     private _comment: string
@@ -26,11 +29,17 @@ export class Review {
   public set userId(value: number) {
     this._userId = value;
   }
-  public get siteId(): number {
-    return this._siteId;
+  public get site(): Site {
+    return this._site;
   }
-  public set siteId(value: number) {
-    this._siteId = value;
+  public set site(value: Site) {
+    this._site = value;
+  }
+  public get groupId(): number {
+    return this._groupId;
+  }
+  public set groupId(value: number) {
+    this._groupId = value;
   }
   public get id(): number {
     return this._id;

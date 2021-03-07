@@ -9,10 +9,21 @@ import { Site } from 'src/app/models/site';
 export class SiteCardComponent implements OnInit {
 
   @Input() site!: Site;
+  @Input() groupId!: number;
+
+  newReview: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  showNewReviewApp(): void {
+    this.newReview = true;
+  }
+
+  closeNewReviewApp(): void {
+    this.newReview = false;
   }
 
 }
