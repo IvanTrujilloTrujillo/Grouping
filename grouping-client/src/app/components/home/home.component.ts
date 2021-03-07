@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Site } from 'src/app/models/site';
 import { EdgeService } from 'src/app/services/edge.service';
+import { MatDialog } from '@angular/material/dialog';
+import { NewSiteComponent } from '../new-site/new-site.component';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +12,10 @@ import { EdgeService } from 'src/app/services/edge.service';
 })
 export class HomeComponent implements OnInit {
 
-  siteList: Site[] = [];
-
-  newSiteAdded: boolean = false;
-  newSite: Site = new Site(1, '', '');
-
   constructor(
-    private edgeService: EdgeService
+    public app: AppComponent,
+    private edgeService: EdgeService,
+    private newSiteDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -24,20 +24,11 @@ export class HomeComponent implements OnInit {
 
   getSitesByGroupId(id: number): void {
     this.edgeService.getSitesByGroupId(id).subscribe(result => {
-      this.siteList = result;
+      this.app.siteList = result;
     });
   }
 
-  addNewSiteToList(site: Site): void {
-    this.siteList.push(site);
-    this.newSite = site;
-    this.newSiteAdded = true;
-
+  openNewSiteDialog(): void {
+    this.newSiteDialog.open(NewSiteComponent);
   }
-
-  closeNewReviewApp() {
-    this.newSiteAdded = false;
-    this.newSite = new Site(1, '', '');
-  }
-
 }

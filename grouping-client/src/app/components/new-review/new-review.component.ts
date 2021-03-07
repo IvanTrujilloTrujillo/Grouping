@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { AppComponent } from 'src/app/app.component';
 import { Groups } from 'src/app/models/groups';
 import { Review } from 'src/app/models/review';
 import { Site } from 'src/app/models/site';
@@ -12,25 +14,17 @@ import { EdgeService } from 'src/app/services/edge.service';
 })
 export class NewReviewComponent implements OnInit {
 
-  @Input() site!: Site;
-  @Input() groupId!: number;
-
-  @Output() reviewAddedEvent = new EventEmitter();
-
   reviewForm: FormGroup;
 
-  ratingField: FormControl;
-  commentField: FormControl;
+  rate: number = 1;
+  comment: string = '';
 
   constructor(
-    private edgeService: EdgeService
+    public app: AppComponent,
+    private edgeService: EdgeService,
+    private dialogRef: MatDialogRef<NewReviewComponent>
   ) {
-    this.ratingField = new FormControl('', [Validators.required]);
-    this.commentField = new FormControl('', []);
-
     this.reviewForm = new FormGroup({
-      rating: this.ratingField,
-      comment: this.commentField
     });
   }
 
@@ -40,16 +34,20 @@ export class NewReviewComponent implements OnInit {
 
   onSubmit(): void {
     const review: Review = new Review(1,
-      this.groupId,
-      this.site,
+      this.app.selectedGroup,
+      this.app.siteList[this.app.selectedSiteId],
       1,
-      Number(this.ratingField.value),
-      this.commentField.value
+      Number(this.rate),
+      this.comment
     );
 
     this.edgeService.saveNewReview(review).subscribe(result => {
-      this.reviewAddedEvent.emit('');
+      this.closeDialog();
     });
+  }
+
+  closeDialog() {
+    this.dialogRef.close('New Review created!');
   }
 
 }

@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AppComponent } from 'src/app/app.component';
 import { Site } from 'src/app/models/site';
+import { NewReviewComponent } from '../../new-review/new-review.component';
 
 @Component({
   selector: 'app-site-card',
@@ -11,19 +14,16 @@ export class SiteCardComponent implements OnInit {
   @Input() site!: Site;
   @Input() groupId!: number;
 
-  newReview: boolean = false;
-
-  constructor() { }
+  constructor(
+    public app: AppComponent,
+    private newReviewDialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
   }
 
-  showNewReviewApp(): void {
-    this.newReview = true;
+  showNewReviewDialog(): void {
+    this.app.selectedSiteId = this.site.id;
+    this.newReviewDialog.open(NewReviewComponent);
   }
-
-  closeNewReviewApp(): void {
-    this.newReview = false;
-  }
-
 }

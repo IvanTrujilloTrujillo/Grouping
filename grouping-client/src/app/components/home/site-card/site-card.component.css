@@ -2,8 +2,9 @@
   width: 400px;
   height: 500px;
   margin: 20px;
-  /* border-radius: 5px;
-  box-shadow: 5px 5px 5px rgba(70, 70, 70, 0.397); */
+  border-radius: 10px;
+  background-color: #dfecfdb2;
+  box-shadow: 0px 3px 2px -2px rgb(0 0 0 / 20%), 2px 2px 2px 0px rgb(0 0 0 / 14%), 0px 2px 4px 0px rgb(0 0 0 / 12%);
 }
 
 .mat-card-title {
@@ -12,7 +13,7 @@
 }
 
 .map-container {
-  height: 300px;
+  height: 280px;
 }
 
 .map-container p {
@@ -20,12 +21,17 @@
   margin: 20px 0px 0px 5px;
 }
 
-.site-card p, a {
+.site-card a {
   margin: 10px 0px;
 }
 
 .mat-card-content {
   margin: 0px;
+}
+
+.mat-card-actions {
+  width: 120px;
+  margin: 10px auto;
 }
 
 .mat-card-actions button {

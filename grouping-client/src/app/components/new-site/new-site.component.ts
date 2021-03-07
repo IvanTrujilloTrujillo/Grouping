@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AppComponent } from 'src/app/app.component';
 import { Site } from 'src/app/models/site';
 import { EdgeService } from 'src/app/services/edge.service';
+import { NewReviewComponent } from '../new-review/new-review.component';
 
 @Component({
   selector: 'app-new-site',
@@ -10,17 +13,16 @@ import { EdgeService } from 'src/app/services/edge.service';
 })
 export class NewSiteComponent implements OnInit {
 
-  @Input() groupId!: number;
-
-  @Output() siteAddedEvent = new EventEmitter();
-
   siteForm: FormGroup;
 
   nameField: FormControl;
   mapUrlField: FormControl;
 
   constructor(
-    private edgeService: EdgeService
+    private app: AppComponent,
+    private edgeService: EdgeService,
+    private dialogRef: MatDialogRef<NewSiteComponent>,
+    private newReviewDialog: MatDialog
   ) {
     this.nameField = new FormControl('', [Validators.required]);
     this.mapUrlField = new FormControl('', []);
@@ -39,7 +41,6 @@ export class NewSiteComponent implements OnInit {
     let mapUrl: string = this.mapUrlField.value;
 
     name = name.trim();
-    //name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase().
 
     if(mapUrl === null || mapUrl === undefined) {
       mapUrl = '';
@@ -50,8 +51,22 @@ export class NewSiteComponent implements OnInit {
     //TODO: Comprobar si es realmente un sitio nuevo
 
     this.edgeService.saveNewSite(site).subscribe(result => {
-      this.siteAddedEvent.emit(result);
+      this.app.siteList.push(result);
+      this.closeDialog();
+      this.openNewReviewDialog();
     });
+  }
+
+  closeDialog() {
+    this.dialogRef.close('New Site created!');
+  }
+
+  cancel(): void {
+    this.dialogRef.close();
+  }
+
+  openNewReviewDialog(): void {
+    this.newReviewDialog.open(NewReviewComponent);
   }
 
 }

@@ -14,10 +14,6 @@
     <a class="nav-link" routerLink="/comments" routerLinkActive="active">See comments</a>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="showNewReviewApp()">Add a Review</button>
+    <button mat-raised-button color="primary" (click)="showNewReviewDialog()">Add a Review</button>
   </mat-card-actions>
 </mat-card>
-
-<div *ngIf="newReview">
-  <app-new-review [site]="site" [groupId]="groupId" (reviewAddedEvent)="closeNewReviewApp()"></app-new-review>
-</div>

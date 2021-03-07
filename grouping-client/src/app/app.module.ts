@@ -15,6 +15,10 @@ import { NewSiteComponent } from './components/new-site/new-site.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { BarRatingModule } from "ngx-bar-rating";
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -35,9 +39,19 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    BarRatingModule,
+    MatFormFieldModule
   ],
-  providers: [],
+  entryComponents: [
+    NewSiteComponent
+  ],
+  providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+    AppComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

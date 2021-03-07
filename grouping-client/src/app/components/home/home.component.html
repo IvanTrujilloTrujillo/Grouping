@@ -1,9 +1,21 @@
-<div class="site-card" *ngFor="let site of siteList">
-  <app-site-card [site]="site" [groupId]="1"></app-site-card>
+<div class="cards-container">
+  <div class="site-card" *ngFor="let site of app.siteList">
+    <app-site-card [site]="site" [groupId]="1"></app-site-card>
+  </div>
+
+  <mat-card class="new-site-card">
+    <mat-card-actions>
+      <button mat-fab color="primary" aria-label="Add a new site" (click)="openNewSiteDialog()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div class="empty-card"></div>
+  <div class="empty-card"></div>
+  <div class="empty-card"></div>
 </div>
-<div class="new-site">
-  <app-new-site [groupId]="1" (siteAddedEvent)="addNewSiteToList($event)"></app-new-site>
-</div>
-<div *ngIf="newSiteAdded">
+
+<!-- <div>
   <app-new-review [site]="newSite" [groupId]="1" (reviewAddedEvent)="closeNewReviewApp()"></app-new-review>
-</div>
+</div> -->
