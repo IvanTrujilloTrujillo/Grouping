@@ -1,16 +1,18 @@
 package com.ironhack.edgeservice.controller.interfaces;
 
-import com.ironhack.edgeservice.controller.dtos.GroupDTO;
-import com.ironhack.edgeservice.controller.dtos.ReviewDTO;
-import com.ironhack.edgeservice.controller.dtos.SiteDTO;
+import com.ironhack.edgeservice.controller.dtos.*;
 
 import java.util.List;
 
 public interface IEdgeController {
 
+    Tocken register(String userJSON);
+
+    Tocken login(String userJSON);
+
     List<GroupDTO> getAllGroups();
 
-    List<SiteDTO> getSiteByGroupId(Long id);
+    List<SiteDTO> getSiteByGroupId(Long id, String tocken);
 
     SiteDTO saveNewSite(String siteJSON);
 

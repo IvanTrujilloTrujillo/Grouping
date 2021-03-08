@@ -10,10 +10,10 @@ CREATE TABLE user (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE role (
+/*CREATE TABLE role (
 	id BIGINT AUTO_INCREMENT NOT NULL,
     name VARCHAR(255),
     user_id BIGINT,
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES user(id)
-);
+);*/

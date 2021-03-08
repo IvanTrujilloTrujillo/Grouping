@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Groups } from './models/groups';
 import { Site } from './models/site';
 
@@ -15,4 +16,7 @@ export class AppComponent {
 
   public selectedGroup: number = 1;
   public selectedSiteId: number = 0;
+
+  constructor(
+  ) {}
 }

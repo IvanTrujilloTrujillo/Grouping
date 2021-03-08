@@ -12,23 +12,10 @@ public class UserDTO {
     private String username;
     private String password;
 
-    private Set<RoleDTO> roles;
-
     /**
      * Default constructor
      */
     public UserDTO() {
-    }
-
-    /**
-     * Constructor: id, name, username, password, roles
-     */
-    public UserDTO(Long id, String name, String username, String password, Set<RoleDTO> roles) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
     }
 
     /**
@@ -74,13 +61,5 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<RoleDTO> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<RoleDTO> roles) {
-        this.roles = roles;
     }
 }

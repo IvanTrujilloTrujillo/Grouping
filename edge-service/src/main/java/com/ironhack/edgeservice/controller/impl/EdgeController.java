@@ -1,14 +1,14 @@
 package com.ironhack.edgeservice.controller.impl;
 
-import com.ironhack.edgeservice.controller.dtos.GroupDTO;
-import com.ironhack.edgeservice.controller.dtos.ReviewDTO;
-import com.ironhack.edgeservice.controller.dtos.SiteDTO;
+import com.ironhack.edgeservice.controller.dtos.*;
 import com.ironhack.edgeservice.controller.interfaces.IEdgeController;
 import com.ironhack.edgeservice.service.interfaces.IEdgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -18,16 +18,28 @@ public class EdgeController implements IEdgeController {
     @Autowired
     private IEdgeService edgeService;
 
+    @PostMapping("/new-user")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Tocken register(@RequestBody String userJSON) {
+        return edgeService.register(userJSON);
+    }
+
+    @PostMapping("/user")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Tocken login(@RequestBody String userJSON) {
+        return edgeService.login(userJSON);
+    }
+
     @GetMapping("/groups")
     @ResponseStatus(HttpStatus.OK)
     public List<GroupDTO> getAllGroups() {
         return edgeService.getAllGroups();
     }
 
-    @GetMapping("/sites/group/{id}")
+    @PostMapping("/sites/group/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<SiteDTO> getSiteByGroupId(@PathVariable("id") Long id) {
-        return edgeService.getSiteByGroupId(id);
+    public List<SiteDTO> getSiteByGroupId(@PathVariable("id") Long id, @RequestBody String tocken) {
+        return edgeService.getSiteByGroupId(id, tocken);
     }
 
     @PostMapping("/sites")

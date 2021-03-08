@@ -5,16 +5,19 @@ import com.ironhack.userservice.controller.interfaces.IUserController;
 import com.ironhack.userservice.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController implements IUserController {
 
     @Autowired
     private IUserService userService;
+
+    @PostMapping("/users")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDTO register(@RequestBody UserDTO userDTO) {
+        return userService.register(userDTO);
+    }
 
     @GetMapping("/users/{username}")
     @ResponseStatus(HttpStatus.OK)

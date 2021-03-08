@@ -4,6 +4,7 @@ import { EdgeService } from 'src/app/services/edge.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NewSiteComponent } from '../new-site/new-site.component';
 import { AppComponent } from 'src/app/app.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +16,16 @@ export class HomeComponent implements OnInit {
   constructor(
     public app: AppComponent,
     private edgeService: EdgeService,
+    private router: Router,
     private newSiteDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.getSitesByGroupId(1);
+    if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
+      this.router.navigate(['/login']);
+    } else {
+      this.getSitesByGroupId(1);
+    }
   }
 
   getSitesByGroupId(id: number): void {

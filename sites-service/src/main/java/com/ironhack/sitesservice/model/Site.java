@@ -1,5 +1,7 @@
 package com.ironhack.sitesservice.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class Site {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Type(type = "text")
     private String mapUrl;
 
     @OneToMany(mappedBy = "site")

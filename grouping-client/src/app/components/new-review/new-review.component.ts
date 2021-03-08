@@ -1,10 +1,8 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AppComponent } from 'src/app/app.component';
-import { Groups } from 'src/app/models/groups';
 import { Review } from 'src/app/models/review';
-import { Site } from 'src/app/models/site';
 import { EdgeService } from 'src/app/services/edge.service';
 
 @Component({

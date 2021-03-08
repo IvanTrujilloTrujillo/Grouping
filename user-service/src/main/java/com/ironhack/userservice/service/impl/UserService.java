@@ -17,6 +17,19 @@ public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepository;
 
+    //Create a new User
+    public UserDTO register(UserDTO userDTO) {
+        //Checks if the username already exists
+        if(userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "The username already exists");
+        }
+
+        //Convert UserDTO to a User and save it
+        userDTO.setId(userRepository.save(new User(userDTO.getName(), userDTO.getUsername(), userDTO.getPassword())).getId());
+
+        return userDTO;
+    }
+
     //Get a User by username
     public UserDTO findByUsername(String username) {
         //Get the User from the database

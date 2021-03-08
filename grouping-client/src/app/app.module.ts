@@ -17,8 +17,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { BarRatingModule } from "ngx-bar-rating";
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 
 @NgModule({
@@ -30,23 +31,25 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     NewReviewComponent,
     SiteCardComponent,
     CommentsComponent,
-    NewSiteComponent
+    NewSiteComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    BarRatingModule,
     MatFormFieldModule
   ],
   entryComponents: [
-    NewSiteComponent
+    NewSiteComponent,
+    NewReviewComponent
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},

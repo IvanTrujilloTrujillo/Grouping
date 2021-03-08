@@ -1,0 +1,44 @@
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
+import { User } from 'src/app/models/user';
+import { EdgeService } from 'src/app/services/edge.service';
+
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  loginForm: FormGroup;
+
+  usernameField: FormControl;
+  passwordField: FormControl;
+
+  constructor(
+    private edgeService: EdgeService,
+    private app: AppComponent,
+    private router: Router) {
+      this.usernameField = new FormControl('', [Validators.required]);
+      this.passwordField = new FormControl('', [Validators.required]);
+      this.loginForm = new FormGroup({
+        username: this.usernameField,
+        password: this.passwordField
+      });
+    }
+
+  ngOnInit(): void {
+  }
+
+  login(): void {
+    const user: User = new User(1, '', this.usernameField.value, this.passwordField.value);
+    this.edgeService.login(user).subscribe(result => {
+      this.edgeService.tocken = result.tocken;
+      localStorage.setItem('tockenLogin', result.tocken);
+      this.router.navigate(['/home']);
+    });
+  }
+}
