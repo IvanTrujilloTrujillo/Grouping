@@ -10,11 +10,13 @@ public interface IEdgeService {
 
     Tocken login(String userJSON);
 
-    List<GroupDTO> getAllGroups();
+    List<GroupDTO> getGroupsByUser(String tocken);
 
     List<SiteDTO> getSiteByGroupId(Long id, String tocken);
 
     SiteDTO saveNewSite(String siteJSON);
 
     void saveNewReview(String reviewJSON);
+
+    GroupDTO saveNewGroup(String groupJSON);
 }

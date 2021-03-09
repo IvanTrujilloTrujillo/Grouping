@@ -2,6 +2,8 @@ package com.ironhack.groupsservice.service.impl;
 
 import com.ironhack.groupsservice.controller.dtos.GroupDTO;
 import com.ironhack.groupsservice.model.Group;
+import com.ironhack.groupsservice.model.GroupMember;
+import com.ironhack.groupsservice.repository.GroupMemberRepository;
 import com.ironhack.groupsservice.repository.GroupRepository;
 import com.ironhack.groupsservice.service.interfaces.IGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,20 @@ public class GroupService implements IGroupService {
     @Autowired
     private GroupRepository groupRepository;
 
-    //Return all the groups from the database
-    public List<GroupDTO> getAllGroups() {
+    @Autowired
+    private GroupMemberRepository groupMemberRepository;
 
-        //Retrieve the group list from the database
-        List<Group> groupList = groupRepository.findAll();
+    //Return all the groups from the database
+    public List<GroupDTO> getGroupsByUser(Long id) {
+
+        //Retrieve the GroupMembers where appear the userId
+        List<GroupMember> groupMemberList = groupMemberRepository.findByUserId(id);
+
+        //Create a list with the groups in the groupMemberList
+        List<Group> groupList = new ArrayList<>();
+        for (GroupMember groupMember : groupMemberList) {
+            groupList.add(groupMember.getGroups());
+        }
 
         //Convert to a dto list
         List<GroupDTO> groupDTOList = new ArrayList<>();
@@ -47,4 +58,19 @@ public class GroupService implements IGroupService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Group not found");
         }
     }
+
+    public GroupDTO saveNewGroup(GroupDTO groupDTO) {
+        //Save the group in the database
+        Group group = groupRepository.save(new Group(groupDTO.getName(), groupDTO.getGroupAdmin()));
+
+        //Save the admin as a group member
+        groupMemberRepository.save(new GroupMember(group.getGroupAdmin(), group));
+
+        //Set the group Id to the DTO
+        groupDTO.setId(group.getId());
+
+        return groupDTO;
+    }
+
+
 }

@@ -14,6 +14,8 @@ public class GroupDTO {
     @NotNull
     private Long groupAdmin;
 
+    private String tocken;
+
     /**
      * Default constructor
      */
@@ -62,5 +64,13 @@ public class GroupDTO {
 
     public void setGroupAdmin(Long groupAdmin) {
         this.groupAdmin = groupAdmin;
+    }
+
+    public String getTocken() {
+        return tocken;
+    }
+
+    public void setTocken(String tocken) {
+        this.tocken = tocken;
     }
 }

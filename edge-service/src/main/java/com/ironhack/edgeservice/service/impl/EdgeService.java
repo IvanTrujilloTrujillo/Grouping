@@ -50,6 +50,9 @@ public class EdgeService implements IEdgeService {
         //Save the user on the database
         userClient.register(userDTO);
 
+        //Save the user as a member of group global (1)
+        groupClient.saveUserAsMemberByGroupId(1L, userDTO.getId());
+
         //Encode username and password to return a token
         String encodedUsername = Base64.getEncoder().encodeToString(userDTO.getUsername().getBytes());
         String encodedPassword = Base64.getEncoder().encodeToString(userDTO.getPassword().getBytes());
@@ -84,8 +87,15 @@ public class EdgeService implements IEdgeService {
     }
 
     //Return all the groups from the database
-    public List<GroupDTO> getAllGroups() {
-        return groupClient.getAllGroups();
+    public List<GroupDTO> getGroupsByUser(String tocken) {
+
+        //Checks if username and password are valid
+        UserDTO userDTO = checkLogin(tocken);
+        if(userDTO == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
+        }
+
+        return groupClient.getGroupsByUser(userDTO.getId());
     }
 
 
@@ -93,16 +103,24 @@ public class EdgeService implements IEdgeService {
     public List<SiteDTO> getSiteByGroupId(Long id, String tocken) {
 
         //Checks if username and password are valid
-        if(!checkLogin(tocken)) {
+        UserDTO userDTO = checkLogin(tocken);
+        if(userDTO == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
         }
-
-        //Checks if the user belongs to the group
-
 
         //Check if the group exists
         try {
             groupClient.getGroupById(id);
+        } catch (ResponseStatusException e) {
+            throw e;
+        }
+
+        //Checks if the user belongs to the group
+        try {
+            List<Long> userIdList = groupClient.getMembersByGroupId(id);
+            if(!userIdList.contains(userDTO.getId())) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The user doesn't belong to this group");
+            }
         } catch (ResponseStatusException e) {
             throw e;
         }
@@ -122,6 +140,15 @@ public class EdgeService implements IEdgeService {
             e.printStackTrace();
         }
 
+        //Check if the tocken is correct
+        UserDTO userDTO = checkLogin(siteDTO.getTocken());
+        if(userDTO == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
+        }
+
+        //Delete the tocken
+        siteDTO.setTocken(null);
+
         return siteClient.saveNewSite(siteDTO);
     }
 
@@ -137,13 +164,48 @@ public class EdgeService implements IEdgeService {
             e.printStackTrace();
         }
 
+        //Check if the tocken is correct
+        UserDTO userDTO = checkLogin(reviewDTO.getTocken());
+        if(userDTO == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
+        }
+
+        //Delete the tocken
+        reviewDTO.setTocken(null);
+        //Set the userId
+        reviewDTO.setUserId(userDTO.getId());
+
         siteClient.saveNewReview(reviewDTO);
     }
 
-    //Checks if the username and the password are correct
-    public boolean checkLogin(String tocken) {
-        boolean correctLogin = false;
+    //Creates a new group
+    public GroupDTO saveNewGroup(String groupJSON) {
+        //Convert JSON object to GroupDTO
+        ObjectMapper objectMapper = new ObjectMapper();
+        GroupDTO groupDTO = null;
+        try {
+            groupDTO = objectMapper.readValue(groupJSON, GroupDTO.class);
+        } catch (JsonProcessingException e) {
+            System.out.println(groupDTO);
+            e.printStackTrace();
+        }
 
+        //Check if the tocken is correct
+        UserDTO userDTO = checkLogin(groupDTO.getTocken());
+        if(userDTO == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
+        }
+
+        //Delete the tocken
+        groupDTO.setTocken(null);
+        //Set the userId
+        groupDTO.setGroupAdmin(userDTO.getId());
+
+        return groupClient.saveNewGroup(groupDTO);
+    }
+
+    //Checks if the username and the password are correct
+    public UserDTO checkLogin(String tocken) {
         //Get username in the tocken
         String username = tocken.split("@")[0];
         byte[] decodedUsername = Base64.getDecoder().decode(username);
@@ -156,14 +218,10 @@ public class EdgeService implements IEdgeService {
         //Takes the user from the database by username
         UserDTO userDTO = userClient.findByUsername(username);
 
-        System.out.println(Arrays.toString(tocken.split("@")));
-        System.out.println(password);
-        System.out.println(userDTO.getPassword());
-        //String passwordHashed = DigestUtils.md5Hex(userDTO.getUsername()).toUpperCase();
-        if(password.equals(userDTO.getPassword())) {
-            correctLogin = true;
+        if(!password.equals(userDTO.getPassword())) {
+            userDTO = null;
         }
 
-        return correctLogin;
+        return userDTO;
     }
 }

@@ -20,6 +20,8 @@ import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/d
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { NewGroupComponent } from './components/new-group/new-group.component';
+import { GroupCardComponent } from './components/groups/group-card/group-card.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { RegisterComponent } from './components/register/register.component';
     CommentsComponent,
     NewSiteComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NewGroupComponent,
+    GroupCardComponent
   ],
   imports: [
     BrowserModule,

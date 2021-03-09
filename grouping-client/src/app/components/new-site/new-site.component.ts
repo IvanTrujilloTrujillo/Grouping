@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Site } from 'src/app/models/site';
 import { EdgeService } from 'src/app/services/edge.service';
@@ -22,7 +23,8 @@ export class NewSiteComponent implements OnInit {
     private app: AppComponent,
     private edgeService: EdgeService,
     private dialogRef: MatDialogRef<NewSiteComponent>,
-    private newReviewDialog: MatDialog
+    private newReviewDialog: MatDialog,
+    private router: Router
   ) {
     this.nameField = new FormControl('', [Validators.required]);
     this.mapUrlField = new FormControl('', []);
@@ -34,6 +36,9 @@ export class NewSiteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
+      this.router.navigate(['/login']);
+    }
   }
 
   onSubmit(): void {
@@ -46,15 +51,15 @@ export class NewSiteComponent implements OnInit {
       mapUrl = '';
     }
 
-    const site: Site = new Site(1, name, mapUrl);
+    const site: Site = new Site(1, name, mapUrl, this.edgeService.tocken);
 
     //TODO: Comprobar si es realmente un sitio nuevo
 
     this.edgeService.saveNewSite(site).subscribe(result => {
       this.app.siteList.push(result);
-      this.closeDialog();
-      this.openNewReviewDialog();
     });
+    this.closeDialog();
+    this.openNewReviewDialog();
   }
 
   closeDialog() {

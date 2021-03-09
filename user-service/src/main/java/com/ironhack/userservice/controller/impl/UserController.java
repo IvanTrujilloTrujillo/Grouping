@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class UserController implements IUserController {
 
@@ -15,7 +17,7 @@ public class UserController implements IUserController {
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO register(@RequestBody UserDTO userDTO) {
+    public UserDTO register(@RequestBody @Valid UserDTO userDTO) {
         return userService.register(userDTO);
     }
 

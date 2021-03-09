@@ -52,9 +52,9 @@ export class EdgeService {
     this.tocken = '';
   }
 
-  getAllGroups(): Observable<Groups[]> {
-    const url: string = "groups/";
-    return this.http.get<Groups[]>(this.baseUrl + url);
+  getGroupsByUser(): Observable<Groups[]> {
+    const url: string = "groups";
+    return this.http.post<Groups[]>(this.baseUrl + url, this.tocken);
   }
 
   getSitesByGroupId(id: number): Observable<Site[]> {
@@ -64,6 +64,7 @@ export class EdgeService {
 
   saveNewReview(review: Review): Observable<{}> {
     const url: string = "reviews";
+    review.tocken = this.tocken;
     let body = JSON.stringify(review);
     //Need to remove '_' from the names of the properties
     body = body.replace(/"_/g, '"');
@@ -73,10 +74,20 @@ export class EdgeService {
 
   saveNewSite(site: Site): Observable<Site> {
     const url: string = "sites";
+    site.tocken = this.tocken;
     let body = JSON.stringify(site);
     //Need to remove '_' from the names of the properties
     body = body.replace(/"_/g, '"');
 
     return this.http.post<Site>(this.baseUrl + url, body);
+  }
+
+  saveNewGroup(group: Groups): Observable<Groups> {
+    const url: string = "new-group";
+    let body = JSON.stringify(group);
+    //Need to remove '_' from the names of the properties
+    body = body.replace(/"_/g, '"');
+
+    return this.http.post<Groups>(this.baseUrl + url, body);
   }
 }

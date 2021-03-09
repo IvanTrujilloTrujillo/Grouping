@@ -1,5 +1,6 @@
 package com.ironhack.userservice.controller.dtos;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 public class UserDTO {
@@ -8,8 +9,11 @@ public class UserDTO {
      * Properties
      */
     private Long id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String password;
 
     /**

@@ -5,10 +5,7 @@ import com.ironhack.groupsservice.controller.interfaces.IGroupController;
 import com.ironhack.groupsservice.service.interfaces.IGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +17,8 @@ public class GroupController implements IGroupController {
 
     @GetMapping("/groups")
     @ResponseStatus(HttpStatus.OK)
-    public List<GroupDTO> getAllGroups() {
-        return groupService.getAllGroups();
+    public List<GroupDTO> getGroupsByUser(@PathVariable("id") Long id) {
+        return groupService.getGroupsByUser(id);
     }
 
     @GetMapping("/groups/{id}")
@@ -29,4 +26,11 @@ public class GroupController implements IGroupController {
     public GroupDTO getGroupById(@PathVariable("id") Long id) {
         return groupService.getGroupById(id);
     }
+
+    @PostMapping("/new-group")
+    @ResponseStatus(HttpStatus.CREATED)
+    public GroupDTO saveNewGroup(@RequestBody GroupDTO groupDTO) {
+        return groupService.saveNewGroup(groupDTO);
+    }
+
 }

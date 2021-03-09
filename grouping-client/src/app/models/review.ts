@@ -1,4 +1,5 @@
 import { Site } from "./site";
+import { Tocken } from "./tocken";
 
 export class Review {
 
@@ -8,8 +9,16 @@ export class Review {
     private _site: Site,
     private _userId: number,
     private _rating: number,
-    private _comment: string
+    private _comment: string,
+    private _tocken: string | null
   ) {}
+
+  public get tocken(): string | null {
+    return this._tocken;
+  }
+  public set tocken(value: string | null) {
+    this._tocken = value;
+  }
 
   public get comment(): string {
     return this._comment;

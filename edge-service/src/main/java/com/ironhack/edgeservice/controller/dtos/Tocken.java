@@ -10,7 +10,7 @@ public class Tocken {
     public Tocken() {
     }
 
-    public Tocken(@NotNull String tocken) {
+    public Tocken(String tocken) {
         this.tocken = tocken;
     }
 

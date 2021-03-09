@@ -35,6 +35,10 @@ export class HomeComponent implements OnInit {
   }
 
   openNewSiteDialog(): void {
-    this.newSiteDialog.open(NewSiteComponent);
+    const dialogRef = this.newSiteDialog.open(NewSiteComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      setInterval(() => {this.ngOnInit()}, 2000);
+    });
   }
 }

@@ -25,6 +25,8 @@ public class ReviewDTO {
     @NotNull
     private String comment;
 
+    private String tocken;
+
     /**
      * Default constructor
      */
@@ -103,5 +105,13 @@ public class ReviewDTO {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getTocken() {
+        return tocken;
+    }
+
+    public void setTocken(String tocken) {
+        this.tocken = tocken;
     }
 }

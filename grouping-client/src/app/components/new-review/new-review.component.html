@@ -3,8 +3,8 @@
 <div mat-dialog-content>
   <form (ngSubmit)="onSubmit()" [formGroup]="reviewForm">
 
-    <input type="number">
-    <textarea matInput></textarea>
+    <input type="number" formControlName="rating">
+    <textarea matInput formControlName="comment"></textarea>
 
     <button mat-raised-button color="primary" type="submit">Send Review</button>
 

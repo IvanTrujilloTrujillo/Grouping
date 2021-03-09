@@ -30,10 +30,10 @@ public class EdgeController implements IEdgeController {
         return edgeService.login(userJSON);
     }
 
-    @GetMapping("/groups")
+    @PostMapping("/groups")
     @ResponseStatus(HttpStatus.OK)
-    public List<GroupDTO> getAllGroups() {
-        return edgeService.getAllGroups();
+    public List<GroupDTO> getGroupsByUser(@RequestBody String tocken) {
+        return edgeService.getGroupsByUser(tocken);
     }
 
     @PostMapping("/sites/group/{id}")
@@ -52,5 +52,11 @@ public class EdgeController implements IEdgeController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveNewReview(@RequestBody String reviewJSON) {
         edgeService.saveNewReview(reviewJSON);
+    }
+
+    @PostMapping("/new-group")
+    @ResponseStatus(HttpStatus.CREATED)
+    public GroupDTO saveNewGroup(@RequestBody String groupJSON) {
+        return edgeService.saveNewGroup(groupJSON);
     }
 }

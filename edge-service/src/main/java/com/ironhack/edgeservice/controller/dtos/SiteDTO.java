@@ -16,6 +16,8 @@ public class SiteDTO {
     @NotNull
     private String mapUrl;
 
+    private String tocken;
+
     /**
      * Default Constructor
      */
@@ -74,5 +76,13 @@ public class SiteDTO {
 
     public void setMapUrl(String mapUrl) {
         this.mapUrl = mapUrl;
+    }
+
+    public String getTocken() {
+        return tocken;
+    }
+
+    public void setTocken(String tocken) {
+        this.tocken = tocken;
     }
 }

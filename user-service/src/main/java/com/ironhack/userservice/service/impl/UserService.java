@@ -19,6 +19,10 @@ public class UserService implements IUserService {
 
     //Create a new User
     public UserDTO register(UserDTO userDTO) {
+        //Checks if the name, username and password are valid
+        if(userDTO.getName().equals("") || userDTO.getUsername().equals("") || userDTO.getPassword().equals("")) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "The user is not valid");
+        }
         //Checks if the username already exists
         if(userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "The username already exists");

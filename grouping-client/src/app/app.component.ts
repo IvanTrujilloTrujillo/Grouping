@@ -18,5 +18,6 @@ export class AppComponent {
   public selectedSiteId: number = 0;
 
   constructor(
-  ) {}
+  ) {
+  }
 }

@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface IGroupController {
 
-    List<GroupDTO> getAllGroups();
+    List<GroupDTO> getGroupsByUser(Long id);
 
     GroupDTO getGroupById(Long id);
+
+    GroupDTO saveNewGroup(GroupDTO groupDTO);
+
 }

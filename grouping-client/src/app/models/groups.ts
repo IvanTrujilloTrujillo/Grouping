@@ -1,9 +1,10 @@
 export class Groups {
-  
+
   constructor(
     private _id: number,
     private _name: string,
-    private _groupAdmin: number
+    private _groupAdmin: number,
+    private _tocken: string | null
   ) {}
 
   public get id(): number {
@@ -23,5 +24,12 @@ export class Groups {
   }
   public set groupAdmin(value: number) {
     this._groupAdmin = value;
+  }
+
+  public get tocken(): string | null {
+    return this._tocken;
+  }
+  public set tocken(value: string | null) {
+    this._tocken = value;
   }
 }
