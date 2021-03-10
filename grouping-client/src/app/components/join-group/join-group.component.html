@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Join Group</h1>
+
+<div mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="joinGroupForm">
+
+    <label for="code">Invitation code:</label>
+    <input type="text" id="code" name="code" formControlName="code" placeholder="Invitation code">
+
+    <button mat-raised-button color="primary" type="submit">Join Group</button>
+    <button mat-raised-button (click)="cancel()">Cancel</button>
+
+  </form>
+</div>
+

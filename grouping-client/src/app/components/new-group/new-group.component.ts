@@ -56,7 +56,7 @@ export class NewGroupComponent implements OnInit {
   }
 
   cancel(): void {
-
+    this.dialogRef.close();
   }
 
 }

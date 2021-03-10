@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
 import { Groups } from '../models/groups';
+import { InvitationCode } from '../models/invitation-code';
 import { Review } from '../models/review';
 import { Site } from '../models/site';
 import { Tocken } from '../models/tocken';
@@ -85,6 +86,16 @@ export class EdgeService {
   saveNewGroup(group: Groups): Observable<Groups> {
     const url: string = "new-group";
     let body = JSON.stringify(group);
+    //Need to remove '_' from the names of the properties
+    body = body.replace(/"_/g, '"');
+
+    return this.http.post<Groups>(this.baseUrl + url, body);
+  }
+
+  joinGroup(code: string): Observable<Groups> {
+    const url: string = "join-group";
+    const invitationCode: InvitationCode = new InvitationCode(code, this.tocken);
+    let body = JSON.stringify(invitationCode);
     //Need to remove '_' from the names of the properties
     body = body.replace(/"_/g, '"');
 

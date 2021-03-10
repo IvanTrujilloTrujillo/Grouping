@@ -95,7 +95,7 @@ public class EdgeService implements IEdgeService {
         return new Tocken(fmt + encodedUsername + "@" + encodedPassword);
     }
 
-    //Return all the groups from the database
+    //Return all the groups which the user belongs from the database
     public List<GroupDTO> getGroupsByUser(String tocken) {
 
         //Checks if username and password are valid
@@ -212,6 +212,41 @@ public class EdgeService implements IEdgeService {
         System.out.println(groupDTO);
 
         return groupClient.saveNewGroup(groupDTO);
+    }
+
+    //Join a user to an existent group
+    public GroupDTO joinGroup(String invitationCodeJSON) {
+        //Convert JSON object to GroupDTO
+        ObjectMapper objectMapper = new ObjectMapper();
+        InvitationCodeDTO invitationCodeDTO = null;
+        try {
+            invitationCodeDTO = objectMapper.readValue(invitationCodeJSON, InvitationCodeDTO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        //Check if the tocken is correct
+        UserDTO userDTO = checkLogin(invitationCodeDTO.getTocken());
+        if(userDTO == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
+        }
+
+        //Check if the invitation code is valid
+        Long groupId = (Long.getLong(invitationCodeDTO.getCode().split("#")[1]) - 247) / 34;
+        GroupDTO groupDTO = groupClient.getGroupById(groupId);
+
+        //Check if the user is already in the group
+        List<GroupDTO> groupDTOList = groupClient.getGroupsByUser(userDTO.getId());
+        for (GroupDTO groupDTOFor : groupDTOList) {
+            if(groupDTOFor.getId().equals(groupId)) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "The user is already in the group");
+            }
+        }
+
+        //Save the user as a new member of the group
+        groupClient.saveUserAsMemberByGroupId(groupId, userDTO.getId());
+
+        return groupDTO;
     }
 
     //Checks if the username and the password are correct

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { EdgeService } from 'src/app/services/edge.service';
+import { JoinGroupComponent } from '../join-group/join-group.component';
 import { NewGroupComponent } from '../new-group/new-group.component';
 
 @Component({
@@ -17,7 +18,7 @@ export class GroupsComponent implements OnInit {
     private edgeService: EdgeService,
     private router: Router,
     private newGroupDialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
@@ -44,11 +45,11 @@ export class GroupsComponent implements OnInit {
   }
 
   openJoinGroupDialog(): void {
-    /*const dialogRef = this.newGroupDialog.open(JoinGroupComponent);
+    const dialogRef = this.newGroupDialog.open(JoinGroupComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       setTimeout(() => {this.ngOnInit()}, 100);
-    });*/
+    });
   }
 
 }

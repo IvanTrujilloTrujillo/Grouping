@@ -19,4 +19,6 @@ public interface IEdgeController {
     void saveNewReview(String reviewJSON);
 
     GroupDTO saveNewGroup(String groupJSON);
+
+    GroupDTO joinGroup(String invitationCodeJSON);
 }

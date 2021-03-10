@@ -22,6 +22,9 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NewGroupComponent } from './components/new-group/new-group.component';
 import { GroupCardComponent } from './components/groups/group-card/group-card.component';
+import { JoinGroupComponent } from './components/join-group/join-group.component';
+import { MapComponent } from './components/map/map.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 @NgModule({
@@ -37,7 +40,9 @@ import { GroupCardComponent } from './components/groups/group-card/group-card.co
     LoginComponent,
     RegisterComponent,
     NewGroupComponent,
-    GroupCardComponent
+    GroupCardComponent,
+    JoinGroupComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +54,8 @@ import { GroupCardComponent } from './components/groups/group-card/group-card.co
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    GoogleMapsModule
   ],
   entryComponents: [
     NewSiteComponent,

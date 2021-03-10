@@ -59,4 +59,10 @@ public class EdgeController implements IEdgeController {
     public GroupDTO saveNewGroup(@RequestBody String groupJSON) {
         return edgeService.saveNewGroup(groupJSON);
     }
+
+    @PostMapping("/join-group")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public GroupDTO joinGroup(@RequestBody String invitationCodeJSON) {
+        return edgeService.joinGroup(invitationCodeJSON);
+    }
 }
