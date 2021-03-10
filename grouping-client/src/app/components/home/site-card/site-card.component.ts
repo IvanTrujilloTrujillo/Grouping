@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Site } from 'src/app/models/site';
 import { MapComponent } from '../../map/map.component';
@@ -18,7 +19,8 @@ export class SiteCardComponent implements OnInit {
   constructor(
     public app: AppComponent,
     private newReviewDialog: MatDialog,
-    private mapDialog: MatDialog
+    private mapDialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -35,5 +37,10 @@ export class SiteCardComponent implements OnInit {
     //dialogRef.componentInstance.site = this.site;
     dialogRef.componentInstance.latitude = Number(this.site.mapUrl.split("@")[1].split(",")[0]);
     dialogRef.componentInstance.longitude = Number(this.site.mapUrl.split("@")[1].split(",")[1].split(",")[0]);
+  }
+
+  seeReviews(): void {
+    this.app.selectedSiteId = this.app.siteList.findIndex(site => {return site === this.site});
+    this.router.navigate(['/comments']);
   }
 }

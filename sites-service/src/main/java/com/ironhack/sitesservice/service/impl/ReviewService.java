@@ -1,6 +1,7 @@
 package com.ironhack.sitesservice.service.impl;
 
 import com.ironhack.sitesservice.controller.dtos.ReviewDTO;
+import com.ironhack.sitesservice.controller.dtos.SiteDTO;
 import com.ironhack.sitesservice.model.Review;
 import com.ironhack.sitesservice.model.Site;
 import com.ironhack.sitesservice.repository.ReviewRepository;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ReviewService implements IReviewService {
@@ -28,5 +32,23 @@ public class ReviewService implements IReviewService {
 
         //Convert ReviewDTO to a Review and save it
         reviewRepository.save(new Review(reviewDTO.getGroupId(), site, reviewDTO.getUserId(), reviewDTO.getRating(), reviewDTO.getComment()));
+    }
+
+    //Get all the reviews from a Site and a Group
+    public List<ReviewDTO> getReviews(Long groupId, SiteDTO siteDTO) {
+        //Convert siteDTO to a Site
+        Site site = new Site(siteDTO.getId(), siteDTO.getName(), siteDTO.getMapUrl());
+
+        //Search all the reviews from the database
+        List<Review> reviewList = reviewRepository.findByGroupIdAndSite(groupId, site);
+
+        //Convert the list to a list of DTOs and return it
+        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        for (Review review : reviewList) {
+            reviewDTOList.add(new ReviewDTO(review.getId(), review.getGroupId(),
+                    new SiteDTO(review.getSite().getId(), review.getSite().getName(), review.getSite().getMapUrl()),
+                    review.getUserId(), review.getRating(), review.getComment()));
+        }
+        return reviewDTOList;
     }
 }

@@ -22,4 +22,10 @@ public class ReviewController implements IReviewController {
     public void saveNewReview(@RequestBody @Valid ReviewDTO reviewDTO) {
         reviewService.saveNewReview(reviewDTO);
     }
+
+    @GetMapping("/reviews/{groupId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ReviewDTO> getReviews(@PathVariable("groupId") Long groupId, @RequestBody SiteDTO siteDTO) {
+        return reviewService.getReviews(groupId, siteDTO);
+    }
 }

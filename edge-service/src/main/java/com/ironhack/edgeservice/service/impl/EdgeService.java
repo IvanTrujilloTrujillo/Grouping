@@ -249,6 +249,33 @@ public class EdgeService implements IEdgeService {
         return groupDTO;
     }
 
+    //Get all the reviews from a Site and a Group
+    public List<ReviewDTO> getReviews(Long groupId, String siteJSON) {
+        //Check if the group exists and get it
+        GroupDTO groupDTO = groupClient.getGroupById(groupId);
+
+        //Convert JSON object to GroupDTO
+        ObjectMapper objectMapper = new ObjectMapper();
+        SiteDTO siteDTO = null;
+        try {
+            siteDTO = objectMapper.readValue(siteJSON, SiteDTO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        //Check if the tocken is correct
+        UserDTO userDTO = checkLogin(siteDTO.getTocken());
+        if(userDTO == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
+        }
+
+        //Delete the tocken
+        siteDTO.setTocken(null);
+
+        //Get the review list and return it
+        return siteClient.getReviews(groupId, siteDTO);
+    }
+
     //Checks if the username and the password are correct
     public UserDTO checkLogin(String tocken) {
         //Get username in the tocken

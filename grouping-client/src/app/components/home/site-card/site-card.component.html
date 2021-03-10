@@ -9,7 +9,7 @@
     <p>
       Review: x estrellas
     </p>
-    <a class="nav-link" routerLink="/comments" routerLinkActive="active">See comments</a>
+    <p class="nav-link" (click)="seeReviews()">See comments</p>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="showNewReviewDialog()">Add a Review</button>

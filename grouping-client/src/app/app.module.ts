@@ -25,6 +25,7 @@ import { GroupCardComponent } from './components/groups/group-card/group-card.co
 import { JoinGroupComponent } from './components/join-group/join-group.component';
 import { MapComponent } from './components/map/map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { GroupSitesComponent } from './components/group-sites/group-sites.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     NewGroupComponent,
     GroupCardComponent,
     JoinGroupComponent,
-    MapComponent
+    MapComponent,
+    GroupSitesComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,10 @@ import { GoogleMapsModule } from '@angular/google-maps';
   ],
   entryComponents: [
     NewSiteComponent,
-    NewReviewComponent
+    NewReviewComponent,
+    MapComponent,
+    NewGroupComponent,
+    JoinGroupComponent
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},

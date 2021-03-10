@@ -65,4 +65,10 @@ public class EdgeController implements IEdgeController {
     public GroupDTO joinGroup(@RequestBody String invitationCodeJSON) {
         return edgeService.joinGroup(invitationCodeJSON);
     }
+
+    @PostMapping("/reviews/{groupId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public List<ReviewDTO> getReviews(@PathVariable("groupId") Long groupId, @RequestBody String siteJSON) {
+        return edgeService.getReviews(groupId, siteJSON);
+    }
 }

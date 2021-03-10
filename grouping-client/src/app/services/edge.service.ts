@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -9,6 +9,8 @@ import { Review } from '../models/review';
 import { Site } from '../models/site';
 import { Tocken } from '../models/tocken';
 import { User } from '../models/user';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -100,5 +102,15 @@ export class EdgeService {
     body = body.replace(/"_/g, '"');
 
     return this.http.post<Groups>(this.baseUrl + url, body);
+  }
+
+  chargeReviews(site: Site, groupId: number): Observable<Review[]> {
+    const url: string = "reviews/";
+    site.tocken = this.tocken;
+    let body = JSON.stringify(site);
+    //Need to remove '_' from the names of the properties
+    body = body.replace(/"_/g, '"');
+
+    return this.http.post<Review[]>(this.baseUrl + url + groupId, body);
   }
 }

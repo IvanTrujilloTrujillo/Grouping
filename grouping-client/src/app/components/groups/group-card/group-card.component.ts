@@ -26,6 +26,6 @@ export class GroupCardComponent implements OnInit {
 
   openGroup():void {
     this.app.selectedGroup = this.group.id;
-    this.router.navigate(['/group-sites']);
+    this.router.navigate(['/group-sites',  this.group.id]);
   }
 }

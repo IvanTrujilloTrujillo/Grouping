@@ -21,4 +21,6 @@ public interface IEdgeService {
     GroupDTO saveNewGroup(String groupJSON);
 
     GroupDTO joinGroup(String invitationCodeJSON);
+
+    List<ReviewDTO> getReviews(Long groupId, String siteJSON);
 }
