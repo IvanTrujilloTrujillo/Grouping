@@ -24,12 +24,14 @@ export class GroupsComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       this.getGroupsByUser();
+      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
   getGroupsByUser(): void {
     this.edgeService.getGroupsByUser().subscribe(result => {
       this.app.groupList = result;
+      this.app.groupList.shift();
     });
   }
 
@@ -37,8 +39,16 @@ export class GroupsComponent implements OnInit {
     const dialogRef = this.newGroupDialog.open(NewGroupComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      setInterval(() => {this.ngOnInit()}, 2000);
+      setTimeout(() => {this.ngOnInit()}, 100);
     });
+  }
+
+  openJoinGroupDialog(): void {
+    /*const dialogRef = this.newGroupDialog.open(JoinGroupComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {this.ngOnInit()}, 100);
+    });*/
   }
 
 }

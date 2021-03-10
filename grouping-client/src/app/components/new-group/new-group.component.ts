@@ -33,6 +33,8 @@ export class NewGroupComponent implements OnInit {
   ngOnInit(): void {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
+    } else {
+      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 

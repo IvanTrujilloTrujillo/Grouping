@@ -73,4 +73,14 @@ public class GroupDTO {
     public void setTocken(String tocken) {
         this.tocken = tocken;
     }
+
+    @Override
+    public String toString() {
+        return "GroupDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", groupAdmin=" + groupAdmin +
+                ", tocken='" + tocken + '\'' +
+                '}';
+    }
 }

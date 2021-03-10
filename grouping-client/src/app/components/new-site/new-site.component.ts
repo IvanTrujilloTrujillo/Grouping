@@ -38,6 +38,8 @@ export class NewSiteComponent implements OnInit {
   ngOnInit(): void {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
+    } else {
+      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
@@ -51,13 +53,16 @@ export class NewSiteComponent implements OnInit {
       mapUrl = '';
     }
 
-    const site: Site = new Site(1, name, mapUrl, this.edgeService.tocken);
-
-    //TODO: Comprobar si es realmente un sitio nuevo
-
-    this.edgeService.saveNewSite(site).subscribe(result => {
-      this.app.siteList.push(result);
+    //Check if the site already exists
+    this.app.siteList.forEach(site => {
+      if(site.name === name || site.mapUrl === mapUrl) {
+        alert("This site already exists");
+        return;
+      }
     });
+
+    this.app.newSite = new Site(1, name, mapUrl, this.edgeService.tocken);
+
     this.closeDialog();
     this.openNewReviewDialog();
   }

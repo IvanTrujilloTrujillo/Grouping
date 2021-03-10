@@ -12,7 +12,7 @@ public class GroupMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long UserId;
+    private Long userId;
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
@@ -27,7 +27,7 @@ public class GroupMember {
      * Constructor: userId, group
      */
     public GroupMember(Long userId, Group group) {
-        UserId = userId;
+        this.userId = userId;
         this.group = group;
     }
 
@@ -43,18 +43,18 @@ public class GroupMember {
     }
 
     public Long getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(Long userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
-    public Group getGroups() {
+    public Group getGroup() {
         return group;
     }
 
-    public void setGroups(Group group) {
+    public void setGroup(Group group) {
         this.group = group;
     }
 }

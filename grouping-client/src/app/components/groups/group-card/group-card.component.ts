@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
 import { Groups } from 'src/app/models/groups';
 
 @Component({
@@ -10,9 +12,20 @@ export class GroupCardComponent implements OnInit {
 
   @Input() group!: Groups;
 
-  constructor() { }
+  groupNameUpperCase: string = '';
 
-  ngOnInit(): void {
+  constructor(
+    public app: AppComponent,
+    private router: Router
+  ) {
   }
 
+  ngOnInit(): void {
+    this.groupNameUpperCase = this.group.name.toUpperCase();
+  }
+
+  openGroup():void {
+    this.app.selectedGroup = this.group.id;
+    this.router.navigate(['/group-sites']);
+  }
 }

@@ -19,6 +19,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Formatter;
 import java.util.List;
 
 @Service
@@ -48,7 +49,7 @@ public class EdgeService implements IEdgeService {
         userDTO.setPassword(DigestUtils.md5Hex(userDTO.getUsername()).toUpperCase());
 
         //Save the user on the database
-        userClient.register(userDTO);
+        userDTO = userClient.register(userDTO);
 
         //Save the user as a member of group global (1)
         groupClient.saveUserAsMemberByGroupId(1L, userDTO.getId());
@@ -57,7 +58,11 @@ public class EdgeService implements IEdgeService {
         String encodedUsername = Base64.getEncoder().encodeToString(userDTO.getUsername().getBytes());
         String encodedPassword = Base64.getEncoder().encodeToString(userDTO.getPassword().getBytes());
 
-        return new Tocken(encodedUsername + "@" + encodedPassword);
+        //Add the user id to the tocken
+        Formatter fmt = new Formatter();
+        fmt.format("%04d", userDTO.getId());
+
+        return new Tocken(fmt + encodedUsername + "@" + encodedPassword);
     }
 
     //Check if the user exists with username and password and return it from the database
@@ -83,7 +88,11 @@ public class EdgeService implements IEdgeService {
         String encodedUsername = Base64.getEncoder().encodeToString(user.getUsername().getBytes());
         String encodedPassword = Base64.getEncoder().encodeToString(user.getPassword().getBytes());
 
-        return new Tocken(encodedUsername + "@" + encodedPassword);
+        //Add the user id to the tocken
+        Formatter fmt = new Formatter();
+        fmt.format("%04d", user.getId());
+
+        return new Tocken(fmt + encodedUsername + "@" + encodedPassword);
     }
 
     //Return all the groups from the database
@@ -160,9 +169,10 @@ public class EdgeService implements IEdgeService {
         try {
             reviewDTO = objectMapper.readValue(reviewJSON, ReviewDTO.class);
         } catch (JsonProcessingException e) {
-            System.out.println(reviewJSON);
+
             e.printStackTrace();
         }
+        System.out.println(reviewJSON);
 
         //Check if the tocken is correct
         UserDTO userDTO = checkLogin(reviewDTO.getTocken());
@@ -186,7 +196,6 @@ public class EdgeService implements IEdgeService {
         try {
             groupDTO = objectMapper.readValue(groupJSON, GroupDTO.class);
         } catch (JsonProcessingException e) {
-            System.out.println(groupDTO);
             e.printStackTrace();
         }
 
@@ -200,6 +209,7 @@ public class EdgeService implements IEdgeService {
         groupDTO.setTocken(null);
         //Set the userId
         groupDTO.setGroupAdmin(userDTO.getId());
+        System.out.println(groupDTO);
 
         return groupClient.saveNewGroup(groupDTO);
     }
@@ -207,11 +217,11 @@ public class EdgeService implements IEdgeService {
     //Checks if the username and the password are correct
     public UserDTO checkLogin(String tocken) {
         //Get username in the tocken
-        String username = tocken.split("@")[0];
+        String username = tocken.substring(4).split("@")[0];
         byte[] decodedUsername = Base64.getDecoder().decode(username);
         username = new String(decodedUsername);
         //Get password in the tocken
-        String password = tocken.split("@")[1];
+        String password = tocken.substring(4).split("@")[1];
         byte[] decodedPassword = Base64.getDecoder().decode(password);
         password = new String(decodedPassword);
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
 import { EdgeService } from 'src/app/services/edge.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class NavBarComponent implements OnInit {
 
   constructor(
     private edgeService: EdgeService,
-    private router: Router
+    private router: Router,
+    private app: AppComponent
   ) { }
 
   ngOnInit(): void {
@@ -20,5 +22,6 @@ export class NavBarComponent implements OnInit {
   logout(): void {
     this.edgeService.logout();
     this.router.navigate(['/login']);
+    this.app.userId = 0;
   }
 }

@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       this.getSitesByGroupId(1);
+      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit {
     const dialogRef = this.newSiteDialog.open(NewSiteComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      setInterval(() => {this.ngOnInit()}, 2000);
+
     });
   }
 }

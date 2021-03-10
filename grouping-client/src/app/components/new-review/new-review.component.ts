@@ -4,7 +4,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Review } from 'src/app/models/review';
+import { Site } from 'src/app/models/site';
 import { EdgeService } from 'src/app/services/edge.service';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-new-review',
@@ -35,23 +37,35 @@ export class NewReviewComponent implements OnInit {
   ngOnInit(): void {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
+    } else {
+      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
 
   onSubmit(): void {
-    const review: Review = new Review(1,
+    let review: Review = new Review(1,
       this.app.selectedGroup,
-      this.app.siteList[this.app.selectedSiteId],
+      this.app.newSite,
       1,
       Number(this.ratingField.value),
       this.commentField.value,
       this.edgeService.tocken
     );
 
-    try{
-      this.edgeService.saveNewReview(review).subscribe(result => {
+    if(this.app.newSite.name !== '') {
+      this.edgeService.saveNewSite(this.app.newSite).subscribe(result => {
+        review.site = result;
+        this.app.siteList.push(result);
+        this.app.newSite = new Site(1, '', '', '');
       });
+    }
+
+    try{
+      setTimeout(() => {
+        this.edgeService.saveNewReview(review).subscribe(result => {
+        });
+      }, 100);
     } catch {
       alert("You has already sended a review previously");
     }
@@ -61,6 +75,10 @@ export class NewReviewComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close('New Review created!');
+  }
+
+  cancel(): void {
+    this.dialogRef.close();
   }
 
 }

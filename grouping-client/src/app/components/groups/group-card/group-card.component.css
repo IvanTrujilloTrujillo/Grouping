@@ -1,0 +1,33 @@
+.group-card {
+  width: 300px;
+  height: 250px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #dfecfdb2;
+  box-shadow: 0px 3px 2px -2px rgb(0 0 0 / 20%), 2px 2px 2px 0px rgb(0 0 0 / 14%), 0px 2px 4px 0px rgb(0 0 0 / 12%);
+}
+
+.mat-card-title {
+  margin-top: 10px;
+  line-height: 28px;
+  font-size: 24px;
+}
+
+.mat-card-content {
+  margin: 0px;
+  height: 90px;
+}
+
+.mat-card-content .invitation-code {
+  padding-top: 30px;
+}
+
+.mat-card-actions {
+  width: 120px;
+  margin: 10px auto;
+}
+
+.mat-card-actions button {
+  padding: 5px 15px;
+  margin: 5px;
+}

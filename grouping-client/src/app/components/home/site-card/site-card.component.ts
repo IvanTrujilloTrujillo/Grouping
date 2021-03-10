@@ -26,4 +26,8 @@ export class SiteCardComponent implements OnInit {
     this.app.selectedSiteId = this.site.id;
     this.newReviewDialog.open(NewReviewComponent);
   }
+
+  openMapDialog(): void {
+    
+  }
 }

@@ -1,16 +1,14 @@
 <mat-card class="site-card">
   <mat-card-header>
     <mat-card-title>{{ site.name }}</mat-card-title>
+    <button mat-fab color="primary" aria-label="Show map" (click)="openMapDialog()">
+      <mat-icon>location_on</mat-icon>
+    </button>
   </mat-card-header>
-  <div class="map-container">
-    <p>Error on display the map</p>
-  </div><!-- Aquí estaría genial meter el mapa -->
   <mat-card-content>
     <p>
       Review: x estrellas
     </p>
-    <!-- Esto tiene que ser un link que lleve a ver todos los comentarios de este sitio y del mismo grupo,
-  por lo que probablemente haya que user app-comments -->
     <a class="nav-link" routerLink="/comments" routerLinkActive="active">See comments</a>
   </mat-card-content>
   <mat-card-actions>

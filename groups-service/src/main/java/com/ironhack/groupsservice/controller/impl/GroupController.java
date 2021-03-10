@@ -15,7 +15,7 @@ public class GroupController implements IGroupController {
     @Autowired
     private IGroupService groupService;
 
-    @GetMapping("/groups")
+    @GetMapping("/groups-by-user/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<GroupDTO> getGroupsByUser(@PathVariable("id") Long id) {
         return groupService.getGroupsByUser(id);

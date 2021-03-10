@@ -60,11 +60,21 @@ public class Group {
         this.groupAdmin = groupAdmin;
     }
 
-    public List<GroupMember> getGroupsMembersList() {
+    public List<GroupMember> getGroupMemberList() {
         return groupMemberList;
     }
 
-    public void setGroupsMembersList(List<GroupMember> groupMemberList) {
+    public void setGroupMemberList(List<GroupMember> groupMemberList) {
         this.groupMemberList = groupMemberList;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", groupAdmin=" + groupAdmin +
+                ", groupMemberList=" + groupMemberList +
+                '}';
     }
 }

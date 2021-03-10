@@ -12,7 +12,7 @@ import java.util.List;
 @FeignClient("group-service")
 public interface GroupClient {
 
-    @GetMapping("/groups")
+    @GetMapping("/groups-by-user/{id}")
     List<GroupDTO> getGroupsByUser(@PathVariable("id") Long id);
 
     @GetMapping("/groups/{id}")

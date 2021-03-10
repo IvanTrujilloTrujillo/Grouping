@@ -1,1 +1,16 @@
-<p>group-card works!</p>
+<mat-card class="group-card">
+  <mat-card-header>
+    <mat-card-title>{{ group.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="invitation-code" *ngIf="group.groupAdmin === app.userId">
+      Invitation code: {{ groupNameUpperCase + '#' + (group.id * 34 + 247) }}
+    </p>
+    <p class="number-members">
+      Number of members: XX
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="openGroup()">Open group</button>
+  </mat-card-actions>
+</mat-card>

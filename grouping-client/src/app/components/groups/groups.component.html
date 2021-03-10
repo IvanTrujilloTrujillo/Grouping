@@ -3,7 +3,21 @@
     <app-group-card [group]="group"></app-group-card>
   </div>
 
+  <mat-card class="join-group-card">
+    <mat-card-header>
+      <mat-card-title>Join a Group</mat-card-title>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-fab color="primary" aria-label="Add a new group" (click)="openJoinGroupDialog()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
   <mat-card class="new-group-card">
+    <mat-card-header>
+      <mat-card-title>Create a new Group</mat-card-title>
+    </mat-card-header>
     <mat-card-actions>
       <button mat-fab color="primary" aria-label="Add a new group" (click)="openNewGroupDialog()">
         <mat-icon>add_circle</mat-icon>
@@ -11,6 +25,8 @@
     </mat-card-actions>
   </mat-card>
 
+  <div class="empty-card"></div>
+  <div class="empty-card"></div>
   <div class="empty-card"></div>
   <div class="empty-card"></div>
   <div class="empty-card"></div>
