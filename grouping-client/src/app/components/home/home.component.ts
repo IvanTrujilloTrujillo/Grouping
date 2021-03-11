@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
   siteWithReviewList: any[] = [];
 
   constructor(
-    public app: AppComponent,
     private edgeService: EdgeService,
     private router: Router,
     private newSiteDialog: MatDialog
@@ -46,12 +45,14 @@ export class HomeComponent implements OnInit {
   openNewSiteDialog(): void {
     let dialogRef = this.newSiteDialog.open(NewSiteComponent, {
       height: '600px',
-      width: '800px',
+      width: '700px',
+      hasBackdrop: true,
+      disableClose: true
     });
     dialogRef.componentInstance.siteGroupList = this.edgeService.siteList;
 
     dialogRef.afterClosed().subscribe(result => {
-
+      setTimeout(() => {this.ngOnInit();}, 200);
     });
   }
 }

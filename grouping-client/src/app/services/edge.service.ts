@@ -114,7 +114,7 @@ export class EdgeService {
     return this.http.post<Groups>(this.baseUrl + url, body);
   }
 
-  chargeReviews(groupId: number, site: Site): Observable<Review[]> {
+  chargeReviews(groupId: number, site: any): Observable<Review[]> {
     const url: string = "reviews-by-group/";
     site.tocken = this.tocken;
     let body = JSON.stringify(site);

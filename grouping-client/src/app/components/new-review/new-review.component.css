@@ -1,0 +1,21 @@
+form {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+}
+
+label {
+  margin-top: 10px;
+}
+
+#rating {
+  width: 100px;
+}
+
+textarea {
+  height: 80px;
+}
+
+button {
+  margin: 20px;
+}

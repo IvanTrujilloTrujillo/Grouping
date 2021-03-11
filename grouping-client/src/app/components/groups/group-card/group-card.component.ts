@@ -22,11 +22,12 @@ export class GroupCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.groupNameUpperCase = this.group.name.toUpperCase();
+    this.groupNameUpperCase = this.group.name.toUpperCase().replace(/\s+/g, '');
   }
 
   openGroup():void {
     this.edgeService.selectedGroup = this.group.id;
-    this.router.navigate(['/group-sites',  this.group.id]);
+    console.log(this.group.id);
+    this.router.navigate(['/group/' + this.group.id + '/sites']);
   }
 }

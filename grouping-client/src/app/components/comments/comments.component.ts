@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Review } from 'src/app/models/review';
 import { Site } from 'src/app/models/site';
@@ -12,13 +12,20 @@ import { EdgeService } from 'src/app/services/edge.service';
 })
 export class CommentsComponent implements OnInit {
 
+  @Input() groupId!: number;
+  @Input() siteId!: number;
+
+  site: any;
+
   reviewList: Review[] = [];
 
   constructor(
     public edgeService: EdgeService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    console.log(edgeService.siteList[edgeService.selectedSiteId].name);
+    this.groupId = Number(this.route.snapshot.paramMap.get('groupId'));
+    this.siteId = Number(this.route.snapshot.paramMap.get('siteId'));
   }
 
   ngOnInit(): void {
@@ -29,13 +36,20 @@ export class CommentsComponent implements OnInit {
         alert("There is no selected site");
         this.router.navigate(['/home']);
       } else {
-        this.chargeReviews(this.edgeService.selectedGroup, this.edgeService.siteList[this.edgeService.selectedSiteId]);
+        this.site = this.edgeService.siteList.find(element => element.id === this.siteId);
+        if (this.site !== undefined) {
+          this.chargeReviews(this.groupId, this.site);
+        } else {
+          this.router.navigate(['/home']);
+        }
       }
       this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
-  chargeReviews(groupId: number, site: Site): void {
+  chargeReviews(groupId: number, site: any): void {
+    console.log(site);
+    console.log(groupId);
     this.edgeService.chargeReviews(groupId, site).subscribe(result => {
       this.reviewList = result;
       console.log(result);

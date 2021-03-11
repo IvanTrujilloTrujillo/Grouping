@@ -19,7 +19,6 @@ export class SiteCardComponent implements OnInit {
   @Input() mean!: number;
 
   constructor(
-    public app: AppComponent,
     private newReviewDialog: MatDialog,
     private mapDialog: MatDialog,
     private router: Router,
@@ -31,21 +30,33 @@ export class SiteCardComponent implements OnInit {
 
   showNewReviewDialog(): void {
     this.edgeService.selectedSiteId = this.edgeService.siteList.findIndex(site => {return site === new Site(this.site.id, this.site.name, this.site.mapUrl, '')});
-    this.newReviewDialog.open(NewReviewComponent);
+    let dialogRef = this.newReviewDialog.open(NewReviewComponent, {
+      hasBackdrop: true,
+      disableClose: true
+    });
+    dialogRef.componentInstance.site = this.site;
   }
 
   openMapDialog(): void {
     this.edgeService.selectedSiteId = this.edgeService.siteList.findIndex(site => {return site === new Site(this.site.id, this.site.name, this.site.mapUrl, '')});
-    let dialogRef = this.mapDialog.open(MapComponent, { data: {site: this.site}});
-    const center = {lat: Number(this.site.mapUrl.split("@")[1].split(",")[0]), lng: Number(this.site.mapUrl.split("@")[1].split(",")[1].split(",")[0])};
-    dialogRef.componentInstance.center = center;
+    if(this.site.mapUrl.includes("@")) {
+      let dialogRef = this.mapDialog.open(MapComponent, {
+        data: {site: this.site},
+        hasBackdrop: true,
+        disableClose: true
+      });
+      const center = {lat: Number(this.site.mapUrl.split("@")[1].split(",")[0]), lng: Number(this.site.mapUrl.split("@")[1].split(",")[1].split(",")[0])};
+      dialogRef.componentInstance.center = center;
+    } else {
+      alert("The map is not available for this site");
+    }
   }
 
   seeReviews(): void {
     this.edgeService.selectedSiteId = this.edgeService.siteList.findIndex(site => {return site === new Site(this.site.id, this.site.name, this.site.mapUrl, "")});
-    console.log(new Site(this.site.id, this.site.name, this.site.mapUrl, ""));
-    console.log(this.edgeService.siteList);
-    console.log(this.edgeService.selectedSiteId);
-    this.router.navigate(['/comments']);
+    //console.log(new Site(this.site.id, this.site.name, this.site.mapUrl, ""));
+    //console.log(this.edgeService.siteList);
+    //console.log(this.edgeService.selectedSiteId);
+    this.router.navigate(['/group/' + this.groupId + '/site/' + this.site.id + '/comments']);
   }
 }

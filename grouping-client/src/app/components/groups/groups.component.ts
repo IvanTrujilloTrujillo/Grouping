@@ -36,7 +36,10 @@ export class GroupsComponent implements OnInit {
   }
 
   openNewGroupDialog(): void {
-    const dialogRef = this.newGroupDialog.open(NewGroupComponent);
+    const dialogRef = this.newGroupDialog.open(NewGroupComponent, {
+      hasBackdrop: true,
+      disableClose: true
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       setTimeout(() => {this.ngOnInit()}, 100);
@@ -44,7 +47,10 @@ export class GroupsComponent implements OnInit {
   }
 
   openJoinGroupDialog(): void {
-    const dialogRef = this.newGroupDialog.open(JoinGroupComponent);
+    const dialogRef = this.newGroupDialog.open(JoinGroupComponent, {
+      hasBackdrop: true,
+      disableClose: true
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       setTimeout(() => {this.ngOnInit()}, 100);

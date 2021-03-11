@@ -19,7 +19,6 @@ export class JoinGroupComponent implements OnInit {
   constructor(
     private edgeService: EdgeService,
     private router: Router,
-    private app: AppComponent,
     private dialogRef: MatDialogRef<JoinGroupComponent>,
   ) {
     this.codeField = new FormControl('', [Validators.required]);

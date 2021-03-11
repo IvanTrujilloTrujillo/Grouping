@@ -12,8 +12,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'groups', component: GroupsComponent },
-  { path: 'group-sites/:groupId', component: GroupSitesComponent },
-  { path: 'comments', component: CommentsComponent },
+  { path: 'group/:groupId/sites', component: GroupSitesComponent },
+  { path: 'group/:groupId/site/:siteId/comments', component: CommentsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];

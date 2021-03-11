@@ -18,7 +18,6 @@ export class NewGroupComponent implements OnInit {
   nameField: FormControl;
 
   constructor(
-    private app: AppComponent,
     private edgeService: EdgeService,
     private dialogRef: MatDialogRef<NewGroupComponent>,
     private router: Router

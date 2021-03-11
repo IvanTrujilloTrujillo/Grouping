@@ -19,7 +19,7 @@ public interface GroupClient {
     GroupDTO getGroupById(@PathVariable("id") Long id);
 
     @PostMapping("/new-member/{groupId}/{userId}")
-    void saveUserAsMemberByGroupId(@PathVariable("groupId") Long groupId, @PathVariable("groupId") Long userId);
+    void saveUserAsMemberByGroupId(@PathVariable("groupId") Long groupId, @PathVariable("userId") Long userId);
 
     @GetMapping("/members-group/{id}")
     List<Long> getMembersByGroupId(@PathVariable("id") Long id);

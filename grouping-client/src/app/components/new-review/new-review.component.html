@@ -3,11 +3,16 @@
 <div mat-dialog-content>
   <form (ngSubmit)="onSubmit()" [formGroup]="reviewForm">
 
-    <input type="number" formControlName="rating">
-    <textarea matInput formControlName="comment"></textarea>
+    <label for="rating">Rating:</label>
+    <input type="number" id="rating" name="rating" formControlName="rating">
 
-    <button mat-raised-button color="primary" type="submit">Send Review</button>
-    <button mat-raised-button (click)="cancel()" type="button">Cancel</button>
+    <label for="comment">Comment:</label>
+    <textarea matInput name="comment" formControlName="comment"></textarea>
+    
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">Send Review</button>
+      <button mat-raised-button (click)="cancel()" type="button">Cancel</button>
+    </div>
 
   </form>
 </div>

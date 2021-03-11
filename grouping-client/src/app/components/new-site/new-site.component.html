@@ -3,14 +3,14 @@
 <div mat-dialog-content>
   <form class="site-form" (ngSubmit)="onSubmit()" [formGroup]="siteForm">
 
-    <div class="select">
+    <div class="select" *ngIf="!createNewSite">
       <mat-label for="site">Choose the site do you want to add</mat-label>
-      <mat-select name="site" id="site" [(ngModel)]="selectedSite" formControlName="selectSite">
-        <mat-option *ngFor="let site of siteList" [value]="site.id">{{ site.name }}</mat-option>
+      <mat-select name="site" id="site" formControlName="selectSite">
+        <mat-option *ngFor="let site of siteList" [value]="site">{{ site.name }}</mat-option>
       </mat-select>
     </div>
 
-    <button id="new-site-button" mat-raised-button (click)="newSite()" type="button">New Site</button>
+    <button *ngIf="!createNewSite" id="new-site-button" mat-raised-button (click)="newSite()" type="button">New Site</button>
 
     <div class="new-site" *ngIf="createNewSite">
       <label for="name-site">Name of the site:</label>
@@ -18,6 +18,14 @@
 
       <label for="map-url">Url of Google Maps:</label>
       <input type="text" id="map-url" name="map-url" formControlName="mapUrl" placeholder="Url">
+    </div>
+
+    <div class="review">
+      <label for="rating">Rating:</label>
+      <input type="number" id="rating" name="rating" formControlName="rating">
+
+      <label for="map-url">Comment</label>
+      <textarea matInput formControlName="comment"></textarea>
     </div>
 
     <button mat-raised-button class="create" color="primary" type="submit">Create Site</button>

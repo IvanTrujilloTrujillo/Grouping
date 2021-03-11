@@ -16,7 +16,7 @@ public class GroupMemberController implements IGroupMemberController {
 
     @PostMapping("/new-member/{groupId}/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveUserAsMemberByGroupId(@PathVariable("groupId") Long groupId, @PathVariable("groupId") Long userId) {
+    public void saveUserAsMemberByGroupId(@PathVariable("groupId") Long groupId, @PathVariable("userId") Long userId) {
         groupMemberService.saveUserAsMemberByGroupId(groupId, userId);
     }
 

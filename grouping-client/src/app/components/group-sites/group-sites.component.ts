@@ -44,10 +44,16 @@ export class GroupSitesComponent implements OnInit {
   }
 
   openNewSiteDialog(): void {
-    const dialogRef = this.newSiteDialog.open(NewSiteComponent);
+    let dialogRef = this.newSiteDialog.open(NewSiteComponent, {
+      height: '600px',
+      width: '700px',
+      hasBackdrop: true,
+      disableClose: true
+    });
+    dialogRef.componentInstance.siteGroupList = this.edgeService.siteList;
 
     dialogRef.afterClosed().subscribe(result => {
-
+      setTimeout(() => {this.ngOnInit();}, 200);
     });
   }
 

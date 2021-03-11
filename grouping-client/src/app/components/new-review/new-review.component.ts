@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -15,13 +15,14 @@ import { HomeComponent } from '../home/home.component';
 })
 export class NewReviewComponent implements OnInit {
 
+  @Input() site!: Site;
+
   reviewForm: FormGroup;
 
   ratingField: FormControl;
   commentField: FormControl;
 
   constructor(
-    public app: AppComponent,
     private edgeService: EdgeService,
     private dialogRef: MatDialogRef<NewReviewComponent>,
     private router: Router
@@ -46,21 +47,12 @@ export class NewReviewComponent implements OnInit {
   onSubmit(): void {
     let review: Review = new Review(1,
       this.edgeService.selectedGroup,
-      this.edgeService.newSite,
-      1,
+      new Site(this.site.id, this.site.name, this.site.mapUrl, ''),
+      this.edgeService.userId,
       Number(this.ratingField.value),
       this.commentField.value,
       this.edgeService.tocken
     );
-
-    if(this.edgeService.newSite.name !== '') {
-      this.edgeService.saveNewSite(this.edgeService.newSite).subscribe(result => {
-        review.site = result;
-        this.edgeService.siteList.push(result);
-        console.log(this.edgeService.siteList);
-        this.edgeService.newSite = new Site(1, '', '', '');
-      });
-    }
 
     try{
       console.log(review);

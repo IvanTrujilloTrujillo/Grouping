@@ -42,6 +42,7 @@ public class EdgeService implements IEdgeService {
         //Save the user on the database
         userDTO = userClient.register(userDTO);
 
+        System.out.println(userDTO.getId());
         //Save the user as a member of group global (1)
         groupClient.saveUserAsMemberByGroupId(1L, userDTO.getId());
 
@@ -122,7 +123,7 @@ public class EdgeService implements IEdgeService {
         for (SiteDTO siteDTO : siteDTOList) {
             siteWithReviewsDTOList.add(new SiteWithReviewsDTO(siteDTO.getId(), siteDTO.getName(), siteDTO.getMapUrl(), meanReviews(id, siteDTO)));
         }
-        System.out.println(siteWithReviewsDTOList);
+        //System.out.println(siteWithReviewsDTOList);
 
         return siteWithReviewsDTOList;
     }
@@ -215,8 +216,9 @@ public class EdgeService implements IEdgeService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
         }
 
+        //System.out.println(invitationCodeDTO.getCode().split("#")[1]);
         //Check if the invitation code is valid
-        Long groupId = (Long.getLong(invitationCodeDTO.getCode().split("#")[1]) - 247) / 34;
+        Long groupId = (Long.parseLong(invitationCodeDTO.getCode().split("#")[1]) - 247) / 34;
         GroupDTO groupDTO = groupClient.getGroupById(groupId);
 
         //Check if the user is already in the group
@@ -252,6 +254,7 @@ public class EdgeService implements IEdgeService {
 
         //Get the review list and return it
         List<ReviewDTO> reviewDTOList = siteClient.getReviews(groupId, siteDTO);
+        //System.out.println(reviewDTOList);
         return reviewDTOList;
     }
 

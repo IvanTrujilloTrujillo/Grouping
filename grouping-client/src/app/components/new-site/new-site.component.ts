@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
+import { Review } from 'src/app/models/review';
 import { Site } from 'src/app/models/site';
 import { EdgeService } from 'src/app/services/edge.service';
 import { NewReviewComponent } from '../new-review/new-review.component';
@@ -19,58 +20,54 @@ export class NewSiteComponent implements OnInit {
   createNewSite: boolean = false;
   siteList: Site[] = [];
 
-  selectedSite: number = -1;
-
   siteForm: FormGroup;
 
   selectSiteField: FormControl;
   nameField: FormControl;
   mapUrlField: FormControl;
+  ratingField: FormControl;
+  commentField: FormControl;
 
   constructor(
-    private app: AppComponent,
     private edgeService: EdgeService,
     private dialogRef: MatDialogRef<NewSiteComponent>,
-    private newReviewDialog: MatDialog,
     private router: Router
   ) {
     this.selectSiteField = new FormControl('', []);
     this.nameField = new FormControl('', [Validators.required]);
     this.mapUrlField = new FormControl('', []);
+    this.ratingField = new FormControl('', [Validators.required]);
+    this.commentField = new FormControl('', []);
 
     this.siteForm = new FormGroup({
       selectSite: this.selectSiteField,
       name: this.nameField,
-      mapUrl: this.mapUrlField
+      mapUrl: this.mapUrlField,
+      rating: this.ratingField,
+      comment: this.commentField
     });
   }
 
   ngOnInit(): void {
-    if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
+    if (this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
       this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
       this.edgeService.getAllSites().subscribe(result => {
         this.siteList = result;
-        console.log(result);
-        console.log(this.siteGroupList);
-        console.log(this.edgeService.siteList);
-        for (let index = 0; index < this.siteGroupList.length; index++) {
-          let site = this.siteGroupList[index];
-          if(this.siteList.includes(site)) {
-            console.log(index);
-            this.siteList.splice(index, 1);
-            index--;
+        this.siteGroupList.forEach(element => {
+          let indexToDelete = -1;
+          for (let index = 0; index < this.siteList.length; index++) {
+            const element2 = this.siteList[index];
+            if (element.id === element2.id) {
+              indexToDelete = index;
+              break;
+            }
           }
-        }
-        console.log(this.siteList);
-      });
-
-      this.selectSiteField.statusChanges.subscribe(() => {
-        if(this.selectedSite !== -1) {
-          this.siteForm.controls['name'].setValue(this.siteList[this.selectedSite].name);
-          this.siteForm.controls['mapUrl'].setValue(this.siteList[this.selectedSite].mapUrl);
-        }
+          if (indexToDelete !== -1) {
+            this.siteList.splice(indexToDelete, 1);
+          }
+        });
       });
     }
   }
@@ -93,10 +90,32 @@ export class NewSiteComponent implements OnInit {
       }
     });
 
-    this.edgeService.newSite = new Site(1, name, mapUrl, this.edgeService.tocken);
+    if(this.ratingField.value === '') {
+      alert("The rating is required");
+      return;
+    }
+
+    if(this.nameField.value === '') {
+      alert("The name of the site is required");
+      return;
+    }
+
+    if(this.selectSiteField.value !== '' && !this.createNewSite) {
+      name = this.selectSiteField.value.name;
+      mapUrl = this.selectSiteField.value.mapUrl;
+    } else if (this.selectSiteField.value !==  '') {
+      alert("You haven't selected any site");
+      return;
+    }
+
+    const site = new Site(1, name, mapUrl, this.edgeService.tocken);
+    this.edgeService.saveNewSite(site).subscribe(result => {
+      const review = new Review(1, this.edgeService.selectedGroup, result, 1, this.ratingField.value, this.commentField.value, this.edgeService.tocken);
+      this.edgeService.saveNewReview(review).subscribe(result => {
+      });
+    });
 
     this.closeDialog();
-    this.openNewReviewDialog();
   }
 
   closeDialog() {
@@ -107,10 +126,6 @@ export class NewSiteComponent implements OnInit {
   cancel(): void {
     this.createNewSite = false;
     this.dialogRef.close();
-  }
-
-  openNewReviewDialog(): void {
-    this.newReviewDialog.open(NewReviewComponent);
   }
 
   newSite(): void {

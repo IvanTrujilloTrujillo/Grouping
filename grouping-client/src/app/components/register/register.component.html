@@ -10,6 +10,6 @@
 	<input type="password" d="password" formControlName="password">
 
 	<button mat-raised-button color="primary" type="submit">Register</button>
-  <button mat-raised-button><a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a></button>
+  <button mat-raised-button (click)="goToLogin()" type="button">Login</button>
 
 </form>

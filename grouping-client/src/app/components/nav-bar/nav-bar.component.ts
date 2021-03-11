@@ -12,8 +12,7 @@ export class NavBarComponent implements OnInit {
 
   constructor(
     private edgeService: EdgeService,
-    private router: Router,
-    private app: AppComponent
+    private router: Router
   ) { }
 
   ngOnInit(): void {

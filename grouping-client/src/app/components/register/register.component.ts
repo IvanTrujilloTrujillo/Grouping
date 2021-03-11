@@ -20,7 +20,6 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private edgeService: EdgeService,
-    private app: AppComponent,
     private router: Router
   ) {
     this.nameField = new FormControl('', [Validators.required]);
@@ -44,5 +43,9 @@ export class RegisterComponent implements OnInit {
       this.edgeService.userId = Number(result.tocken.substr(0, 4));
       this.router.navigate(['/home']);
     });
+  }
+
+  goToLogin(): void {
+    this.router.navigate(['/login']);
   }
 }

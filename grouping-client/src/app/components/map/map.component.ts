@@ -17,7 +17,6 @@ export class MapComponent implements OnInit {
   display?: google.maps.LatLngLiteral;
 
   constructor(
-    private app: AppComponent,
     private edgeService: EdgeService,
     private dialogRef: MatDialogRef<MapComponent>,
     private router: Router
@@ -28,7 +27,7 @@ export class MapComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
-      console.log(this.center);
+      //console.log(this.center);
     }
   }
 

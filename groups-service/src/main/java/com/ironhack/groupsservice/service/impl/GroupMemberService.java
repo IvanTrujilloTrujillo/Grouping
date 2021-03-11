@@ -33,6 +33,9 @@ public class GroupMemberService implements IGroupMemberService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Group not found");
         }
 
+        System.out.println(userId);
+        System.out.println(group);
+
         groupMemberRepository.save(new GroupMember(userId, group));
     }
 
