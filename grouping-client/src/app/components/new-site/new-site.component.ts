@@ -14,8 +14,16 @@ import { NewReviewComponent } from '../new-review/new-review.component';
 })
 export class NewSiteComponent implements OnInit {
 
+  siteGroupList!: Site[];
+
+  createNewSite: boolean = false;
+  siteList: Site[] = [];
+
+  selectedSite: number = -1;
+
   siteForm: FormGroup;
 
+  selectSiteField: FormControl;
   nameField: FormControl;
   mapUrlField: FormControl;
 
@@ -26,10 +34,12 @@ export class NewSiteComponent implements OnInit {
     private newReviewDialog: MatDialog,
     private router: Router
   ) {
+    this.selectSiteField = new FormControl('', []);
     this.nameField = new FormControl('', [Validators.required]);
     this.mapUrlField = new FormControl('', []);
 
     this.siteForm = new FormGroup({
+      selectSite: this.selectSiteField,
       name: this.nameField,
       mapUrl: this.mapUrlField
     });
@@ -39,7 +49,29 @@ export class NewSiteComponent implements OnInit {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
-      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
+      this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
+      this.edgeService.getAllSites().subscribe(result => {
+        this.siteList = result;
+        console.log(result);
+        console.log(this.siteGroupList);
+        console.log(this.edgeService.siteList);
+        for (let index = 0; index < this.siteGroupList.length; index++) {
+          let site = this.siteGroupList[index];
+          if(this.siteList.includes(site)) {
+            console.log(index);
+            this.siteList.splice(index, 1);
+            index--;
+          }
+        }
+        console.log(this.siteList);
+      });
+
+      this.selectSiteField.statusChanges.subscribe(() => {
+        if(this.selectedSite !== -1) {
+          this.siteForm.controls['name'].setValue(this.siteList[this.selectedSite].name);
+          this.siteForm.controls['mapUrl'].setValue(this.siteList[this.selectedSite].mapUrl);
+        }
+      });
     }
   }
 
@@ -54,29 +86,35 @@ export class NewSiteComponent implements OnInit {
     }
 
     //Check if the site already exists
-    this.app.siteList.forEach(site => {
+    this.edgeService.siteList.forEach(site => {
       if(site.name === name || site.mapUrl === mapUrl) {
         alert("This site already exists");
         return;
       }
     });
 
-    this.app.newSite = new Site(1, name, mapUrl, this.edgeService.tocken);
+    this.edgeService.newSite = new Site(1, name, mapUrl, this.edgeService.tocken);
 
     this.closeDialog();
     this.openNewReviewDialog();
   }
 
   closeDialog() {
+    this.createNewSite = false;
     this.dialogRef.close('New Site created!');
   }
 
   cancel(): void {
+    this.createNewSite = false;
     this.dialogRef.close();
   }
 
   openNewReviewDialog(): void {
     this.newReviewDialog.open(NewReviewComponent);
+  }
+
+  newSite(): void {
+    this.createNewSite = true;
   }
 
 }

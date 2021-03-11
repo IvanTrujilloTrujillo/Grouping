@@ -25,10 +25,17 @@ public class ReviewService implements IReviewService {
         //Convert the SiteDTO to a Site
         Site site = new Site(reviewDTO.getSite().getId(), reviewDTO.getSite().getName(), reviewDTO.getSite().getMapUrl());
 
+        System.out.println(reviewDTO);
+        System.out.println(site);
+
         //Check if the user has a review from the same site in the same group
-        if(reviewRepository.findByGroupIdAndSiteAndUserId(reviewDTO.getGroupId(), site, reviewDTO.getUserId()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This user already has a review to this site and group");
+        List<Review> reviewList = reviewRepository.findByGroupIdAndUserId(reviewDTO.getGroupId(), reviewDTO.getUserId());
+        for (Review review : reviewList) {
+            if(review.getSite().getName().equals(site.getName())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "This user already has a review to this site and group");
+            }
         }
+
 
         //Convert ReviewDTO to a Review and save it
         reviewRepository.save(new Review(reviewDTO.getGroupId(), site, reviewDTO.getUserId(), reviewDTO.getRating(), reviewDTO.getComment()));

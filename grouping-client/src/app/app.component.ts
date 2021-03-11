@@ -12,15 +12,7 @@ import { Site } from './models/site';
 export class AppComponent {
   title = 'grouping-client';
 
-  public groupList: Groups[] = [];
-  public siteList: Site[] = [];
-
-  public selectedGroup: number = 1;
-  public selectedSiteId: number = 0;
-  public userId: number = 0;
-
-  public newSite: Site = new Site(1, '', '', '');
-
   constructor(
   ) {}
+
 }

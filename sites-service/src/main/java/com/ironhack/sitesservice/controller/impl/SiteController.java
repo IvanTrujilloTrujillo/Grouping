@@ -27,4 +27,10 @@ public class SiteController implements ISiteController {
     public SiteDTO saveNewSite(@RequestBody @Valid SiteDTO siteDTO) {
         return siteService.saveNewSite(siteDTO);
     }
+
+    @GetMapping("/all-sites")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SiteDTO> getAllSites() {
+        return siteService.getAllSites();
+    }
 }

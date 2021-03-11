@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Groups } from 'src/app/models/groups';
+import { EdgeService } from 'src/app/services/edge.service';
 
 @Component({
   selector: 'app-group-card',
@@ -15,7 +16,7 @@ export class GroupCardComponent implements OnInit {
   groupNameUpperCase: string = '';
 
   constructor(
-    public app: AppComponent,
+    public edgeService: EdgeService,
     private router: Router
   ) {
   }
@@ -25,7 +26,7 @@ export class GroupCardComponent implements OnInit {
   }
 
   openGroup():void {
-    this.app.selectedGroup = this.group.id;
+    this.edgeService.selectedGroup = this.group.id;
     this.router.navigate(['/group-sites',  this.group.id]);
   }
 }

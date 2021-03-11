@@ -16,8 +16,7 @@ export class SiteCardComponent implements OnInit {
 
   @Input() site!: Site;
   @Input() groupId!: number;
-
-  rating: number = 1;
+  @Input() mean!: number;
 
   constructor(
     public app: AppComponent,
@@ -28,34 +27,25 @@ export class SiteCardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.meanReviews();
-    console.log(this.rating);
-  }
-
-  meanReviews(): void {
-    this.edgeService.meanReviews(this.groupId, this.site).subscribe(result => {
-      console.log(result);
-      this.rating = result;
-    });
   }
 
   showNewReviewDialog(): void {
-    this.app.selectedSiteId = this.app.siteList.findIndex(site => {return site === this.site});
+    this.edgeService.selectedSiteId = this.edgeService.siteList.findIndex(site => {return site === new Site(this.site.id, this.site.name, this.site.mapUrl, '')});
     this.newReviewDialog.open(NewReviewComponent);
   }
 
   openMapDialog(): void {
-    this.app.selectedSiteId = this.app.siteList.findIndex(site => {return site === this.site});
+    this.edgeService.selectedSiteId = this.edgeService.siteList.findIndex(site => {return site === new Site(this.site.id, this.site.name, this.site.mapUrl, '')});
     let dialogRef = this.mapDialog.open(MapComponent, { data: {site: this.site}});
-    //dialogRef.componentInstance.site = this.site;
-    dialogRef.componentInstance.latitude = Number(this.site.mapUrl.split("@")[1].split(",")[0]);
-    dialogRef.componentInstance.longitude = Number(this.site.mapUrl.split("@")[1].split(",")[1].split(",")[0]);
+    const center = {lat: Number(this.site.mapUrl.split("@")[1].split(",")[0]), lng: Number(this.site.mapUrl.split("@")[1].split(",")[1].split(",")[0])};
+    dialogRef.componentInstance.center = center;
   }
 
   seeReviews(): void {
-    this.app.selectedSiteId = this.app.siteList.findIndex(site => {return site === this.site});
-    console.log(this.site);
-    console.log(this.app.selectedSiteId);
+    this.edgeService.selectedSiteId = this.edgeService.siteList.findIndex(site => {return site === new Site(this.site.id, this.site.name, this.site.mapUrl, "")});
+    console.log(new Site(this.site.id, this.site.name, this.site.mapUrl, ""));
+    console.log(this.edgeService.siteList);
+    console.log(this.edgeService.selectedSiteId);
     this.router.navigate(['/comments']);
   }
 }

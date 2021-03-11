@@ -12,7 +12,7 @@ public interface IEdgeController {
 
     List<GroupDTO> getGroupsByUser(String tocken);
 
-    List<SiteDTO> getSiteByGroupId(Long id, String tocken);
+    List<SiteWithReviewsDTO> getSiteByGroupId(Long id, String tocken);
 
     SiteDTO saveNewSite(String siteJSON);
 
@@ -24,6 +24,6 @@ public interface IEdgeController {
 
     List<ReviewDTO> getReviews(Long groupId, String siteJSON);
 
-    Double meanReviews(Long groupId, String siteJSON);
+    List<SiteDTO> getAllSites(String tocken);
 
 }

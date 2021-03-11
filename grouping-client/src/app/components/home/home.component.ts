@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewSiteComponent } from '../new-site/new-site.component';
 import { AppComponent } from 'src/app/app.component';
 import { Router } from '@angular/router';
+import { SiteWithReview } from 'src/app/models/site-with-review';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  siteWithReviewList: any[] = [];
 
   constructor(
     public app: AppComponent,
@@ -25,18 +28,27 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       this.getSitesByGroupId(1);
-      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
+      this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
   getSitesByGroupId(id: number): void {
     this.edgeService.getSitesByGroupId(id).subscribe(result => {
-      this.app.siteList = result;
+      //console.log(result);
+      this.siteWithReviewList = result;
+      this.edgeService.siteList = [];
+      result.forEach(element => {
+        this.edgeService.siteList.push(new Site(element.id, element.name, element.mapUrl, ''));
+      });
     });
   }
 
   openNewSiteDialog(): void {
-    const dialogRef = this.newSiteDialog.open(NewSiteComponent);
+    let dialogRef = this.newSiteDialog.open(NewSiteComponent, {
+      height: '600px',
+      width: '800px',
+    });
+    dialogRef.componentInstance.siteGroupList = this.edgeService.siteList;
 
     dialogRef.afterClosed().subscribe(result => {
 

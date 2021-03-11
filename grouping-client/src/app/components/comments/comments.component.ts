@@ -15,24 +15,23 @@ export class CommentsComponent implements OnInit {
   reviewList: Review[] = [];
 
   constructor(
-    private edgeService: EdgeService,
-    private router: Router,
-    public app: AppComponent
+    public edgeService: EdgeService,
+    private router: Router
   ) {
-    console.log(app.siteList[app.selectedSiteId].name);
+    console.log(edgeService.siteList[edgeService.selectedSiteId].name);
   }
 
   ngOnInit(): void {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
-      if(this.app.selectedSiteId = 0) {
+      if(this.edgeService.selectedSiteId = 0) {
         alert("There is no selected site");
         this.router.navigate(['/home']);
       } else {
-        this.chargeReviews(this.app.selectedGroup, this.app.siteList[this.app.selectedSiteId]);
+        this.chargeReviews(this.edgeService.selectedGroup, this.edgeService.siteList[this.edgeService.selectedSiteId]);
       }
-      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
+      this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 

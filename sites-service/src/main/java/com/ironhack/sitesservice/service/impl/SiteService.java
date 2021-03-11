@@ -56,14 +56,30 @@ public class SiteService implements ISiteService {
         if(siteRepository.findByName(siteDTO.getName()).isPresent() ||
                 siteRepository.findByMapUrl(siteDTO.getMapUrl()).isPresent()) {
 
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "The site already exists");
+            Site site = siteRepository.findByName(siteDTO.getName()).get();
+            siteDTO.setId(site.getId());
+        } else {
+            //Convert SiteDTO to a Site and save it
+            Site site = siteRepository.save(new Site(siteDTO.getName(), siteDTO.getMapUrl()));
+
+            //We need to return the SiteDTO with the id
+            siteDTO.setId(site.getId());
         }
 
-        //Convert SiteDTO to a Site and save it
-        Site site = siteRepository.save(new Site(siteDTO.getName(), siteDTO.getMapUrl()));
-
-        //We need to return the SiteDTO with the id
-        siteDTO.setId(site.getId());
         return siteDTO;
+    }
+
+    //Get all sites from the database
+    public List<SiteDTO> getAllSites() {
+        //Get the site list
+        List<Site> siteList = siteRepository.findAll();
+
+        //Convert to DTO list
+        List<SiteDTO> siteDTOList = new ArrayList<>();
+        for (Site site : siteList) {
+            siteDTOList.add(new SiteDTO(site.getId(), site.getName(), site.getMapUrl()));
+        }
+
+        return siteDTOList;
     }
 }

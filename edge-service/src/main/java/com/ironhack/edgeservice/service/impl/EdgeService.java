@@ -17,10 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Formatter;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EdgeService implements IEdgeService {
@@ -60,7 +57,6 @@ public class EdgeService implements IEdgeService {
     }
 
     //Check if the user exists with username and password and return it from the database
-
     public Tocken login(String userJSON) {
         //Convert JSON in UserDTO
         UserDTO userDTO = getUserDTO(userJSON);
@@ -83,8 +79,8 @@ public class EdgeService implements IEdgeService {
 
         return new Tocken(fmt + encodedUsername + "@" + encodedPassword);
     }
-    //Return all the groups which the user belongs from the database
 
+    //Return all the groups which the user belongs from the database
     public List<GroupDTO> getGroupsByUser(String tocken) {
 
         //Checks if username and password are valid
@@ -97,8 +93,7 @@ public class EdgeService implements IEdgeService {
     }
 
     //Find all the sites associated with a group and return them
-
-    public List<SiteDTO> getSiteByGroupId(Long id, String tocken) {
+    public List<SiteWithReviewsDTO> getSiteByGroupId(Long id, String tocken) {
         //Checks if username and password are valid
         UserDTO userDTO = checkLogin(tocken);
         if(userDTO == null) {
@@ -122,10 +117,17 @@ public class EdgeService implements IEdgeService {
             throw e;
         }
 
-        return siteClient.getSiteByGroupId(id);
-    }
-    //Save a new Site
+        List<SiteDTO> siteDTOList = siteClient.getSiteByGroupId(id);
+        List<SiteWithReviewsDTO> siteWithReviewsDTOList = new ArrayList<>();
+        for (SiteDTO siteDTO : siteDTOList) {
+            siteWithReviewsDTOList.add(new SiteWithReviewsDTO(siteDTO.getId(), siteDTO.getName(), siteDTO.getMapUrl(), meanReviews(id, siteDTO)));
+        }
+        System.out.println(siteWithReviewsDTOList);
 
+        return siteWithReviewsDTOList;
+    }
+
+    //Save a new Site
     public SiteDTO saveNewSite(String siteJSON) {
         //Convert JSON object to SiteDTO
         ObjectMapper objectMapper = new ObjectMapper();
@@ -142,8 +144,8 @@ public class EdgeService implements IEdgeService {
 
         return siteClient.saveNewSite(siteDTO);
     }
-    //Save a new Review
 
+    //Save a new Review
     public void saveNewReview(String reviewJSON) {
         //Convert JSON object to ReviewDTO
         ObjectMapper objectMapper = new ObjectMapper();
@@ -169,8 +171,8 @@ public class EdgeService implements IEdgeService {
 
         siteClient.saveNewReview(reviewDTO);
     }
-    //Creates a new group
 
+    //Creates a new group
     public GroupDTO saveNewGroup(String groupJSON) {
         //Convert JSON object to GroupDTO
         ObjectMapper objectMapper = new ObjectMapper();
@@ -195,8 +197,8 @@ public class EdgeService implements IEdgeService {
 
         return groupClient.saveNewGroup(groupDTO);
     }
-    //Join a user to an existent group
 
+    //Join a user to an existent group
     public GroupDTO joinGroup(String invitationCodeJSON) {
         //Convert JSON object to GroupDTO
         ObjectMapper objectMapper = new ObjectMapper();
@@ -254,19 +256,7 @@ public class EdgeService implements IEdgeService {
     }
 
     //Calculate the mean of the reviews of a site in a group
-    public Double meanReviews(Long groupId, String siteJSON) {
-        //Convert JSON object to SiteDTO
-        SiteDTO siteDTO = getSiteDTO(siteJSON);
-
-        //Check if the tocken is correct
-        UserDTO userDTO = checkLogin(siteDTO.getTocken());
-        if(userDTO == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
-        }
-
-        //Delete the tocken
-        siteDTO.setTocken(null);
-
+    public Double meanReviews(Long groupId, SiteDTO siteDTO) {
         //Get the review list of the Site and the group
         List<ReviewDTO> reviewDTOList = siteClient.getReviews(groupId, siteDTO);
         Long sum = 0L;
@@ -278,6 +268,17 @@ public class EdgeService implements IEdgeService {
         Double mean = sum.doubleValue() / reviewDTOList.size();
 
         return mean;
+    }
+
+    //Get all sites in the database
+    public List<SiteDTO> getAllSites(String tocken) {
+        //Check if the tocken is correct
+        UserDTO userDTO = checkLogin(tocken);
+        if(userDTO == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
+        }
+
+        return siteClient.getAllSites();
     }
 
     //Checks if the username and the password are correct

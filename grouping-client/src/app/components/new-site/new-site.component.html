@@ -1,16 +1,27 @@
 <h1 mat-dialog-title>New Site</h1>
 
 <div mat-dialog-content>
-  <form (ngSubmit)="onSubmit()" [formGroup]="siteForm">
+  <form class="site-form" (ngSubmit)="onSubmit()" [formGroup]="siteForm">
 
-    <label for="name-site">Name of the site:</label>
-    <input type="text" id="name-site" name="name-site" formControlName="name" placeholder="Name">
+    <div class="select">
+      <mat-label for="site">Choose the site do you want to add</mat-label>
+      <mat-select name="site" id="site" [(ngModel)]="selectedSite" formControlName="selectSite">
+        <mat-option *ngFor="let site of siteList" [value]="site.id">{{ site.name }}</mat-option>
+      </mat-select>
+    </div>
 
-    <label for="map-url">Url of Google Maps:</label>
-    <input type="text" id="map-url" name="map-url" formControlName="mapUrl" placeholder="Url">
+    <button id="new-site-button" mat-raised-button (click)="newSite()" type="button">New Site</button>
 
-    <button mat-raised-button color="primary" type="submit">Create Site</button>
-    <button mat-raised-button (click)="cancel()" type="button">Cancel</button>
+    <div class="new-site" *ngIf="createNewSite">
+      <label for="name-site">Name of the site:</label>
+      <input type="text" id="name-site" name="name-site" formControlName="name" placeholder="Name">
+
+      <label for="map-url">Url of Google Maps:</label>
+      <input type="text" id="map-url" name="map-url" formControlName="mapUrl" placeholder="Url">
+    </div>
+
+    <button mat-raised-button class="create" color="primary" type="submit">Create Site</button>
+    <button mat-raised-button class="cancel" (click)="cancel()" type="button">Cancel</button>
 
   </form>
 </div>

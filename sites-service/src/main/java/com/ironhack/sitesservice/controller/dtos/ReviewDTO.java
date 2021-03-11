@@ -114,4 +114,17 @@ public class ReviewDTO {
     public void setTocken(String tocken) {
         this.tocken = tocken;
     }
+
+    @Override
+    public String toString() {
+        return "ReviewDTO{" +
+                "id=" + id +
+                ", groupId=" + groupId +
+                ", site=" + site +
+                ", userId=" + userId +
+                ", rating=" + rating +
+                ", comment='" + comment + '\'' +
+                ", tocken='" + tocken + '\'' +
+                '}';
+    }
 }

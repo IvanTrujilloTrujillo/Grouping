@@ -8,4 +8,6 @@ public interface ISiteService {
     List<SiteDTO> getSiteByGroupId(Long id);
 
     SiteDTO saveNewSite(SiteDTO siteDTO);
+
+    List<SiteDTO> getAllSites();
 }

@@ -32,6 +32,11 @@ mat-icon {
   font-size: 28px;
 }
 
+.see-comments {
+  color: rgb(42, 141, 255);
+  cursor: pointer;
+}
+
 .site-card a {
   margin: 10px 0px;
 }

@@ -1,5 +1,4 @@
-<h1>{{ app.siteList[app.selectedSiteId].name }} Reviews</h1>
-<h1>{{ reviewList[0].site.name }} Reviews</h1>
+<h1>Reviews of {{ edgeService.siteList[edgeService.selectedSiteId].name }}</h1>
 
 <div class="review-item" *ngFor="let review of reviewList">
   <app-review-item [review]="review"></app-review-item>

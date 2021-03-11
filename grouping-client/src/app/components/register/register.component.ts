@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
     this.edgeService.register(user).subscribe(result => {
       localStorage.setItem('tockenLogin', result.tocken);
       this.edgeService.tocken = result.tocken;
-      this.app.userId = Number(result.tocken.substr(0, 4));
+      this.edgeService.userId = Number(result.tocken.substr(0, 4));
       this.router.navigate(['/home']);
     });
   }

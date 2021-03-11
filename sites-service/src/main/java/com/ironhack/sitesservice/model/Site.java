@@ -78,4 +78,14 @@ public class Site {
     public void setReviewList(List<Review> reviewList) {
         this.reviewList = reviewList;
     }
+
+    @Override
+    public String toString() {
+        return "Site{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", mapUrl='" + mapUrl + '\'' +
+                ", reviewList=" + reviewList +
+                '}';
+    }
 }

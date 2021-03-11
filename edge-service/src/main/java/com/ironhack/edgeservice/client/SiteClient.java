@@ -24,4 +24,7 @@ public interface SiteClient {
 
     @PostMapping("/reviews-by-group/{groupId}")
     List<ReviewDTO> getReviews(@PathVariable("groupId") Long groupId, @RequestBody SiteDTO siteDTO);
+
+    @GetMapping("/all-sites")
+    List<SiteDTO> getAllSites();
 }

@@ -1,12 +1,12 @@
 <div class="cards-container">
-  <div class="site-card" *ngFor="let site of app.siteList">
+  <div class="site-card" *ngFor="let site of edgeService.siteList">
     <app-site-card [site]="site" [groupId]="groupId"></app-site-card>
   </div>
 
   <mat-card class="new-site-card">
     <mat-card-actions>
       <button mat-fab color="primary" aria-label="Add a new site" (click)="openNewSiteDialog()">
-        <mat-icon>add_ circle</mat-icon>
+        <mat-icon>add_circle</mat-icon>
       </button>
     </mat-card-actions>
   </mat-card>

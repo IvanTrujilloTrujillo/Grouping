@@ -34,7 +34,7 @@ export class NewGroupComponent implements OnInit {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
-      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
+      this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
@@ -46,7 +46,7 @@ export class NewGroupComponent implements OnInit {
     const group: Groups = new Groups(1, name, 0, this.edgeService.tocken);
 
     this.edgeService.saveNewGroup(group).subscribe(result => {
-      this.app.groupList.push(result);
+      this.edgeService.groupList.push(result);
     });
     this.closeDialog();
   }

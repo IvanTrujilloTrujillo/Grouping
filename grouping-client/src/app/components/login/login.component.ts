@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     this.edgeService.login(user).subscribe(result => {
       this.edgeService.tocken = result.tocken;
       localStorage.setItem('tockenLogin', result.tocken);
-      this.app.userId = Number(result.tocken.substr(0, 4));
+      this.edgeService.userId = Number(result.tocken.substr(0, 4));
       this.router.navigate(['/home']);
     });
   }

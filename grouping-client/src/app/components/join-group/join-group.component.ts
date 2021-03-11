@@ -33,7 +33,7 @@ export class JoinGroupComponent implements OnInit {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
-      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
+      this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
@@ -43,7 +43,7 @@ export class JoinGroupComponent implements OnInit {
     code = code.trim();
 
     //Check if the user is already in the group
-    this.app.groupList.forEach(group => {
+    this.edgeService.groupList.forEach(group => {
       if(group.id === (Number(code.split('#')[1]) - 247) / 34) {
         alert("You are already in this group");
         this.closeDialog();
@@ -53,7 +53,7 @@ export class JoinGroupComponent implements OnInit {
 
     try {
     this.edgeService.joinGroup(code).subscribe(result => {
-      this.app.groupList.push(result);
+      this.edgeService.groupList.push(result);
     });
     } catch {
       alert("This code isn't valid");

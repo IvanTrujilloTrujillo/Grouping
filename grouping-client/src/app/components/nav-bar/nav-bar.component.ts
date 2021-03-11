@@ -22,6 +22,6 @@ export class NavBarComponent implements OnInit {
   logout(): void {
     this.edgeService.logout();
     this.router.navigate(['/login']);
-    this.app.userId = 0;
+    this.edgeService.userId = 0;
   }
 }

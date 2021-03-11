@@ -1,6 +1,6 @@
 <div class="cards-container">
-  <div class="site-card" *ngFor="let site of app.siteList">
-    <app-site-card [site]="site" [groupId]="1"></app-site-card>
+  <div class="site-card" *ngFor="let site of siteWithReviewList">
+    <app-site-card [site]="site" [groupId]="1" [mean]="site.mean"></app-site-card>
   </div>
 
   <mat-card class="new-site-card">

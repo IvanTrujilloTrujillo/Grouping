@@ -12,7 +12,7 @@ public interface IEdgeService {
 
     List<GroupDTO> getGroupsByUser(String tocken);
 
-    List<SiteDTO> getSiteByGroupId(Long id, String tocken);
+    List<SiteWithReviewsDTO> getSiteByGroupId(Long id, String tocken);
 
     SiteDTO saveNewSite(String siteJSON);
 
@@ -24,5 +24,7 @@ public interface IEdgeService {
 
     List<ReviewDTO> getReviews(Long groupId, String siteJSON);
 
-    Double meanReviews(Long groupId, String siteJSON);
+    Double meanReviews(Long groupId, SiteDTO siteDTO);
+
+    List<SiteDTO> getAllSites(String tocken);
 }

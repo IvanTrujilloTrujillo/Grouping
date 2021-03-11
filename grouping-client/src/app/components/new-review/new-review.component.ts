@@ -38,32 +38,35 @@ export class NewReviewComponent implements OnInit {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
-      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
+      this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
 
   onSubmit(): void {
     let review: Review = new Review(1,
-      this.app.selectedGroup,
-      this.app.newSite,
+      this.edgeService.selectedGroup,
+      this.edgeService.newSite,
       1,
       Number(this.ratingField.value),
       this.commentField.value,
       this.edgeService.tocken
     );
 
-    if(this.app.newSite.name !== '') {
-      this.edgeService.saveNewSite(this.app.newSite).subscribe(result => {
+    if(this.edgeService.newSite.name !== '') {
+      this.edgeService.saveNewSite(this.edgeService.newSite).subscribe(result => {
         review.site = result;
-        this.app.siteList.push(result);
-        this.app.newSite = new Site(1, '', '', '');
+        this.edgeService.siteList.push(result);
+        console.log(this.edgeService.siteList);
+        this.edgeService.newSite = new Site(1, '', '', '');
       });
     }
 
     try{
+      console.log(review);
       setTimeout(() => {
         this.edgeService.saveNewReview(review).subscribe(result => {
+          console.log(review);
         });
       }, 100);
     } catch {

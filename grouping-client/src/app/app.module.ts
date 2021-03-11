@@ -27,6 +27,7 @@ import { MapComponent } from './components/map/map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { GroupSitesComponent } from './components/group-sites/group-sites.component';
 import { ReviewItemComponent } from './components/comments/review-item/review-item.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { ReviewItemComponent } from './components/comments/review-item/review-it
     MatIconModule,
     MatDialogModule,
     MatFormFieldModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    MatSelectModule
   ],
   entryComponents: [
     NewSiteComponent,

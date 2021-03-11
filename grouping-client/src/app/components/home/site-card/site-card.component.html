@@ -7,9 +7,9 @@
   </mat-card-header>
   <mat-card-content>
     <p>
-      Review: {{ rating }} estrellas
+      Review: {{ mean }} estrellas
     </p>
-    <p class="nav-link" (click)="seeReviews()">See comments</p>
+    <p class="see-comments" (click)="seeReviews()">See comments</p>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="showNewReviewDialog()">Add a Review</button>

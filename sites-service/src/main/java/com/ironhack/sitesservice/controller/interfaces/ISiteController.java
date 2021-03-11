@@ -9,4 +9,6 @@ public interface ISiteController {
     List<SiteDTO> getSiteByGroupId(Long id);
 
     SiteDTO saveNewSite(SiteDTO siteDTO);
+
+    List<SiteDTO> getAllSites();
 }

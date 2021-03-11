@@ -38,7 +38,7 @@ public class EdgeController implements IEdgeController {
 
     @PostMapping("/sites/group/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<SiteDTO> getSiteByGroupId(@PathVariable("id") Long id, @RequestBody String tocken) {
+    public List<SiteWithReviewsDTO> getSiteByGroupId(@PathVariable("id") Long id, @RequestBody String tocken) {
         return edgeService.getSiteByGroupId(id, tocken);
     }
 
@@ -72,9 +72,9 @@ public class EdgeController implements IEdgeController {
         return edgeService.getReviews(groupId, siteJSON);
     }
 
-    @PostMapping("/mean-reviews/{groupId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Double meanReviews(@PathVariable("groupId") Long groupId, @RequestBody String siteJSON) {
-        return edgeService.meanReviews(groupId, siteJSON);
+    @PostMapping("/all-sites")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SiteDTO> getAllSites(@RequestBody String tocken) {
+        return edgeService.getAllSites(tocken);
     }
 }

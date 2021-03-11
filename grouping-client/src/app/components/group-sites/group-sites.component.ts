@@ -16,9 +16,8 @@ export class GroupSitesComponent implements OnInit {
   @Input() groupId!: number;
 
   constructor(
-    private edgeService: EdgeService,
+    public edgeService: EdgeService,
     private router: Router,
-    public app: AppComponent,
     private newSiteDialog: MatDialog,
     private route: ActivatedRoute
   ) {
@@ -31,13 +30,13 @@ export class GroupSitesComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       this.getSitesByGroupId(this.groupId);
-      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
+      this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
   getSitesByGroupId(id: number): void {
     this.edgeService.getSitesByGroupId(id).subscribe(result => {
-      this.app.siteList = result;
+      this.edgeService.siteList = result;
     }, error => {
       alert("You don't have access to this group");
       this.router.navigate(['/groups']);

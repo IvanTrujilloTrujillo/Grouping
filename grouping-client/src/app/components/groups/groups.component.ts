@@ -14,8 +14,7 @@ import { NewGroupComponent } from '../new-group/new-group.component';
 export class GroupsComponent implements OnInit {
 
   constructor(
-    public app: AppComponent,
-    private edgeService: EdgeService,
+    public edgeService: EdgeService,
     private router: Router,
     private newGroupDialog: MatDialog
   ) {}
@@ -25,14 +24,14 @@ export class GroupsComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       this.getGroupsByUser();
-      this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
+      this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
   getGroupsByUser(): void {
     this.edgeService.getGroupsByUser().subscribe(result => {
-      this.app.groupList = result;
-      this.app.groupList.shift();
+      this.edgeService.groupList = result;
+      this.edgeService.groupList.shift();
     });
   }
 

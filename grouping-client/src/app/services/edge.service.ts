@@ -7,6 +7,7 @@ import { Groups } from '../models/groups';
 import { InvitationCode } from '../models/invitation-code';
 import { Review } from '../models/review';
 import { Site } from '../models/site';
+import { SiteWithReview } from '../models/site-with-review';
 import { Tocken } from '../models/tocken';
 import { User } from '../models/user';
 
@@ -20,6 +21,15 @@ export class EdgeService {
   private baseUrl: string = "http://localhost:8083/";
 
   public tocken: string | null = '';
+
+  public groupList: Groups[] = [];
+  public siteList: Site[] = [];
+
+  public selectedGroup: number = 1;
+  public selectedSiteId: number = 0;
+  public userId: number = 0;
+
+  public newSite: Site = new Site(1, '', '', '');
 
   constructor(
     private http: HttpClient,
@@ -60,9 +70,9 @@ export class EdgeService {
     return this.http.post<Groups[]>(this.baseUrl + url, this.tocken);
   }
 
-  getSitesByGroupId(id: number): Observable<Site[]> {
+  getSitesByGroupId(id: number): Observable<SiteWithReview[]> {
     const url: string = "sites/group/";
-    return this.http.post<Site[]>(this.baseUrl + url + id, this.tocken);
+    return this.http.post<SiteWithReview[]>(this.baseUrl + url + id, this.tocken);
   }
 
   saveNewReview(review: Review): Observable<{}> {
@@ -114,13 +124,8 @@ export class EdgeService {
     return this.http.post<Review[]>(this.baseUrl + url + groupId, body);
   }
 
-  meanReviews(groupId: number, site: Site): Observable<number> {
-    const url: string = "mean-reviews/";
-    site.tocken = this.tocken;
-    let body = JSON.stringify(site);
-    //Need to remove '_' from the names of the properties
-    body = body.replace(/"_/g, '"');
-
-    return this.http.post<number>(this.baseUrl + url + groupId, body);
+  getAllSites(): Observable<Site[]> {
+    const url: string = "all-sites";
+    return this.http.post<Site[]>(this.baseUrl + url, this.tocken);
   }
 }
