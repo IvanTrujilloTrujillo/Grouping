@@ -23,4 +23,6 @@ public interface IEdgeService {
     GroupDTO joinGroup(String invitationCodeJSON);
 
     List<ReviewDTO> getReviews(Long groupId, String siteJSON);
+
+    Double meanReviews(Long groupId, String siteJSON);
 }

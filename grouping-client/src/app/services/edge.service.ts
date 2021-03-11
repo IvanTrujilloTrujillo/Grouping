@@ -104,13 +104,23 @@ export class EdgeService {
     return this.http.post<Groups>(this.baseUrl + url, body);
   }
 
-  chargeReviews(site: Site, groupId: number): Observable<Review[]> {
-    const url: string = "reviews/";
+  chargeReviews(groupId: number, site: Site): Observable<Review[]> {
+    const url: string = "reviews-by-group/";
     site.tocken = this.tocken;
     let body = JSON.stringify(site);
     //Need to remove '_' from the names of the properties
     body = body.replace(/"_/g, '"');
 
     return this.http.post<Review[]>(this.baseUrl + url + groupId, body);
+  }
+
+  meanReviews(groupId: number, site: Site): Observable<number> {
+    const url: string = "mean-reviews/";
+    site.tocken = this.tocken;
+    let body = JSON.stringify(site);
+    //Need to remove '_' from the names of the properties
+    body = body.replace(/"_/g, '"');
+
+    return this.http.post<number>(this.baseUrl + url + groupId, body);
   }
 }

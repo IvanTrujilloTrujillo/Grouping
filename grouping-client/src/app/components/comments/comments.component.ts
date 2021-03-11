@@ -18,7 +18,9 @@ export class CommentsComponent implements OnInit {
     private edgeService: EdgeService,
     private router: Router,
     public app: AppComponent
-  ) { }
+  ) {
+    console.log(app.siteList[app.selectedSiteId].name);
+  }
 
   ngOnInit(): void {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
@@ -28,15 +30,16 @@ export class CommentsComponent implements OnInit {
         alert("There is no selected site");
         this.router.navigate(['/home']);
       } else {
-        this.chargeReviews(this.app.siteList[this.app.selectedSiteId], this.app.selectedGroup);
+        this.chargeReviews(this.app.selectedGroup, this.app.siteList[this.app.selectedSiteId]);
       }
       this.app.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
-  chargeReviews(site: Site, groupId: number): void {
-    this.edgeService.chargeReviews(site, groupId).subscribe(result => {
+  chargeReviews(groupId: number, site: Site): void {
+    this.edgeService.chargeReviews(groupId, site).subscribe(result => {
       this.reviewList = result;
+      console.log(result);
     });
   }
 

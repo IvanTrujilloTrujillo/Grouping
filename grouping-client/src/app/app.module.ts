@@ -26,6 +26,7 @@ import { JoinGroupComponent } from './components/join-group/join-group.component
 import { MapComponent } from './components/map/map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { GroupSitesComponent } from './components/group-sites/group-sites.component';
+import { ReviewItemComponent } from './components/comments/review-item/review-item.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { GroupSitesComponent } from './components/group-sites/group-sites.compon
     GroupCardComponent,
     JoinGroupComponent,
     MapComponent,
-    GroupSitesComponent
+    GroupSitesComponent,
+    ReviewItemComponent
   ],
   imports: [
     BrowserModule,

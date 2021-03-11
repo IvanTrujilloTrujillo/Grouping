@@ -1,5 +1,4 @@
 import { Site } from "./site";
-import { Tocken } from "./tocken";
 
 export class Review {
 

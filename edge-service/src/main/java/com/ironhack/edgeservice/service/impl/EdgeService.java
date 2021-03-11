@@ -37,13 +37,7 @@ public class EdgeService implements IEdgeService {
     //Create a new User
     public Tocken register(String userJSON) {
         //Convert JSON in UserDTO
-        ObjectMapper objectMapper = new ObjectMapper();
-        UserDTO userDTO = null;
-        try {
-            userDTO = objectMapper.readValue(userJSON, UserDTO.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        UserDTO userDTO = getUserDTO(userJSON);
 
         //Hash the password
         userDTO.setPassword(DigestUtils.md5Hex(userDTO.getUsername()).toUpperCase());
@@ -66,15 +60,10 @@ public class EdgeService implements IEdgeService {
     }
 
     //Check if the user exists with username and password and return it from the database
+
     public Tocken login(String userJSON) {
         //Convert JSON in UserDTO
-        ObjectMapper objectMapper = new ObjectMapper();
-        UserDTO userDTO = null;
-        try {
-            userDTO = objectMapper.readValue(userJSON, UserDTO.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        UserDTO userDTO = getUserDTO(userJSON);
 
         //Find the user from the database by username
         UserDTO user = userClient.findByUsername(userDTO.getUsername());
@@ -94,8 +83,8 @@ public class EdgeService implements IEdgeService {
 
         return new Tocken(fmt + encodedUsername + "@" + encodedPassword);
     }
-
     //Return all the groups which the user belongs from the database
+
     public List<GroupDTO> getGroupsByUser(String tocken) {
 
         //Checks if username and password are valid
@@ -107,10 +96,9 @@ public class EdgeService implements IEdgeService {
         return groupClient.getGroupsByUser(userDTO.getId());
     }
 
-
     //Find all the sites associated with a group and return them
-    public List<SiteDTO> getSiteByGroupId(Long id, String tocken) {
 
+    public List<SiteDTO> getSiteByGroupId(Long id, String tocken) {
         //Checks if username and password are valid
         UserDTO userDTO = checkLogin(tocken);
         if(userDTO == null) {
@@ -136,18 +124,12 @@ public class EdgeService implements IEdgeService {
 
         return siteClient.getSiteByGroupId(id);
     }
-
     //Save a new Site
+
     public SiteDTO saveNewSite(String siteJSON) {
         //Convert JSON object to SiteDTO
         ObjectMapper objectMapper = new ObjectMapper();
-        SiteDTO siteDTO = null;
-        try {
-            siteDTO = objectMapper.readValue(siteJSON, SiteDTO.class);
-        } catch (JsonProcessingException e) {
-            System.out.println(siteJSON);
-            e.printStackTrace();
-        }
+        SiteDTO siteDTO = getSiteDTO(siteJSON);
 
         //Check if the tocken is correct
         UserDTO userDTO = checkLogin(siteDTO.getTocken());
@@ -160,8 +142,8 @@ public class EdgeService implements IEdgeService {
 
         return siteClient.saveNewSite(siteDTO);
     }
-
     //Save a new Review
+
     public void saveNewReview(String reviewJSON) {
         //Convert JSON object to ReviewDTO
         ObjectMapper objectMapper = new ObjectMapper();
@@ -187,8 +169,8 @@ public class EdgeService implements IEdgeService {
 
         siteClient.saveNewReview(reviewDTO);
     }
-
     //Creates a new group
+
     public GroupDTO saveNewGroup(String groupJSON) {
         //Convert JSON object to GroupDTO
         ObjectMapper objectMapper = new ObjectMapper();
@@ -213,8 +195,8 @@ public class EdgeService implements IEdgeService {
 
         return groupClient.saveNewGroup(groupDTO);
     }
-
     //Join a user to an existent group
+
     public GroupDTO joinGroup(String invitationCodeJSON) {
         //Convert JSON object to GroupDTO
         ObjectMapper objectMapper = new ObjectMapper();
@@ -254,14 +236,8 @@ public class EdgeService implements IEdgeService {
         //Check if the group exists and get it
         GroupDTO groupDTO = groupClient.getGroupById(groupId);
 
-        //Convert JSON object to GroupDTO
-        ObjectMapper objectMapper = new ObjectMapper();
-        SiteDTO siteDTO = null;
-        try {
-            siteDTO = objectMapper.readValue(siteJSON, SiteDTO.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        //Convert JSON object to SiteDTO
+        SiteDTO siteDTO = getSiteDTO(siteJSON);
 
         //Check if the tocken is correct
         UserDTO userDTO = checkLogin(siteDTO.getTocken());
@@ -273,7 +249,35 @@ public class EdgeService implements IEdgeService {
         siteDTO.setTocken(null);
 
         //Get the review list and return it
-        return siteClient.getReviews(groupId, siteDTO);
+        List<ReviewDTO> reviewDTOList = siteClient.getReviews(groupId, siteDTO);
+        return reviewDTOList;
+    }
+
+    //Calculate the mean of the reviews of a site in a group
+    public Double meanReviews(Long groupId, String siteJSON) {
+        //Convert JSON object to SiteDTO
+        SiteDTO siteDTO = getSiteDTO(siteJSON);
+
+        //Check if the tocken is correct
+        UserDTO userDTO = checkLogin(siteDTO.getTocken());
+        if(userDTO == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
+        }
+
+        //Delete the tocken
+        siteDTO.setTocken(null);
+
+        //Get the review list of the Site and the group
+        List<ReviewDTO> reviewDTOList = siteClient.getReviews(groupId, siteDTO);
+        Long sum = 0L;
+        for (ReviewDTO reviewDTO : reviewDTOList) {
+            sum+= reviewDTO.getRating();
+        }
+
+        //Calculate the average
+        Double mean = sum.doubleValue() / reviewDTOList.size();
+
+        return mean;
     }
 
     //Checks if the username and the password are correct
@@ -295,5 +299,27 @@ public class EdgeService implements IEdgeService {
         }
 
         return userDTO;
+    }
+
+    private UserDTO getUserDTO(String userJSON) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        UserDTO userDTO = null;
+        try {
+            userDTO = objectMapper.readValue(userJSON, UserDTO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return userDTO;
+    }
+
+    private SiteDTO getSiteDTO(String siteJSON) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        SiteDTO siteDTO = null;
+        try {
+            siteDTO = objectMapper.readValue(siteJSON, SiteDTO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return siteDTO;
     }
 }
