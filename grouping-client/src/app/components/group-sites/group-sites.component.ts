@@ -29,9 +29,10 @@ export class GroupSitesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //console.log(this.groupId);
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
-    } else if (this.groupId = 1) {
+    } else if (this.groupId === 1) {
       this.router.navigate(['/home']);
     } else {
       this.getSitesByGroupId(this.groupId);

@@ -11,7 +11,7 @@ mat-card-header {
   display: flex;
   justify-content: space-between;
   padding-top: 5px;
-  height: 100px;
+  height: 80px;
 }
 
 .mat-card-title {
@@ -32,8 +32,13 @@ mat-icon {
   font-size: 28px;
 }
 
+.rating {
+  margin: 10px 0px 20px 20px;
+}
+
 .see-comments {
   color: rgb(42, 141, 255);
+  margin-left: 10px;
   cursor: pointer;
 }
 
@@ -46,8 +51,8 @@ mat-icon {
 }
 
 .mat-card-actions {
-  width: 120px;
-  margin: 10px auto;
+  width: 100px;
+  margin: 0px auto;
 }
 
 .mat-card-actions button {

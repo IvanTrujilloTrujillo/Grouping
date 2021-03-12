@@ -1,0 +1,32 @@
+.row {
+  width: 600px !important;
+  margin: 0px auto;
+}
+
+.col, .m6 {
+  width: 100% !important;
+}
+
+.card-content {
+  position: relative;
+  background-color: #dfecfd;
+  box-shadow: 0px 2px 2px -2px rgb(0 0 0 / 20%), 2px 2px 2px 0px rgb(0 0 0 / 14%), 0px 2px 2px 0px rgb(0 0 0 / 12%);
+}
+
+.card-title {
+  color: #00054e;
+}
+
+.rating {
+  position: absolute;
+  top: 30px;
+  left: 380px;
+  width: 200px;
+  /*color:#ffee00*/
+}
+
+.card-content p {
+  margin-top: 20px;
+  font-size: 20px;
+  color: rgb(34, 34, 34)
+}

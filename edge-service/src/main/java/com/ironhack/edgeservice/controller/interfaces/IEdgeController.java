@@ -22,7 +22,7 @@ public interface IEdgeController {
 
     GroupDTO joinGroup(String invitationCodeJSON);
 
-    List<ReviewDTO> getReviews(Long groupId, String siteJSON);
+    List<ReviewWithUserNameDTO> getReviews(Long groupId, String siteJSON);
 
     List<SiteDTO> getAllSites(String tocken);
 

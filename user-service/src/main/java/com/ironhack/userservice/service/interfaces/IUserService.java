@@ -7,4 +7,6 @@ public interface IUserService {
     UserDTO register(UserDTO userDTO);
 
     UserDTO findByUsername(String username);
+
+    String findNameByUserId(Long userId);
 }

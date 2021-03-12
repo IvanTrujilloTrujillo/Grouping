@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Review } from 'src/app/models/review';
+import { ReviewWithUserName } from 'src/app/models/review-with-user-name';
 import { Site } from 'src/app/models/site';
 import { EdgeService } from 'src/app/services/edge.service';
 
@@ -17,7 +18,7 @@ export class CommentsComponent implements OnInit {
 
   site: any;
 
-  reviewList: Review[] = [];
+  reviewList: ReviewWithUserName[] = [];
 
   constructor(
     public edgeService: EdgeService,
@@ -48,11 +49,11 @@ export class CommentsComponent implements OnInit {
   }
 
   chargeReviews(groupId: number, site: any): void {
-    console.log(site);
-    console.log(groupId);
+    //console.log(site);
+    //console.log(groupId);
     this.edgeService.chargeReviews(groupId, site).subscribe(result => {
       this.reviewList = result;
-      console.log(result);
+      //console.log(result);
     });
   }
 

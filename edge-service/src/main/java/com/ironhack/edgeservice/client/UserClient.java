@@ -15,4 +15,7 @@ public interface UserClient {
 
     @GetMapping("/users/{username}")
     UserDTO findByUsername(@PathVariable("username") String username);
+
+    @GetMapping("/users/name/{userId}")
+    String findNameByUserId(@PathVariable("userId") Long userId);
 }

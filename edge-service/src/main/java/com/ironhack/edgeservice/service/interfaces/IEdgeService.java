@@ -22,7 +22,7 @@ public interface IEdgeService {
 
     GroupDTO joinGroup(String invitationCodeJSON);
 
-    List<ReviewDTO> getReviews(Long groupId, String siteJSON);
+    List<ReviewWithUserNameDTO> getReviews(Long groupId, String siteJSON);
 
     Double meanReviews(Long groupId, SiteDTO siteDTO);
 

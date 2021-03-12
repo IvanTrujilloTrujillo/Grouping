@@ -1,16 +1,18 @@
-<h1 mat-dialog-title>New Site</h1>
+<h1 mat-dialog-title><strong>New Site</strong></h1>
 
 <div mat-dialog-content>
   <form class="site-form" (ngSubmit)="onSubmit()" [formGroup]="siteForm">
 
     <div class="select" *ngIf="!createNewSite">
-      <mat-label for="site">Choose the site do you want to add</mat-label>
+      <mat-label for="site" class="existing-site">Do you want to add some of this sites?</mat-label>
       <mat-select name="site" id="site" formControlName="selectSite">
         <mat-option *ngFor="let site of siteList" [value]="site">{{ site.name }}</mat-option>
       </mat-select>
     </div>
+    <div class="new-site-button-container">
+      <button *ngIf="!createNewSite" id="new-site-button" mat-raised-button color="primary" (click)="newSite()" type="button">New Site</button>
+    </div>
 
-    <button *ngIf="!createNewSite" id="new-site-button" mat-raised-button (click)="newSite()" type="button">New Site</button>
 
     <div class="new-site" *ngIf="createNewSite">
       <label for="name-site">Name of the site:</label>
@@ -21,15 +23,18 @@
     </div>
 
     <div class="review">
-      <label for="rating">Rating:</label>
-      <input type="number" id="rating" name="rating" formControlName="rating">
+      <label>Rating</label>
+      <star-rating [value]="5" checkedcolor="gold" uncheckedcolor="grey" size="28px" [readonly]="false" (rate)="onRate($event)"></star-rating>
+      <!-- <input matInput name="rating" formControlName="rating"> -->
 
-      <label for="map-url">Comment</label>
-      <textarea matInput formControlName="comment"></textarea>
+      <mat-form-field class="comment">
+        <mat-label>Comment</mat-label>
+        <textarea matInput formControlName="comment"></textarea>
+      </mat-form-field>
     </div>
 
     <button mat-raised-button class="create" color="primary" type="submit">Create Site</button>
-    <button mat-raised-button class="cancel" (click)="cancel()" type="button">Cancel</button>
+    <button mat-raised-button class="cancel" color="primary" (click)="cancel()" type="button">Cancel</button>
 
   </form>
 </div>

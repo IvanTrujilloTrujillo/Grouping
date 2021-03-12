@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Review } from 'src/app/models/review';
+import { ReviewWithUserName } from 'src/app/models/review-with-user-name';
+import { EdgeService } from 'src/app/services/edge.service';
 
 @Component({
   selector: 'app-review-item',
@@ -8,9 +10,13 @@ import { Review } from 'src/app/models/review';
 })
 export class ReviewItemComponent implements OnInit {
 
-  @Input() review!: Review;
+  @Input() review!: ReviewWithUserName;
 
-  constructor() { }
+  userName: string = '';
+
+  constructor(
+    public edgeService: EdgeService
+  ) {}
 
   ngOnInit(): void {
   }

@@ -1,16 +1,30 @@
+h1 {
+  text-align: center;
+}
+
 .mat-dialog-content {
-  display: flex;
-  flex-direction: column;
   height: 500px;
+  width: 700px;
 }
 
 .select {
-  width: 250px;
+  width: 350px;
   height: 60px;
   margin: 20px 400px 20px 20px;
 }
 
+.existing-site {
+  font-size: 18px;
+}
+
+.new-site-button-container {
+  position: relative;
+}
+
 #new-site-button {
+  position: absolute;
+  top: -80px;
+  left: 400px;
   height: 50px;
   width: 110px;
   margin-left: 40px;
@@ -42,4 +56,8 @@ textarea {
 
 .site-form .cancel {
   left: 510px;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
 }

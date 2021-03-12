@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { StarRatingComponent } from 'ng-starrating';
 import { AppComponent } from 'src/app/app.component';
 import { Review } from 'src/app/models/review';
 import { Site } from 'src/app/models/site';
@@ -125,6 +126,13 @@ export class NewSiteComponent implements OnInit {
 
   newSite(): void {
     this.createNewSite = true;
+  }
+
+  onRate($event:{oldValue: number, newValue: number, starRating: StarRatingComponent}) {
+    alert(`Old Value:${$event.oldValue},
+      New Value: ${$event.newValue},
+      Checked Color: ${$event.starRating.checkedcolor},
+      Unchecked Color: ${$event.starRating.uncheckedcolor}`);
   }
 
 }

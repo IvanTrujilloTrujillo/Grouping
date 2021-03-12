@@ -68,7 +68,7 @@ public class EdgeController implements IEdgeController {
 
     @PostMapping("/reviews-by-group/{groupId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<ReviewDTO> getReviews(@PathVariable("groupId") Long groupId, @RequestBody String siteJSON) {
+    public List<ReviewWithUserNameDTO> getReviews(@PathVariable("groupId") Long groupId, @RequestBody String siteJSON) {
         return edgeService.getReviews(groupId, siteJSON);
     }
 

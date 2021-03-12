@@ -47,4 +47,19 @@ public class UserService implements IUserService {
         //Convert User to UserDTO and return it
         return new UserDTO(user.get().getId(), user.get().getName(), user.get().getUsername(), user.get().getPassword());
     }
+
+    //Get the name of the user by his/her id
+    public String findNameByUserId(Long userId) {
+        User user;
+
+        //Get the user from the database
+        if(userRepository.existsById(userId)) {
+            user = userRepository.findById(userId).get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+
+        //Return the name
+        return user.getName();
+    }
 }

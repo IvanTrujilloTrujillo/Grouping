@@ -28,7 +28,7 @@ export class GroupCardComponent implements OnInit {
 
   openGroup():void {
     this.edgeService.selectedGroup = this.group.id;
-    console.log(this.group.id);
+    //console.log(this.group.id);
     this.router.navigate(['/group/' + this.group.id + '/sites']);
   }
 }

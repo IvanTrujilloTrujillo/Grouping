@@ -28,6 +28,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { GroupSitesComponent } from './components/group-sites/group-sites.component';
 import { ReviewItemComponent } from './components/comments/review-item/review-item.component';
 import { MatSelectModule } from '@angular/material/select';
+import { RatingModule } from 'ng-starrating';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -61,7 +63,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatDialogModule,
     MatFormFieldModule,
     GoogleMapsModule,
-    MatSelectModule
+    MatSelectModule,
+    RatingModule,
+    MatInputModule
   ],
   entryComponents: [
     NewSiteComponent,

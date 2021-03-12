@@ -1,15 +1,23 @@
 <form (ngSubmit)="register()" [formGroup]="registerForm">
 
-	<label for="name">Name:</label>
-	<input type="text" id="name" formControlName="name">
+	<h1><strong>Register</strong></h1>
 
-	<label for="username">Username:</label>
-	<input type="text" id="username" formControlName="username">
+	<mat-form-field class="input-box">
+		<mat-label>Name</mat-label>
+		<input matInput formControlName="name">
+	</mat-form-field>
 
-	<label for="password">Password:</label>
-	<input type="password" d="password" formControlName="password">
+	<mat-form-field class="input-box">
+		<mat-label>Username</mat-label>
+		<input matInput formControlName="username">
+	</mat-form-field>
+
+	<mat-form-field class="input-box">
+		<mat-label>Password</mat-label>
+		<input matInput formControlName="password">
+	</mat-form-field>
 
 	<button mat-raised-button color="primary" type="submit">Register</button>
-  <button mat-raised-button (click)="goToLogin()" type="button">Login</button>
+  <button mat-raised-button color="primary" (click)="goToLogin()" type="button">Login</button>
 
 </form>

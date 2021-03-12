@@ -7,6 +7,7 @@ import { GroupWithMembers } from '../models/group-with-members';
 import { Groups } from '../models/groups';
 import { InvitationCode } from '../models/invitation-code';
 import { Review } from '../models/review';
+import { ReviewWithUserName } from '../models/review-with-user-name';
 import { Site } from '../models/site';
 import { SiteWithReview } from '../models/site-with-review';
 import { Tocken } from '../models/tocken';
@@ -115,14 +116,14 @@ export class EdgeService {
     return this.http.post<Groups>(this.baseUrl + url, body);
   }
 
-  chargeReviews(groupId: number, site: any): Observable<Review[]> {
+  chargeReviews(groupId: number, site: any): Observable<ReviewWithUserName[]> {
     const url: string = "reviews-by-group/";
     site.tocken = this.tocken;
     let body = JSON.stringify(site);
     //Need to remove '_' from the names of the properties
     body = body.replace(/"_/g, '"');
 
-    return this.http.post<Review[]>(this.baseUrl + url + groupId, body);
+    return this.http.post<ReviewWithUserName[]>(this.baseUrl + url + groupId, body);
   }
 
   getAllSites(): Observable<Site[]> {

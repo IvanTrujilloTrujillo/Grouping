@@ -6,10 +6,10 @@
     </button>
   </mat-card-header>
   <mat-card-content>
-    <p>
-      Review: {{ mean }} estrellas
-    </p>
-    <p class="see-comments" (click)="seeReviews()">See comments</p>
+    <div class="rating">
+      <star-rating [value]="mean" checkedcolor="gold" uncheckedcolor="grey" size="24px" [readonly]="true"></star-rating>
+    </div>
+    <p class="see-comments" (click)="seeReviews()"><u>See comments</u></p>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="showNewReviewDialog()">Add a Review</button>

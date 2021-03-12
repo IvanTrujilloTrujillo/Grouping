@@ -26,4 +26,10 @@ public class UserController implements IUserController {
     public UserDTO findByUsername(@PathVariable("username") String username) {
         return userService.findByUsername(username);
     }
+
+    @GetMapping("/users/name/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findNameByUserId(@PathVariable("userId") Long userId) {
+        return userService.findNameByUserId(userId);
+    }
 }

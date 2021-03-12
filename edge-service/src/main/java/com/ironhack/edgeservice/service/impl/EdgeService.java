@@ -252,7 +252,7 @@ public class EdgeService implements IEdgeService {
     }
 
     //Get all the reviews from a Site and a Group
-    public List<ReviewDTO> getReviews(Long groupId, String siteJSON) {
+    public List<ReviewWithUserNameDTO> getReviews(Long groupId, String siteJSON) {
         //Check if the group exists and get it
         GroupDTO groupDTO = groupClient.getGroupById(groupId);
 
@@ -270,8 +270,25 @@ public class EdgeService implements IEdgeService {
 
         //Get the review list and return it
         List<ReviewDTO> reviewDTOList = siteClient.getReviews(groupId, siteDTO);
+
         //System.out.println(reviewDTOList);
-        return reviewDTOList;
+
+        //Convert into a review with the user name
+        List<ReviewWithUserNameDTO> reviewWithUserNameDTOList = new ArrayList<>();
+        for (ReviewDTO reviewDTO : reviewDTOList) {
+           ReviewWithUserNameDTO reviewWithUserNameDTO = new ReviewWithUserNameDTO(
+                   reviewDTO.getId(),
+                   reviewDTO.getGroupId(),
+                   reviewDTO.getSite(),
+                   reviewDTO.getUserId(),
+                   reviewDTO.getRating(),
+                   reviewDTO.getComment(),
+                   userClient.findNameByUserId(reviewDTO.getUserId()));
+           reviewWithUserNameDTOList.add(reviewWithUserNameDTO);
+        }
+
+        //And return it
+        return reviewWithUserNameDTOList;
     }
 
     //Calculate the mean of the reviews of a site in a group

@@ -19,7 +19,7 @@ public class ReviewDTO {
     @NotNull
     private Long userId;
     @NotNull
-    @Min(1)
+    @Min(0)
     @Max(5)
     private Integer rating;
     @NotNull
