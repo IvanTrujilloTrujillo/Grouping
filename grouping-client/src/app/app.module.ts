@@ -31,6 +31,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { RatingModule } from 'ng-starrating';
 import { MatInputModule } from '@angular/material/input';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatSelectModule,
     RatingModule,
     MatInputModule,
-    NgbModule
+    NgbModule,
+    MatSnackBarModule
   ],
   entryComponents: [
     NewSiteComponent,

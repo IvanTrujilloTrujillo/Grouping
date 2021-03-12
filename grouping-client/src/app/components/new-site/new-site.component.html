@@ -15,11 +15,15 @@
 
 
     <div class="new-site" *ngIf="createNewSite">
-      <label for="name-site">Name of the site:</label>
-      <input type="text" id="name-site" name="name-site" formControlName="name" placeholder="Name">
+      <mat-form-field class="name-site-container">
+        <mat-label>Name of the site</mat-label>
+        <input matInput formControlName="name" placeholder="Name">
+      </mat-form-field>
 
-      <label for="map-url">Url of Google Maps:</label>
-      <input type="text" id="map-url" name="map-url" formControlName="mapUrl" placeholder="Url">
+      <mat-form-field class="url-container">
+        <mat-label>Url of Google Maps</mat-label>
+        <input matInput formControlName="mapUrl" placeholder="Url">
+      </mat-form-field>
     </div>
 
     <div class="review">

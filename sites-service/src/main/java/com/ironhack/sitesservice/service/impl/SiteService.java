@@ -52,6 +52,11 @@ public class SiteService implements ISiteService {
 
     //Save a new Site
     public SiteDTO saveNewSite(SiteDTO siteDTO) {
+        //Check if the Site's name is empty
+        if(siteDTO.getName().equals("")) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "The name can't be empty");
+        }
+
         //Check if the Site already exists searching by the name and the map url
         if(siteRepository.findByName(siteDTO.getName()).isPresent() ||
                 siteRepository.findByMapUrl(siteDTO.getMapUrl()).isPresent()) {

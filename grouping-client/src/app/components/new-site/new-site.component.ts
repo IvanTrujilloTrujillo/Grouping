@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { StarRatingComponent } from 'ng-starrating';
 import { AppComponent } from 'src/app/app.component';
@@ -33,10 +34,11 @@ export class NewSiteComponent implements OnInit {
   constructor(
     private edgeService: EdgeService,
     private dialogRef: MatDialogRef<NewSiteComponent>,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.selectSiteField = new FormControl('', []);
-    this.nameField = new FormControl('', [Validators.required]);
+    this.nameField = new FormControl('', [Validators.required, Validators.minLength(3)]);
     this.mapUrlField = new FormControl('', []);
     this.commentField = new FormControl('', []);
 
@@ -76,6 +78,16 @@ export class NewSiteComponent implements OnInit {
     let name: string = this.nameField.value;
     let mapUrl: string = this.mapUrlField.value;
 
+    if (this.selectSiteField.value === '' && name === '') {
+      this._snackBar.open("You must select a site or introduce a name", '', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
+      return;
+    }
+    //console.log(name.trim());
+
     name = name.trim();
 
     if(mapUrl === null || mapUrl === undefined) {
@@ -85,7 +97,11 @@ export class NewSiteComponent implements OnInit {
     //Check if the site already exists
     this.edgeService.siteList.forEach(site => {
       if(site.name === name || site.mapUrl === mapUrl) {
-        alert("This site already exists");
+        this._snackBar.open("This site already exists", '', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
         return;
       }
     });
@@ -94,7 +110,11 @@ export class NewSiteComponent implements OnInit {
       name = this.selectSiteField.value.name;
       mapUrl = this.selectSiteField.value.mapUrl;
     } else if (this.selectSiteField.value !==  '') {
-      alert("You haven't selected any site");
+      this._snackBar.open("You haven't selected any site", '', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
       return;
     }
 
@@ -121,14 +141,4 @@ export class NewSiteComponent implements OnInit {
   newSite(): void {
     this.createNewSite = true;
   }
-
-  onRate($event:{oldValue: number, newValue: number, starRating: StarRatingComponent}) {
-    this.rating = $event.newValue;
-    $event.newValue = 3;
-    alert(`Old Value:${$event.oldValue},
-      New Value: ${$event.newValue},
-      Checked Color: ${$event.starRating.checkedcolor},
-      Unchecked Color: ${$event.starRating.uncheckedcolor}`);
-  }
-
 }
