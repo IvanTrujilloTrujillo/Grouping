@@ -30,6 +30,7 @@ import { ReviewItemComponent } from './components/comments/review-item/review-it
 import { MatSelectModule } from '@angular/material/select';
 import { RatingModule } from 'ng-starrating';
 import { MatInputModule } from '@angular/material/input';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { MatInputModule } from '@angular/material/input';
     GoogleMapsModule,
     MatSelectModule,
     RatingModule,
-    MatInputModule
+    MatInputModule,
+    NgbModule
   ],
   entryComponents: [
     NewSiteComponent,

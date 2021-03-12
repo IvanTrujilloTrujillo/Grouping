@@ -1,3 +1,7 @@
+.card {
+  border: none;
+}
+
 .row {
   width: 600px !important;
   margin: 0px auto;
@@ -28,5 +32,6 @@
 .card-content p {
   margin-top: 20px;
   font-size: 20px;
+  line-height: 30px;
   color: rgb(34, 34, 34)
 }

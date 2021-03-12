@@ -21,12 +21,13 @@ export class NewSiteComponent implements OnInit {
   createNewSite: boolean = false;
   siteList: Site[] = [];
 
+  rating: number = 5;
+
   siteForm: FormGroup;
 
   selectSiteField: FormControl;
   nameField: FormControl;
   mapUrlField: FormControl;
-  ratingField: FormControl;
   commentField: FormControl;
 
   constructor(
@@ -37,14 +38,12 @@ export class NewSiteComponent implements OnInit {
     this.selectSiteField = new FormControl('', []);
     this.nameField = new FormControl('', [Validators.required]);
     this.mapUrlField = new FormControl('', []);
-    this.ratingField = new FormControl('', [Validators.required]);
     this.commentField = new FormControl('', []);
 
     this.siteForm = new FormGroup({
       selectSite: this.selectSiteField,
       name: this.nameField,
       mapUrl: this.mapUrlField,
-      rating: this.ratingField,
       comment: this.commentField
     });
   }
@@ -91,11 +90,6 @@ export class NewSiteComponent implements OnInit {
       }
     });
 
-    if(this.ratingField.value === '') {
-      alert("The rating is required");
-      return;
-    }
-
     if(this.selectSiteField.value !== '' && !this.createNewSite) {
       name = this.selectSiteField.value.name;
       mapUrl = this.selectSiteField.value.mapUrl;
@@ -106,7 +100,7 @@ export class NewSiteComponent implements OnInit {
 
     const site = new Site(1, name, mapUrl, this.edgeService.tocken);
     this.edgeService.saveNewSite(site).subscribe(result => {
-      const review = new Review(1, this.edgeService.selectedGroup, result, 1, this.ratingField.value, this.commentField.value, this.edgeService.tocken);
+      const review = new Review(1, this.edgeService.selectedGroup, result, 1, this.rating, this.commentField.value, this.edgeService.tocken);
       this.edgeService.saveNewReview(review).subscribe(result => {
       });
     });
@@ -129,6 +123,8 @@ export class NewSiteComponent implements OnInit {
   }
 
   onRate($event:{oldValue: number, newValue: number, starRating: StarRatingComponent}) {
+    this.rating = $event.newValue;
+    $event.newValue = 3;
     alert(`Old Value:${$event.oldValue},
       New Value: ${$event.newValue},
       Checked Color: ${$event.starRating.checkedcolor},

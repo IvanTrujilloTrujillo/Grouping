@@ -34,7 +34,27 @@ h1 {
   margin: 10px;
 }
 
-textarea {
+.review {
+  display: flex;
+  flex-direction: column;
+}
+
+.rating-label {
+  font-size: 16px;
+  margin: 20px 0px 0px 30px;
+}
+
+ngb-rating {
+  color: #FFC107;
+  font-size: 40px;
+  margin: 20px 0px 0px 20px;
+}
+
+.comment-container {
+  margin: 30px 0px 0px 10px;
+}
+
+.comment {
   resize: none;
   height: 80px;
 }

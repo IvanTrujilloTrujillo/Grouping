@@ -23,13 +23,12 @@
     </div>
 
     <div class="review">
-      <label>Rating</label>
-      <star-rating [value]="5" checkedcolor="gold" uncheckedcolor="grey" size="28px" [readonly]="false" (rate)="onRate($event)"></star-rating>
-      <!-- <input matInput name="rating" formControlName="rating"> -->
+      <label class="rating-label">Rating</label>
+      <ngb-rating [max]="5" [(rate)]="rating" [readonly]="false"></ngb-rating>
 
-      <mat-form-field class="comment">
+      <mat-form-field class="comment-container" appearance="fill">
         <mat-label>Comment</mat-label>
-        <textarea matInput formControlName="comment"></textarea>
+        <textarea matInput class="comment" formControlName="comment"></textarea>
       </mat-form-field>
     </div>
 
