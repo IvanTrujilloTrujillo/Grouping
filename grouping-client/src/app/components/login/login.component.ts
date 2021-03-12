@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { User } from 'src/app/models/user';
@@ -20,7 +21,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private edgeService: EdgeService,
-    private router: Router) {
+    private router: Router,
+    private _snackBar: MatSnackBar
+    ) {
       this.usernameField = new FormControl('', [Validators.required]);
       this.passwordField = new FormControl('', [Validators.required]);
       this.loginForm = new FormGroup({
@@ -39,6 +42,11 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('tockenLogin', result.tocken);
       this.edgeService.userId = Number(result.tocken.substr(0, 4));
       this.router.navigate(['/home']);
+      this._snackBar.open('Successful login', '', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     });
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { User } from 'src/app/models/user';
@@ -20,7 +21,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private edgeService: EdgeService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.nameField = new FormControl('', [Validators.required]);
     this.usernameField = new FormControl('', [Validators.required]);
@@ -42,6 +44,11 @@ export class RegisterComponent implements OnInit {
       this.edgeService.tocken = result.tocken;
       this.edgeService.userId = Number(result.tocken.substr(0, 4));
       this.router.navigate(['/home']);
+      this._snackBar.open('Successful registration', '', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     });
   }
 

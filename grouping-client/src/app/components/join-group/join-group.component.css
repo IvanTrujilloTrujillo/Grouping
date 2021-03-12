@@ -1,3 +1,31 @@
+h1 {
+  text-align: center;
+}
+
+.code-container {
+  margin-left: 10px;
+  width: 400px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
 button {
   margin: 20px;
+  width: 100px;
+  height: 50px;
+}
+
+.info {
+  margin: 5px 10x 0px 10px;
+}
+
+.info p {
+  font-size: 12px;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
 }

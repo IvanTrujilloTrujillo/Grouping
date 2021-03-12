@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { EdgeService } from 'src/app/services/edge.service';
@@ -20,6 +21,7 @@ export class JoinGroupComponent implements OnInit {
     private edgeService: EdgeService,
     private router: Router,
     private dialogRef: MatDialogRef<JoinGroupComponent>,
+    private _snackBar: MatSnackBar
   ) {
     this.codeField = new FormControl('', [Validators.required]);
 
@@ -44,7 +46,11 @@ export class JoinGroupComponent implements OnInit {
     //Check if the user is already in the group
     this.edgeService.groupList.forEach(group => {
       if(group.id === (Number(code.split('#')[1]) - 247) / 34) {
-        alert("You are already in this group");
+        this._snackBar.open("You are already in this group", '', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
         this.closeDialog();
         return;
       }
@@ -55,7 +61,11 @@ export class JoinGroupComponent implements OnInit {
       this.edgeService.groupList.push(result);
     });
     } catch {
-      alert("This code isn't valid");
+      this._snackBar.open("This code isn't valid", '', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     }
     this.closeDialog();
   }

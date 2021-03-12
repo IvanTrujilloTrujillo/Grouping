@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Groups } from 'src/app/models/groups';
@@ -22,7 +23,8 @@ export class GroupSitesComponent implements OnInit {
     public edgeService: EdgeService,
     private router: Router,
     private newSiteDialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar
   ) {
 
     this.groupId = Number(this.route.snapshot.paramMap.get('groupId'));
@@ -48,7 +50,11 @@ export class GroupSitesComponent implements OnInit {
         this.edgeService.siteList.push(new Site(element.id, element.name, element.mapUrl, ''));
       });
     }, error => {
-      alert("You don't have access to this group");
+      this._snackBar.open("You don't have access to this group", '', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
       this.router.navigate(['/groups']);
     });
   }

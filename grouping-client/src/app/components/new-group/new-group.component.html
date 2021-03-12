@@ -1,15 +1,20 @@
-<h1 mat-dialog-title>New Group</h1>
+<h1 mat-dialog-title><strong>New Group</strong></h1>
 
 <div mat-dialog-content>
   <form (ngSubmit)="onSubmit()" [formGroup]="groupForm">
 
-    <label for="name-group">Name of the group:</label>
-    <input type="text" id="name-group" name="name-group" formControlName="name" placeholder="Name">
+    <mat-form-field class="name-container">
+      <mat-label>Name of the group</mat-label>
+      <input matInput formControlName="name" placeholder="Name">
+    </mat-form-field>
 
-    <p>You will be the admin of this group. In the group card, you will see a code required to invite other people to this group.</p>
+    <div class="info">
+      <p>You will be the admin of this group. In the group card, <br>
+        you will see a code required to invite other people to this group.</p>
+    </div>
 
     <button mat-raised-button color="primary" type="submit">Create Group</button>
-    <button mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="cancel()" type="button">Cancel</button>
 
   </form>
 </div>

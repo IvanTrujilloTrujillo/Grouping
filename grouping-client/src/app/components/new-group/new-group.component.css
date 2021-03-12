@@ -1,3 +1,24 @@
+h1 {
+  text-align: center;
+}
+
+.name-container {
+  margin-left: 10px;
+  width: 400px;
+}
+
 button {
   margin: 20px;
+}
+
+.info {
+  margin: 5px 10x 0px 10px;
+}
+
+.info p {
+  font-size: 12px;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
 }

@@ -1,21 +1,44 @@
-form {
+h1 {
+  text-align: center;
+}
+
+.mat-dialog-content {
+  height: 320px;
+  width: 700px;
+}
+
+.mat-dialog-content button {
+  margin: 10px;
+}
+
+.review {
   display: flex;
   flex-direction: column;
   width: 600px;
+  margin-top: 20px;
+  margin-left: 10px;
 }
 
-label {
-  margin-top: 10px;
+.rating-label {
+  font-size: 16px;
+  margin: 0px 0px 0px 30px;
 }
 
-#rating {
-  width: 100px;
+ngb-rating {
+  color: #FFC107;
+  font-size: 40px;
+  margin: 20px 0px 0px 20px;
 }
 
-textarea {
+.comment-container {
+  margin: 30px 0px 0px 10px;
+}
+
+.comment {
+  resize: none;
   height: 80px;
 }
 
-button {
-  margin: 20px;
+::ng-deep .mat-form-field-underline {
+  display: none;
 }

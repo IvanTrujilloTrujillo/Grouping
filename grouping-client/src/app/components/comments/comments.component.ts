@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Review } from 'src/app/models/review';
@@ -23,7 +24,8 @@ export class CommentsComponent implements OnInit {
   constructor(
     public edgeService: EdgeService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar
   ) {
     this.groupId = Number(this.route.snapshot.paramMap.get('groupId'));
     this.siteId = Number(this.route.snapshot.paramMap.get('siteId'));
@@ -34,7 +36,11 @@ export class CommentsComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       if(this.edgeService.selectedSiteId = 0) {
-        alert("There is no selected site");
+        this._snackBar.open("There is no selected site", '', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
         this.router.navigate(['/home']);
       } else {
         this.site = this.edgeService.siteList.find(element => element.id === this.siteId);

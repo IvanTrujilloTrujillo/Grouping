@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Site } from 'src/app/models/site';
@@ -25,7 +26,8 @@ export class SiteCardComponent implements OnInit {
     private mapDialog: MatDialog,
     private router: Router,
     private edgeService: EdgeService,
-    private home: HomeComponent
+    private home: HomeComponent,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -60,7 +62,11 @@ export class SiteCardComponent implements OnInit {
       const center = {lat: Number(this.site.mapUrl.split("@")[1].split(",")[0]), lng: Number(this.site.mapUrl.split("@")[1].split(",")[1].split(",")[0])};
       dialogRef.componentInstance.center = center;
     } else {
-      alert("The map is not available for this site");
+      this._snackBar.open('The map is not available for this site', '', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     }
   }
 

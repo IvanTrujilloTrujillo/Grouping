@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Review } from 'src/app/models/review';
@@ -19,24 +20,23 @@ export class NewReviewComponent implements OnInit {
 
   reviewForm: FormGroup;
 
-  ratingField: FormControl;
+  rating: number = 5;
   commentField: FormControl;
 
   constructor(
     private edgeService: EdgeService,
     private dialogRef: MatDialogRef<NewReviewComponent>,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {
-    this.ratingField = new FormControl('', [Validators.required]);
     this.commentField = new FormControl('', []);
     this.reviewForm = new FormGroup({
-      rating: this.ratingField,
       comment: this.commentField
     });
   }
 
   ngOnInit(): void {
-    if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
+    if (this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
       this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
@@ -49,21 +49,24 @@ export class NewReviewComponent implements OnInit {
       this.edgeService.selectedGroup,
       new Site(this.site.id, this.site.name, this.site.mapUrl, ''),
       this.edgeService.userId,
-      Number(this.ratingField.value),
+      Number(this.rating),
       this.commentField.value,
       this.edgeService.tocken
     );
 
-    try{
-      console.log(review);
-      setTimeout(() => {
-        this.edgeService.saveNewReview(review).subscribe(result => {
-          console.log(review);
+
+    //console.log(review);
+    setTimeout(() => {
+      this.edgeService.saveNewReview(review).subscribe(result => {
+        //console.log(review);
+      }, error => {
+        this._snackBar.open("You has already sended a review previously", '', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
         });
-      }, 100);
-    } catch {
-      alert("You has already sended a review previously");
-    }
+      });
+    }, 100);
 
     this.closeDialog();
   }
