@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Groups } from 'src/app/models/groups';
+import { Site } from 'src/app/models/site';
 import { EdgeService } from 'src/app/services/edge.service';
 import { NewSiteComponent } from '../new-site/new-site.component';
 
@@ -14,6 +15,8 @@ import { NewSiteComponent } from '../new-site/new-site.component';
 export class GroupSitesComponent implements OnInit {
 
   @Input() groupId!: number;
+
+  siteWithReviewList: any[] = [];
 
   constructor(
     public edgeService: EdgeService,
@@ -28,6 +31,8 @@ export class GroupSitesComponent implements OnInit {
   ngOnInit(): void {
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
+    } else if (this.groupId = 1) {
+      this.router.navigate(['/home']);
     } else {
       this.getSitesByGroupId(this.groupId);
       this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
@@ -36,7 +41,11 @@ export class GroupSitesComponent implements OnInit {
 
   getSitesByGroupId(id: number): void {
     this.edgeService.getSitesByGroupId(id).subscribe(result => {
-      this.edgeService.siteList = result;
+      this.siteWithReviewList = result;
+      this.edgeService.siteList = [];
+      result.forEach(element => {
+        this.edgeService.siteList.push(new Site(element.id, element.name, element.mapUrl, ''));
+      });
     }, error => {
       alert("You don't have access to this group");
       this.router.navigate(['/groups']);

@@ -82,7 +82,7 @@ public class EdgeService implements IEdgeService {
     }
 
     //Return all the groups which the user belongs from the database
-    public List<GroupDTO> getGroupsByUser(String tocken) {
+    public List<GroupWithMembersDTO> getGroupsByUser(String tocken) {
 
         //Checks if username and password are valid
         UserDTO userDTO = checkLogin(tocken);
@@ -90,7 +90,23 @@ public class EdgeService implements IEdgeService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The credentials aren't correct");
         }
 
-        return groupClient.getGroupsByUser(userDTO.getId());
+        //Get the group list for the user
+        List<GroupDTO> groupDTOList = groupClient.getGroupsByUser(userDTO.getId());
+
+        //Create the list of the groups with the number of member for each one
+        List<GroupWithMembersDTO> groupWithMembersDTOList = new ArrayList<>();
+        for (GroupDTO groupDTO : groupDTOList) {
+            GroupWithMembersDTO groupWithMembersDTO = new GroupWithMembersDTO(
+                    groupDTO.getId(),
+                    groupDTO.getName(),
+                    groupDTO.getGroupAdmin(),
+                    groupClient.getMembersByGroupId(groupDTO.getId()).size());
+            groupWithMembersDTOList.add(groupWithMembersDTO);
+        }
+
+        //System.out.println(groupWithMembersDTOList);
+        //Return the list
+        return groupWithMembersDTOList;
     }
 
     //Find all the sites associated with a group and return them

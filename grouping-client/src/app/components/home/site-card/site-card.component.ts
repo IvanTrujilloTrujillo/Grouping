@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Site } from 'src/app/models/site';
 import { EdgeService } from 'src/app/services/edge.service';
+import { GroupSitesComponent } from '../../group-sites/group-sites.component';
 import { MapComponent } from '../../map/map.component';
 import { NewReviewComponent } from '../../new-review/new-review.component';
+import { HomeComponent } from '../home.component';
 
 @Component({
   selector: 'app-site-card',
@@ -22,10 +24,12 @@ export class SiteCardComponent implements OnInit {
     private newReviewDialog: MatDialog,
     private mapDialog: MatDialog,
     private router: Router,
-    private edgeService: EdgeService
+    private edgeService: EdgeService,
+    private home: HomeComponent
   ) { }
 
   ngOnInit(): void {
+    //console.log(this.mean);
   }
 
   showNewReviewDialog(): void {
@@ -35,6 +39,14 @@ export class SiteCardComponent implements OnInit {
       disableClose: true
     });
     dialogRef.componentInstance.site = this.site;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(this.groupId === 1) {
+        setTimeout(() => {this.home.ngOnInit();}, 200);
+      } else {
+        //setTimeout(() => {this.groupSites.ngOnInit();}, 200);
+      }
+    });
   }
 
   openMapDialog(): void {

@@ -95,11 +95,6 @@ export class NewSiteComponent implements OnInit {
       return;
     }
 
-    if(this.nameField.value === '') {
-      alert("The name of the site is required");
-      return;
-    }
-
     if(this.selectSiteField.value !== '' && !this.createNewSite) {
       name = this.selectSiteField.value.name;
       mapUrl = this.selectSiteField.value.mapUrl;

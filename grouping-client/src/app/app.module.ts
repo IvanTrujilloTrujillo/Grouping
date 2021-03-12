@@ -72,7 +72,8 @@ import { MatSelectModule } from '@angular/material/select';
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
+import { GroupWithMembers } from '../models/group-with-members';
 import { Groups } from '../models/groups';
 import { InvitationCode } from '../models/invitation-code';
 import { Review } from '../models/review';
@@ -65,9 +66,9 @@ export class EdgeService {
     this.tocken = '';
   }
 
-  getGroupsByUser(): Observable<Groups[]> {
+  getGroupsByUser(): Observable<GroupWithMembers[]> {
     const url: string = "groups";
-    return this.http.post<Groups[]>(this.baseUrl + url, this.tocken);
+    return this.http.post<GroupWithMembers[]>(this.baseUrl + url, this.tocken);
   }
 
   getSitesByGroupId(id: number): Observable<SiteWithReview[]> {

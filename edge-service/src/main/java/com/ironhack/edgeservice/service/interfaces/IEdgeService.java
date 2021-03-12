@@ -10,7 +10,7 @@ public interface IEdgeService {
 
     Tocken login(String userJSON);
 
-    List<GroupDTO> getGroupsByUser(String tocken);
+    List<GroupWithMembersDTO> getGroupsByUser(String tocken);
 
     List<SiteWithReviewsDTO> getSiteByGroupId(Long id, String tocken);
 

@@ -12,6 +12,7 @@ import { EdgeService } from 'src/app/services/edge.service';
 export class GroupCardComponent implements OnInit {
 
   @Input() group!: Groups;
+  @Input() groupMembers!: number;
 
   groupNameUpperCase: string = '';
 

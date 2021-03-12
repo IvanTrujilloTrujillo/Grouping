@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
+import { GroupWithMembers } from 'src/app/models/group-with-members';
+import { Groups } from 'src/app/models/groups';
 import { EdgeService } from 'src/app/services/edge.service';
 import { JoinGroupComponent } from '../join-group/join-group.component';
 import { NewGroupComponent } from '../new-group/new-group.component';
@@ -12,6 +14,8 @@ import { NewGroupComponent } from '../new-group/new-group.component';
   styleUrls: ['./groups.component.css']
 })
 export class GroupsComponent implements OnInit {
+
+  groupWithMembersList: GroupWithMembers[] = [];
 
   constructor(
     public edgeService: EdgeService,
@@ -30,8 +34,12 @@ export class GroupsComponent implements OnInit {
 
   getGroupsByUser(): void {
     this.edgeService.getGroupsByUser().subscribe(result => {
-      this.edgeService.groupList = result;
-      this.edgeService.groupList.shift();
+      this.groupWithMembersList = result;
+      this.groupWithMembersList.shift();
+      this.edgeService.groupList = [];
+      this.groupWithMembersList.forEach(element => {
+        this.edgeService.groupList.push(new Groups(element.id, element.name, element.groupAdmin, ''));
+      });
     });
   }
 

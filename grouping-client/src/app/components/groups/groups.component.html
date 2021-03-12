@@ -1,6 +1,6 @@
 <div class="cards-container">
-  <div class="site-card" *ngFor="let group of edgeService.groupList">
-    <app-group-card [group]="group"></app-group-card>
+  <div class="site-card" *ngFor="let group of groupWithMembersList">
+    <app-group-card [group]="group" [groupMembers]="group.groupMembers"></app-group-card>
   </div>
 
   <mat-card class="join-group-card">

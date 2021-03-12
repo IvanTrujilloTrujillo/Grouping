@@ -32,7 +32,7 @@ public class EdgeController implements IEdgeController {
 
     @PostMapping("/groups")
     @ResponseStatus(HttpStatus.OK)
-    public List<GroupDTO> getGroupsByUser(@RequestBody String tocken) {
+    public List<GroupWithMembersDTO> getGroupsByUser(@RequestBody String tocken) {
         return edgeService.getGroupsByUser(tocken);
     }
 
