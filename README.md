@@ -28,19 +28,19 @@ It will also help you to check public opinions about a place before publishing i
 
 - Microservice Diagram:
 
-![alt text]()
+![Microservice Diagram](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/diagrams/Grouping%20microservice)
 
 - Case Diagram:
 
-![alt text]()
+![Case Diagram](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/diagrams/Grouping%20User%20Case.jpg)
 
 - Class Diagram:
 
-![alt text]()
+![Class Diagram](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/diagrams/Grouping%20Class)
 
 ## Screenshots
 
-![alt text]()
+![Screenshot1]()
 ![alt text]()
 ![alt text]()
 ![alt text]()
