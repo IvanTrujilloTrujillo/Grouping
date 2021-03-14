@@ -22,25 +22,39 @@ It will also help you to check public opinions about a place before publishing i
 
 ## Functionalities
 
+- Register and login
+
+- Access Global group (public) or acces a private group
+
 - Create a private group
+
+- Join a private group with an invitation code
+
+- See Sites, Reviews and comments
+
+- See location of a site in Google Maps
+
+- Add a new review
+
+- Add a new site
 
 ## Diagrams
 
 - Microservice Diagram:
 
-![alt text]()
+![Microservice Diagram](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/diagrams/Grouping%20microservice.jpg)
 
 - Case Diagram:
 
-![alt text]()
+![Case Diagram](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/diagrams/Grouping%20User%20Case.jpg)
 
 - Class Diagram:
 
-![alt text]()
+![Class Diagram](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/diagrams/Grouping%20Class.jpg)
 
 ## Screenshots
 
-![alt text]()
+![Screenshot1]()
 ![alt text]()
 ![alt text]()
 ![alt text]()
