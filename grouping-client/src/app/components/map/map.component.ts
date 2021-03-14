@@ -23,10 +23,15 @@ export class MapComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    //Check if there is a tocken in local storage, if not, redirect to login page
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
+
+      //Get the user id from the tocken
       this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
+      
       //console.log(this.center);
     }
   }

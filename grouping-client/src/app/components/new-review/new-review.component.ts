@@ -36,15 +36,19 @@ export class NewReviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    //Check if there is a tocken in local storage, if not, redirect to login page
     if (this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
+
+      //Get the user id from the tocken
       this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
 
-
   onSubmit(): void {
+    //Create the review with the selected site
     let review: Review = new Review(1,
       this.edgeService.selectedGroup,
       new Site(this.site.id, this.site.name, this.site.mapUrl, ''),
@@ -54,19 +58,22 @@ export class NewReviewComponent implements OnInit {
       this.edgeService.tocken
     );
 
-
     //console.log(review);
+
     setTimeout(() => {
       this.edgeService.saveNewReview(review).subscribe(result => {
+
         //console.log(review);
       }, error => {
+
+        //A user can't send two reviews to the same site in one group
         this._snackBar.open("You has already sended a review previously", '', {
           duration: 5000,
           horizontalPosition: 'center',
           verticalPosition: 'top',
         });
       });
-    }, 1000);
+    }, 100);
 
     this.closeDialog();
   }

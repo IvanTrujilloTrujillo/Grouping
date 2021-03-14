@@ -31,9 +31,12 @@ export class JoinGroupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //Check if there is a tocken in local storage, if not, redirect to login page
     if(this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
+
+      //Get the user id from the tocken
       this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
     }
   }
@@ -56,17 +59,18 @@ export class JoinGroupComponent implements OnInit {
       }
     });
 
-    try {
     this.edgeService.joinGroup(code).subscribe(result => {
       this.edgeService.groupList.push(result);
-    });
-    } catch {
+    }, error => {
+
+      //If there is an error is because the code isn't valid
       this._snackBar.open("This code isn't valid", '', {
         duration: 5000,
         horizontalPosition: 'center',
         verticalPosition: 'top',
       });
-    }
+    });
+
     this.closeDialog();
   }
 

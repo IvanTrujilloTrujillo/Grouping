@@ -38,18 +38,33 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
+
+    //Create the new user
     const user: User = new User(1, this.nameField.value, this.usernameField.value, this.passwordField.value);
+
     this.edgeService.register(user).subscribe(result => {
+
+      //Save the tocken on local storage
       localStorage.setItem('tockenLogin', result.tocken);
+
+      //Gets the tocken with the credentials
       this.edgeService.tocken = result.tocken;
+
+      //Get the user id from the tocken
       this.edgeService.userId = Number(result.tocken.substr(0, 4));
+
+      //Go to home page
       this.router.navigate(['/home']);
+
+      //Show a succesful message
       this._snackBar.open('Successful registration', '', {
         duration: 5000,
         horizontalPosition: 'center',
         verticalPosition: 'top',
       });
     }, error => {
+
+      //If there is an error it's because the username already exists
       this._snackBar.open("The username already exists", '', {
         duration: 5000,
         horizontalPosition: 'center',

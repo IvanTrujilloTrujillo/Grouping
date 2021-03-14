@@ -23,9 +23,11 @@ export class GroupCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //Save the group name in upper case and without spaces
     this.groupNameUpperCase = this.group.name.toUpperCase().replace(/\s+/g, '');
   }
 
+  //Function to open a group and see the site of this group
   openGroup():void {
     this.edgeService.selectedGroup = this.group.id;
     //console.log(this.group.id);

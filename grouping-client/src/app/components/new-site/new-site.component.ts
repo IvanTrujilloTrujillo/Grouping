@@ -51,12 +51,22 @@ export class NewSiteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    //Check if there is a tocken in local storage, if not, redirect to login page
     if (this.edgeService.tocken === null || this.edgeService.tocken === '') {
       this.router.navigate(['/login']);
     } else {
+
+      //Get the user id from the tocken
       this.edgeService.userId = Number(this.edgeService.tocken.substr(0, 4));
+
+      //Set the list of sites as a suggestion to add to the group (from the sites already created in other groups)
       this.edgeService.getAllSites().subscribe(result => {
+
+        //Gets all the sites
         this.siteList = result;
+
+        //For each site already in the selected group, remove them from the list of all sites
         this.siteGroupList.forEach(element => {
           let indexToDelete = -1;
           for (let index = 0; index < this.siteList.length; index++) {
@@ -78,6 +88,7 @@ export class NewSiteComponent implements OnInit {
     let name: string = this.nameField.value;
     let mapUrl: string = this.mapUrlField.value;
 
+    //Check if there is selected an existing site or the user have write a name to a new site
     if (this.selectSiteField.value === '' && name === '') {
       this._snackBar.open("You must select a site or introduce a name", '', {
         duration: 5000,
@@ -86,10 +97,12 @@ export class NewSiteComponent implements OnInit {
       });
       return;
     }
+
     //console.log(name.trim());
 
     name = name.trim();
 
+    //If there is no map url wrote, set as an empty string
     if(mapUrl === null || mapUrl === undefined) {
       mapUrl = '';
     }
@@ -106,6 +119,7 @@ export class NewSiteComponent implements OnInit {
       }
     });
 
+    //Check if the user want to create a new site
     if(this.selectSiteField.value !== '' && !this.createNewSite) {
       name = this.selectSiteField.value.name;
       mapUrl = this.selectSiteField.value.mapUrl;
@@ -118,8 +132,12 @@ export class NewSiteComponent implements OnInit {
       return;
     }
 
+    //Create the site
     const site = new Site(1, name, mapUrl, this.edgeService.tocken);
+
     this.edgeService.saveNewSite(site).subscribe(result => {
+
+      //Create the review of the new site
       const review = new Review(1, this.edgeService.selectedGroup, result, 1, this.rating, this.commentField.value, this.edgeService.tocken);
       this.edgeService.saveNewReview(review).subscribe(result => {
       });
