@@ -35,7 +35,9 @@ export class GroupsComponent implements OnInit {
   getGroupsByUser(): void {
     this.edgeService.getGroupsByUser().subscribe(result => {
       this.groupWithMembersList = result;
-      this.groupWithMembersList.shift();
+      //console.log(this.groupWithMembersList);
+      const globalIndex = this.groupWithMembersList.findIndex(element => element.id === 1);
+      this.groupWithMembersList.splice(globalIndex, 1);
       this.edgeService.groupList = [];
       this.groupWithMembersList.forEach(element => {
         this.edgeService.groupList.push(new Groups(element.id, element.name, element.groupAdmin, ''));

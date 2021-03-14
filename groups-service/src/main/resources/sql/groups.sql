@@ -16,3 +16,5 @@ CREATE TABLE groups_members (
     PRIMARY KEY(id),
     FOREIGN KEY(group_id) REFERENCES groups(id)
 );
+
+INSERT INTO groups (id, name, group_admin) VALUES (1, 'Global', 0);
