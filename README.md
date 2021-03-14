@@ -28,7 +28,7 @@ It will also help you to check public opinions about a place before publishing i
 
 - Microservice Diagram:
 
-![Microservice Diagram](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/diagrams/Grouping%20microservice)
+![Microservice Diagram](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/diagrams/Grouping%20microservice.jpg)
 
 - Case Diagram:
 
@@ -36,7 +36,7 @@ It will also help you to check public opinions about a place before publishing i
 
 - Class Diagram:
 
-![Class Diagram](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/diagrams/Grouping%20Class)
+![Class Diagram](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/diagrams/Grouping%20Class.jpg)
 
 ## Screenshots
 
