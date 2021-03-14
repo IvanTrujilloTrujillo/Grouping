@@ -22,7 +22,21 @@ It will also help you to check public opinions about a place before publishing i
 
 ## Functionalities
 
+- Register and login
+
+- Access Global group (public) or acces a private group
+
 - Create a private group
+
+- Join a private group with an invitation code
+
+- See Sites, Reviews and comments
+
+- See location of a site in Google Maps
+
+- Add a new review
+
+- Add a new site
 
 ## Diagrams
 
