@@ -8,15 +8,17 @@ It will also help you to check public opinions about a place before publishing i
 
 ## Installation
 
-1. Download the proyect from the repository.
+1. Download the proyect from the repository or clone it.
 
-2. Open and run the microservices directories except config-service as a project on a IDE as IntelliJ.
+2. Create the local databases with the sql files in '/src/main/resources/sql' inside the folowing microservices: groups-service, sites-service and user-service (in groups-service it's necessary to add a group called 'Global')
 
-3. Run the client directory as an Angular proyect.
+3. Add the properties in 'application.properties' to connect to each database (there is a config-repo but isn't modifiable so you have to write the properties with your credentials and not run the config-service microservice)
 
-4. Create the local databases with the sql files in '/src/main/resources/sql' and add the 'application.properties' to connect to the databases
+4. Open and run the microservices except config-service as a project on a IDE as IntelliJ.
 
-5. Open a browser and nagivate to 'localhost:4200'.
+5. Run the client directory as an Angular proyect (you'll need to run 'npm install' and then 'ng serve'.
+
+6. Open a browser and nagivate to 'localhost:4200'.
 
 ## Functionalities
 
