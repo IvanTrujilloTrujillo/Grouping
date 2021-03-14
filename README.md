@@ -54,7 +54,7 @@ It will also help you to check public opinions about a place before publishing i
 
 ## Screenshots
 
-![Screenshot1]()
+![Screenshot1](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/screenshots/screenshot0.jpg)
 ![alt text]()
 ![alt text]()
 ![alt text]()
