@@ -25,8 +25,8 @@ public class ReviewService implements IReviewService {
         //Convert the SiteDTO to a Site
         Site site = new Site(reviewDTO.getSite().getId(), reviewDTO.getSite().getName(), reviewDTO.getSite().getMapUrl());
 
-        System.out.println(reviewDTO);
-        System.out.println(site);
+        //System.out.println(reviewDTO);
+        //System.out.println(site);
 
         //Check if the user has a review from the same site in the same group
         List<Review> reviewList = reviewRepository.findByGroupIdAndUserId(reviewDTO.getGroupId(), reviewDTO.getUserId());
