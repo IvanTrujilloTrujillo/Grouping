@@ -54,11 +54,13 @@ It will also help you to check public opinions about a place before publishing i
 
 ## Screenshots
 
-![Screenshot1](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/screenshots/screenshot0.jpg)
-![alt text]()
-![alt text]()
-![alt text]()
-![alt text]()
+![Screenshot0](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/screenshots/screenshot0.jpg)
+![Screenshot1](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/screenshots/screenshot1.jpg)
+![Screenshot2](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/screenshots/screenshot2.jpg)
+![Screenshot3](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/screenshots/screenshot3.jpg)
+![Screenshot4](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/screenshots/screenshot4.jpg)
+![Screenshot5](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/screenshots/screenshot5.jpg)
+![Screenshot6](https://github.com/IvanTrujilloTrujillo/grouping/blob/main/edge-service/src/main/resources/screenshots/screenshot6.jpg)
 
 ## Author
 
