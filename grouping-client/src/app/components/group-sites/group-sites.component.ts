@@ -69,7 +69,7 @@ export class GroupSitesComponent implements OnInit {
     dialogRef.componentInstance.siteGroupList = this.edgeService.siteList;
 
     dialogRef.afterClosed().subscribe(result => {
-      setTimeout(() => {this.ngOnInit();}, 200);
+      setTimeout(() => {this.ngOnInit();}, 1000);
     });
   }
 

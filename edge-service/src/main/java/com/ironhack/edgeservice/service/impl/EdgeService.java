@@ -7,17 +7,17 @@ import com.ironhack.edgeservice.client.SiteClient;
 import com.ironhack.edgeservice.client.UserClient;
 import com.ironhack.edgeservice.controller.dtos.*;
 import com.ironhack.edgeservice.service.interfaces.IEdgeService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Formatter;
+import java.util.List;
 
 @Service
 public class EdgeService implements IEdgeService {
@@ -37,12 +37,12 @@ public class EdgeService implements IEdgeService {
         UserDTO userDTO = getUserDTO(userJSON);
 
         //Hash the password
-        userDTO.setPassword(DigestUtils.md5Hex(userDTO.getUsername()).toUpperCase());
+        userDTO.setPassword(DigestUtils.md5Hex(userDTO.getPassword()).toUpperCase());
 
         //Save the user on the database
         userDTO = userClient.register(userDTO);
 
-        System.out.println(userDTO.getId());
+        //System.out.println(userDTO.getId());
         //Save the user as a member of group global (1)
         groupClient.saveUserAsMemberByGroupId(1L, userDTO.getId());
 
@@ -65,7 +65,9 @@ public class EdgeService implements IEdgeService {
         //Find the user from the database by username
         UserDTO user = userClient.findByUsername(userDTO.getUsername());
 
-        String passwordHashed = DigestUtils.md5Hex(user.getUsername()).toUpperCase();
+        String passwordHashed = DigestUtils.md5Hex(userDTO.getPassword()).toUpperCase();
+        //System.out.println(passwordHashed);
+        //System.out.println(user.getPassword());
         if(!user.getPassword().equals(passwordHashed)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The password is incorrect");
         }
@@ -165,15 +167,9 @@ public class EdgeService implements IEdgeService {
     //Save a new Review
     public void saveNewReview(String reviewJSON) {
         //Convert JSON object to ReviewDTO
-        ObjectMapper objectMapper = new ObjectMapper();
-        ReviewDTO reviewDTO = null;
-        try {
-            reviewDTO = objectMapper.readValue(reviewJSON, ReviewDTO.class);
-        } catch (JsonProcessingException e) {
+        ReviewDTO reviewDTO = getReviewDTO(reviewJSON);
 
-            e.printStackTrace();
-        }
-        System.out.println(reviewJSON);
+        //System.out.println(reviewJSON);
 
         //Check if the tocken is correct
         UserDTO userDTO = checkLogin(reviewDTO.getTocken());
@@ -192,13 +188,7 @@ public class EdgeService implements IEdgeService {
     //Creates a new group
     public GroupDTO saveNewGroup(String groupJSON) {
         //Convert JSON object to GroupDTO
-        ObjectMapper objectMapper = new ObjectMapper();
-        GroupDTO groupDTO = null;
-        try {
-            groupDTO = objectMapper.readValue(groupJSON, GroupDTO.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        GroupDTO groupDTO = getGroupDTO(groupJSON);
 
         //Check if the tocken is correct
         UserDTO userDTO = checkLogin(groupDTO.getTocken());
@@ -218,13 +208,7 @@ public class EdgeService implements IEdgeService {
     //Join a user to an existent group
     public GroupDTO joinGroup(String invitationCodeJSON) {
         //Convert JSON object to GroupDTO
-        ObjectMapper objectMapper = new ObjectMapper();
-        InvitationCodeDTO invitationCodeDTO = null;
-        try {
-            invitationCodeDTO = objectMapper.readValue(invitationCodeJSON, InvitationCodeDTO.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        InvitationCodeDTO invitationCodeDTO = getInvitationCodeDTO(invitationCodeJSON);
 
         //Check if the tocken is correct
         UserDTO userDTO = checkLogin(invitationCodeDTO.getTocken());
@@ -292,6 +276,7 @@ public class EdgeService implements IEdgeService {
     }
 
     //Calculate the mean of the reviews of a site in a group
+    @HystrixCommand(fallbackMethod = "meanReviewsFallBack")
     public Double meanReviews(Long groupId, SiteDTO siteDTO) {
         //Get the review list of the Site and the group
         List<ReviewDTO> reviewDTOList = siteClient.getReviews(groupId, siteDTO);
@@ -307,6 +292,7 @@ public class EdgeService implements IEdgeService {
     }
 
     //Get all sites in the database
+    @HystrixCommand(fallbackMethod = "getAllSitesFallBack")
     public List<SiteDTO> getAllSites(String tocken) {
         //Check if the tocken is correct
         UserDTO userDTO = checkLogin(tocken);
@@ -316,6 +302,8 @@ public class EdgeService implements IEdgeService {
 
         return siteClient.getAllSites();
     }
+
+    /* ----------- Utility Methods ----------- */
 
     //Checks if the username and the password are correct
     public UserDTO checkLogin(String tocken) {
@@ -358,5 +346,51 @@ public class EdgeService implements IEdgeService {
             e.printStackTrace();
         }
         return siteDTO;
+    }
+
+    private GroupDTO getGroupDTO(String groupJSON) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        GroupDTO groupDTO = null;
+        try {
+            groupDTO = objectMapper.readValue(groupJSON, GroupDTO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return groupDTO;
+    }
+
+    private ReviewDTO getReviewDTO(String reviewJSON) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ReviewDTO reviewDTO = null;
+        try {
+            reviewDTO = objectMapper.readValue(reviewJSON, ReviewDTO.class);
+        } catch (JsonProcessingException e) {
+
+            e.printStackTrace();
+        }
+        return reviewDTO;
+    }
+
+    private InvitationCodeDTO getInvitationCodeDTO(String invitationCodeJSON) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        InvitationCodeDTO invitationCodeDTO = null;
+        try {
+            invitationCodeDTO = objectMapper.readValue(invitationCodeJSON, InvitationCodeDTO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return invitationCodeDTO;
+    }
+
+    /* ----------- FallBack Methods ----------- */
+
+    public Double meanReviewsFallBack(Long groupId, SiteDTO siteDTO) {
+
+        return 5.0;
+    }
+
+    public List<SiteDTO> getAllSitesFallBack(String tocken) {
+
+        return new ArrayList<>();
     }
 }

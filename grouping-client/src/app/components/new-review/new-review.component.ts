@@ -66,7 +66,7 @@ export class NewReviewComponent implements OnInit {
           verticalPosition: 'top',
         });
       });
-    }, 100);
+    }, 1000);
 
     this.closeDialog();
   }

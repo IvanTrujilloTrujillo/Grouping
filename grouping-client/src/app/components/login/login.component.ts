@@ -47,6 +47,12 @@ export class LoginComponent implements OnInit {
         horizontalPosition: 'center',
         verticalPosition: 'top',
       });
+    }, error => {
+      this._snackBar.open("The username or the password are not valid", '', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     });
   }
 

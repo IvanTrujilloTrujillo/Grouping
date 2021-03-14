@@ -49,6 +49,12 @@ export class RegisterComponent implements OnInit {
         horizontalPosition: 'center',
         verticalPosition: 'top',
       });
+    }, error => {
+      this._snackBar.open("The username already exists", '', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     });
   }
 

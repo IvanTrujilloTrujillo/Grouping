@@ -44,9 +44,9 @@ export class SiteCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(this.groupId === 1) {
-        setTimeout(() => {this.home.ngOnInit();}, 200);
+        setTimeout(() => {this.home.ngOnInit();}, 1000);
       } else {
-        //setTimeout(() => {this.groupSites.ngOnInit();}, 200);
+        //setTimeout(() => {this.groupSites.ngOnInit();}, 1000);
       }
     });
   }

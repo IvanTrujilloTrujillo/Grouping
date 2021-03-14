@@ -52,7 +52,7 @@ export class GroupsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      setTimeout(() => {this.ngOnInit()}, 100);
+      setTimeout(() => {this.ngOnInit()}, 1000);
     });
   }
 
@@ -63,7 +63,7 @@ export class GroupsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      setTimeout(() => {this.ngOnInit()}, 100);
+      setTimeout(() => {this.ngOnInit()}, 1000);
     });
   }
 
