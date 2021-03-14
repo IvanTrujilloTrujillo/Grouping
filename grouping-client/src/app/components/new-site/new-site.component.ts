@@ -109,7 +109,7 @@ export class NewSiteComponent implements OnInit {
 
     //Check if the site already exists
     this.edgeService.siteList.forEach(site => {
-      if(site.name === name || site.mapUrl === mapUrl) {
+      if(site.name === name) {
         this._snackBar.open("This site already exists", '', {
           duration: 5000,
           horizontalPosition: 'center',

@@ -57,9 +57,8 @@ public class SiteService implements ISiteService {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "The name can't be empty");
         }
 
-        //Check if the Site already exists searching by the name and the map url
-        if(siteRepository.findByName(siteDTO.getName()).isPresent() ||
-                siteRepository.findByMapUrl(siteDTO.getMapUrl()).isPresent()) {
+        //Check if the Site already exists searching by the name
+        if(siteRepository.findByName(siteDTO.getName()).isPresent()) {
 
             Site site = siteRepository.findByName(siteDTO.getName()).get();
             siteDTO.setId(site.getId());
